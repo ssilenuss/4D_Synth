@@ -7,7 +7,7 @@
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_gy5ml"]
 mix_rate = 48000.0
 
-[sub_resource type="Curve" id="Curve_eqp5x"]
+[sub_resource type="Curve" id="Curve_3lw24"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.571429, 1), 0.0, 0.0, 0, 0, Vector2(0.857143, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -189,10 +189,11 @@ offset_bottom = 23.0
 
 [node name="AudioOsc2D" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamGenerator_gy5ml")
+bus = &"Gynth5"
 script = ExtResource("3_o8jjk")
 env_enabled = false
 loop = false
-envelope = SubResource("Curve_eqp5x")
+envelope = SubResource("Curve_3lw24")
 
 [connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/HFO/CheckBox_Generating" to="." method="_on_check_box_generating_toggled"]
 [connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/HFO/CheckBox_Controls_Visible" to="." method="_on_controls_visible_box_toggled"]
