@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bur5odtjg4mqk"]
+
+[ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_5ertr"]
+
+[node name="Gynths" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+
+[node name="Gynth_Console" parent="." instance=ExtResource("1_5ertr")]
+layout_mode = 2
+
+[node name="Gynth_Console2" parent="." instance=ExtResource("1_5ertr")]
+layout_mode = 2
+
+[node name="Gynth_Console3" parent="." instance=ExtResource("1_5ertr")]
+layout_mode = 2

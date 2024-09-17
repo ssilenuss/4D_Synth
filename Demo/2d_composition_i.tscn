@@ -1,0 +1,826 @@
+[gd_scene load_steps=9 format=3 uid="uid://cqi01k3fv5bc3"]
+
+[ext_resource type="Script" path="res://Scripts/2d_composition_i.gd" id="1_cfnd8"]
+[ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="2_d2sc4"]
+[ext_resource type="Script" path="res://Scripts/gynth_console_2D.gd" id="3_vxriw"]
+[ext_resource type="Script" path="res://Scripts/wav_vis_2D.gd" id="4_3d4xq"]
+[ext_resource type="Script" path="res://Scripts/audio_osc_2D.gd" id="5_tdtyk"]
+[ext_resource type="Script" path="res://Scripts/fifth_scalor.gd" id="6_mxi16"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_qyufe"]
+mix_rate = 48000.0
+
+[sub_resource type="Curve" id="Curve_tg8h0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.571429, 1), 0.0, 0.0, 0, 0, Vector2(0.857143, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[node name="2D Composition I" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_cfnd8")
+control_scene = ExtResource("2_d2sc4")
+
+[node name="Gynths" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="Gynth_Console" type="Control" parent="Gynths"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_vxriw")
+
+[node name="ColorRect" type="ColorRect" parent="Gynths/Gynth_Console"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.306923, 0.306923, 0.306923, 1)
+
+[node name="Controls" type="MarginContainer" parent="Gynths/Gynth_Console"]
+visible = false
+layout_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1270.0
+offset_bottom = 710.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Gynths/Gynth_Console/Controls"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "HFO"
+horizontal_alignment = 1
+
+[node name="HFO" type="HBoxContainer" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Generating" type="CheckBox" parent="Gynths/Gynth_Console/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+text = "Generating"
+
+[node name="WaveType_Menu" type="MenuButton" parent="Gynths/Gynth_Console/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WaveType
+"
+item_count = 4
+popup/item_0/text = "SIN"
+popup/item_1/text = "SAW"
+popup/item_1/id = 1
+popup/item_2/text = "PULSE"
+popup/item_2/id = 2
+popup/item_3/text = "SQUARE"
+popup/item_3/id = 3
+
+[node name="CheckBox_Controls_Visible" type="CheckBox" parent="Gynths/Gynth_Console/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+text = "Controls Visible"
+
+[node name="PitchLabel" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Pitch: "
+horizontal_alignment = 1
+
+[node name="PitchSlider" type="HSlider" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="LimiterLabel" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Attenuation"
+horizontal_alignment = 1
+
+[node name="LimiterSlider" type="HSlider" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="EnvelopeLabel" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "ENVELOPE"
+horizontal_alignment = 1
+
+[node name="EnvelopeOptions" type="HBoxContainer" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Bang" type="CheckBox" parent="Gynths/Gynth_Console/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Bang"
+
+[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="Gynths/Gynth_Console/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Enable"
+
+[node name="CheckBox_LoopEnvelope" type="CheckBox" parent="Gynths/Gynth_Console/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Loop"
+
+[node name="SpeedLabel" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Speed"
+horizontal_alignment = 1
+
+[node name="SpeedSlider" type="HSlider" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="AttackLabel" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Attack"
+horizontal_alignment = 1
+
+[node name="AttackSlider" type="HSlider" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="DecayLabel" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Decay
+"
+horizontal_alignment = 1
+
+[node name="DecaySlider" type="HSlider" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="SustainLabel" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Sustain"
+horizontal_alignment = 1
+
+[node name="SustainSlider" type="HSlider" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="ReleaseLabel" type="Label" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Release"
+horizontal_alignment = 1
+
+[node name="ReleaseSlider" type="HSlider" parent="Gynths/Gynth_Console/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="wav_vis" type="ColorRect" parent="Gynths/Gynth_Console"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0.243137)
+script = ExtResource("4_3d4xq")
+
+[node name="Label" type="Label" parent="Gynths/Gynth_Console/wav_vis"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AudioOsc2D" type="AudioStreamPlayer2D" parent="Gynths/Gynth_Console" groups=["AudioOsc2D"]]
+stream = SubResource("AudioStreamGenerator_qyufe")
+volume_db = -0.934549
+pitch_scale = 1.5
+bus = &"Gynth3"
+script = ExtResource("5_tdtyk")
+speed = 0.5
+envelope = SubResource("Curve_tg8h0")
+
+[node name="Fifth_Scalor" type="Node" parent="Gynths/Gynth_Console/AudioOsc2D"]
+script = ExtResource("6_mxi16")
+
+[node name="Gynth_Console2" type="Control" parent="Gynths"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_vxriw")
+
+[node name="ColorRect" type="ColorRect" parent="Gynths/Gynth_Console2"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.306923, 0.306923, 0.306923, 1)
+
+[node name="Controls" type="MarginContainer" parent="Gynths/Gynth_Console2"]
+visible = false
+layout_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1270.0
+offset_bottom = 710.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Gynths/Gynth_Console2/Controls"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "HFO"
+horizontal_alignment = 1
+
+[node name="HFO" type="HBoxContainer" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Generating" type="CheckBox" parent="Gynths/Gynth_Console2/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+text = "Generating"
+
+[node name="WaveType_Menu" type="MenuButton" parent="Gynths/Gynth_Console2/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WaveType
+"
+item_count = 4
+popup/item_0/text = "SIN"
+popup/item_1/text = "SAW"
+popup/item_1/id = 1
+popup/item_2/text = "PULSE"
+popup/item_2/id = 2
+popup/item_3/text = "SQUARE"
+popup/item_3/id = 3
+
+[node name="CheckBox_Controls_Visible" type="CheckBox" parent="Gynths/Gynth_Console2/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+text = "Controls Visible"
+
+[node name="PitchLabel" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Pitch: "
+horizontal_alignment = 1
+
+[node name="PitchSlider" type="HSlider" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="LimiterLabel" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Attenuation"
+horizontal_alignment = 1
+
+[node name="LimiterSlider" type="HSlider" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="EnvelopeLabel" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "ENVELOPE"
+horizontal_alignment = 1
+
+[node name="EnvelopeOptions" type="HBoxContainer" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Bang" type="CheckBox" parent="Gynths/Gynth_Console2/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Bang"
+
+[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="Gynths/Gynth_Console2/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Enable"
+
+[node name="CheckBox_LoopEnvelope" type="CheckBox" parent="Gynths/Gynth_Console2/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Loop"
+
+[node name="SpeedLabel" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Speed"
+horizontal_alignment = 1
+
+[node name="SpeedSlider" type="HSlider" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="AttackLabel" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Attack"
+horizontal_alignment = 1
+
+[node name="AttackSlider" type="HSlider" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="DecayLabel" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Decay
+"
+horizontal_alignment = 1
+
+[node name="DecaySlider" type="HSlider" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="SustainLabel" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Sustain"
+horizontal_alignment = 1
+
+[node name="SustainSlider" type="HSlider" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="ReleaseLabel" type="Label" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Release"
+horizontal_alignment = 1
+
+[node name="ReleaseSlider" type="HSlider" parent="Gynths/Gynth_Console2/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="wav_vis" type="ColorRect" parent="Gynths/Gynth_Console2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0.243137)
+script = ExtResource("4_3d4xq")
+
+[node name="Label" type="Label" parent="Gynths/Gynth_Console2/wav_vis"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AudioOsc2D" type="AudioStreamPlayer2D" parent="Gynths/Gynth_Console2" groups=["AudioOsc2D"]]
+stream = SubResource("AudioStreamGenerator_qyufe")
+volume_db = -0.934549
+pitch_scale = 1.5
+bus = &"Gynth3"
+script = ExtResource("5_tdtyk")
+speed = 0.5
+envelope = SubResource("Curve_tg8h0")
+
+[node name="Fifth_Scalor" type="Node" parent="Gynths/Gynth_Console2/AudioOsc2D"]
+script = ExtResource("6_mxi16")
+
+[node name="Gynth_Console3" type="Control" parent="Gynths"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_vxriw")
+
+[node name="ColorRect" type="ColorRect" parent="Gynths/Gynth_Console3"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.306923, 0.306923, 0.306923, 1)
+
+[node name="Controls" type="MarginContainer" parent="Gynths/Gynth_Console3"]
+visible = false
+layout_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1270.0
+offset_bottom = 710.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Gynths/Gynth_Console3/Controls"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "HFO"
+horizontal_alignment = 1
+
+[node name="HFO" type="HBoxContainer" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Generating" type="CheckBox" parent="Gynths/Gynth_Console3/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+text = "Generating"
+
+[node name="WaveType_Menu" type="MenuButton" parent="Gynths/Gynth_Console3/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WaveType
+"
+item_count = 4
+popup/item_0/text = "SIN"
+popup/item_1/text = "SAW"
+popup/item_1/id = 1
+popup/item_2/text = "PULSE"
+popup/item_2/id = 2
+popup/item_3/text = "SQUARE"
+popup/item_3/id = 3
+
+[node name="CheckBox_Controls_Visible" type="CheckBox" parent="Gynths/Gynth_Console3/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+text = "Controls Visible"
+
+[node name="PitchLabel" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Pitch: "
+horizontal_alignment = 1
+
+[node name="PitchSlider" type="HSlider" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="LimiterLabel" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Attenuation"
+horizontal_alignment = 1
+
+[node name="LimiterSlider" type="HSlider" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="EnvelopeLabel" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "ENVELOPE"
+horizontal_alignment = 1
+
+[node name="EnvelopeOptions" type="HBoxContainer" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Bang" type="CheckBox" parent="Gynths/Gynth_Console3/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Bang"
+
+[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="Gynths/Gynth_Console3/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Enable"
+
+[node name="CheckBox_LoopEnvelope" type="CheckBox" parent="Gynths/Gynth_Console3/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Loop"
+
+[node name="SpeedLabel" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Speed"
+horizontal_alignment = 1
+
+[node name="SpeedSlider" type="HSlider" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="AttackLabel" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Attack"
+horizontal_alignment = 1
+
+[node name="AttackSlider" type="HSlider" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="DecayLabel" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Decay
+"
+horizontal_alignment = 1
+
+[node name="DecaySlider" type="HSlider" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="SustainLabel" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Sustain"
+horizontal_alignment = 1
+
+[node name="SustainSlider" type="HSlider" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="ReleaseLabel" type="Label" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Release"
+horizontal_alignment = 1
+
+[node name="ReleaseSlider" type="HSlider" parent="Gynths/Gynth_Console3/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="wav_vis" type="ColorRect" parent="Gynths/Gynth_Console3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0.243137)
+script = ExtResource("4_3d4xq")
+
+[node name="Label" type="Label" parent="Gynths/Gynth_Console3/wav_vis"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AudioOsc2D" type="AudioStreamPlayer2D" parent="Gynths/Gynth_Console3" groups=["AudioOsc2D"]]
+stream = SubResource("AudioStreamGenerator_qyufe")
+volume_db = -0.934549
+pitch_scale = 1.5
+bus = &"Gynth3"
+script = ExtResource("5_tdtyk")
+speed = 0.5
+envelope = SubResource("Curve_tg8h0")
+
+[node name="Fifth_Scalor" type="Node" parent="Gynths/Gynth_Console3/AudioOsc2D"]
+script = ExtResource("6_mxi16")
+
+[node name="Gynth_Console4" type="Control" parent="Gynths"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_vxriw")
+
+[node name="ColorRect" type="ColorRect" parent="Gynths/Gynth_Console4"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.306923, 0.306923, 0.306923, 1)
+
+[node name="Controls" type="MarginContainer" parent="Gynths/Gynth_Console4"]
+visible = false
+layout_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1270.0
+offset_bottom = 710.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Gynths/Gynth_Console4/Controls"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "HFO"
+horizontal_alignment = 1
+
+[node name="HFO" type="HBoxContainer" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Generating" type="CheckBox" parent="Gynths/Gynth_Console4/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+text = "Generating"
+
+[node name="WaveType_Menu" type="MenuButton" parent="Gynths/Gynth_Console4/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WaveType
+"
+item_count = 4
+popup/item_0/text = "SIN"
+popup/item_1/text = "SAW"
+popup/item_1/id = 1
+popup/item_2/text = "PULSE"
+popup/item_2/id = 2
+popup/item_3/text = "SQUARE"
+popup/item_3/id = 3
+
+[node name="CheckBox_Controls_Visible" type="CheckBox" parent="Gynths/Gynth_Console4/Controls/VBoxContainer/HFO"]
+layout_mode = 2
+text = "Controls Visible"
+
+[node name="PitchLabel" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Pitch: "
+horizontal_alignment = 1
+
+[node name="PitchSlider" type="HSlider" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="LimiterLabel" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Attenuation"
+horizontal_alignment = 1
+
+[node name="LimiterSlider" type="HSlider" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="EnvelopeLabel" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "ENVELOPE"
+horizontal_alignment = 1
+
+[node name="EnvelopeOptions" type="HBoxContainer" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Bang" type="CheckBox" parent="Gynths/Gynth_Console4/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Bang"
+
+[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="Gynths/Gynth_Console4/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Enable"
+
+[node name="CheckBox_LoopEnvelope" type="CheckBox" parent="Gynths/Gynth_Console4/Controls/VBoxContainer/EnvelopeOptions"]
+layout_mode = 2
+text = "Loop"
+
+[node name="SpeedLabel" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Speed"
+horizontal_alignment = 1
+
+[node name="SpeedSlider" type="HSlider" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="AttackLabel" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Attack"
+horizontal_alignment = 1
+
+[node name="AttackSlider" type="HSlider" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="DecayLabel" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Decay
+"
+horizontal_alignment = 1
+
+[node name="DecaySlider" type="HSlider" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="SustainLabel" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Sustain"
+horizontal_alignment = 1
+
+[node name="SustainSlider" type="HSlider" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="ReleaseLabel" type="Label" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Release"
+horizontal_alignment = 1
+
+[node name="ReleaseSlider" type="HSlider" parent="Gynths/Gynth_Console4/Controls/VBoxContainer"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="wav_vis" type="ColorRect" parent="Gynths/Gynth_Console4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0.243137)
+script = ExtResource("4_3d4xq")
+
+[node name="Label" type="Label" parent="Gynths/Gynth_Console4/wav_vis"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AudioOsc2D" type="AudioStreamPlayer2D" parent="Gynths/Gynth_Console4" groups=["AudioOsc2D"]]
+stream = SubResource("AudioStreamGenerator_qyufe")
+volume_db = -0.934549
+pitch_scale = 1.5
+bus = &"Gynth3"
+script = ExtResource("5_tdtyk")
+speed = 0.5
+envelope = SubResource("Curve_tg8h0")
+
+[node name="Fifth_Scalor" type="Node" parent="Gynths/Gynth_Console4/AudioOsc2D"]
+script = ExtResource("6_mxi16")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="toggled" from="Gynths/Gynth_Console/Controls/VBoxContainer/HFO/CheckBox_Generating" to="Gynths/Gynth_Console" method="_on_check_box_generating_toggled"]
+[connection signal="toggled" from="Gynths/Gynth_Console/Controls/VBoxContainer/HFO/CheckBox_Controls_Visible" to="Gynths/Gynth_Console" method="_on_controls_visible_box_toggled"]
+[connection signal="value_changed" from="Gynths/Gynth_Console/Controls/VBoxContainer/PitchSlider" to="Gynths/Gynth_Console" method="_on_pitch_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console/Controls/VBoxContainer/LimiterSlider" to="Gynths/Gynth_Console" method="_on_limiter_slider_value_changed"]
+[connection signal="button_down" from="Gynths/Gynth_Console/Controls/VBoxContainer/EnvelopeOptions/CheckBox_Bang" to="Gynths/Gynth_Console" method="_on_check_box_bang_button_down"]
+[connection signal="toggled" from="Gynths/Gynth_Console/Controls/VBoxContainer/EnvelopeOptions/CheckBox_EnvelopeEnable" to="Gynths/Gynth_Console" method="_on_check_box_envelope_enable_toggled"]
+[connection signal="toggled" from="Gynths/Gynth_Console/Controls/VBoxContainer/EnvelopeOptions/CheckBox_LoopEnvelope" to="Gynths/Gynth_Console" method="_on_check_box_loop_envelope_toggled"]
+[connection signal="value_changed" from="Gynths/Gynth_Console/Controls/VBoxContainer/SpeedSlider" to="Gynths/Gynth_Console" method="_on_speed_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console/Controls/VBoxContainer/AttackSlider" to="Gynths/Gynth_Console" method="_on_attack_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console/Controls/VBoxContainer/DecaySlider" to="Gynths/Gynth_Console" method="_on_decay_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console/Controls/VBoxContainer/SustainSlider" to="Gynths/Gynth_Console" method="_on_sustain_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console/Controls/VBoxContainer/ReleaseSlider" to="Gynths/Gynth_Console" method="_on_release_slider_value_changed"]
+[connection signal="resized" from="Gynths/Gynth_Console/wav_vis" to="Gynths/Gynth_Console/wav_vis" method="_on_resized"]
+[connection signal="toggled" from="Gynths/Gynth_Console2/Controls/VBoxContainer/HFO/CheckBox_Generating" to="Gynths/Gynth_Console2" method="_on_check_box_generating_toggled"]
+[connection signal="toggled" from="Gynths/Gynth_Console2/Controls/VBoxContainer/HFO/CheckBox_Controls_Visible" to="Gynths/Gynth_Console2" method="_on_controls_visible_box_toggled"]
+[connection signal="value_changed" from="Gynths/Gynth_Console2/Controls/VBoxContainer/PitchSlider" to="Gynths/Gynth_Console2" method="_on_pitch_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console2/Controls/VBoxContainer/LimiterSlider" to="Gynths/Gynth_Console2" method="_on_limiter_slider_value_changed"]
+[connection signal="button_down" from="Gynths/Gynth_Console2/Controls/VBoxContainer/EnvelopeOptions/CheckBox_Bang" to="Gynths/Gynth_Console2" method="_on_check_box_bang_button_down"]
+[connection signal="toggled" from="Gynths/Gynth_Console2/Controls/VBoxContainer/EnvelopeOptions/CheckBox_EnvelopeEnable" to="Gynths/Gynth_Console2" method="_on_check_box_envelope_enable_toggled"]
+[connection signal="toggled" from="Gynths/Gynth_Console2/Controls/VBoxContainer/EnvelopeOptions/CheckBox_LoopEnvelope" to="Gynths/Gynth_Console2" method="_on_check_box_loop_envelope_toggled"]
+[connection signal="value_changed" from="Gynths/Gynth_Console2/Controls/VBoxContainer/SpeedSlider" to="Gynths/Gynth_Console2" method="_on_speed_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console2/Controls/VBoxContainer/AttackSlider" to="Gynths/Gynth_Console2" method="_on_attack_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console2/Controls/VBoxContainer/DecaySlider" to="Gynths/Gynth_Console2" method="_on_decay_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console2/Controls/VBoxContainer/SustainSlider" to="Gynths/Gynth_Console2" method="_on_sustain_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console2/Controls/VBoxContainer/ReleaseSlider" to="Gynths/Gynth_Console2" method="_on_release_slider_value_changed"]
+[connection signal="resized" from="Gynths/Gynth_Console2/wav_vis" to="Gynths/Gynth_Console2/wav_vis" method="_on_resized"]
+[connection signal="toggled" from="Gynths/Gynth_Console3/Controls/VBoxContainer/HFO/CheckBox_Generating" to="Gynths/Gynth_Console3" method="_on_check_box_generating_toggled"]
+[connection signal="toggled" from="Gynths/Gynth_Console3/Controls/VBoxContainer/HFO/CheckBox_Controls_Visible" to="Gynths/Gynth_Console3" method="_on_controls_visible_box_toggled"]
+[connection signal="value_changed" from="Gynths/Gynth_Console3/Controls/VBoxContainer/PitchSlider" to="Gynths/Gynth_Console3" method="_on_pitch_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console3/Controls/VBoxContainer/LimiterSlider" to="Gynths/Gynth_Console3" method="_on_limiter_slider_value_changed"]
+[connection signal="button_down" from="Gynths/Gynth_Console3/Controls/VBoxContainer/EnvelopeOptions/CheckBox_Bang" to="Gynths/Gynth_Console3" method="_on_check_box_bang_button_down"]
+[connection signal="toggled" from="Gynths/Gynth_Console3/Controls/VBoxContainer/EnvelopeOptions/CheckBox_EnvelopeEnable" to="Gynths/Gynth_Console3" method="_on_check_box_envelope_enable_toggled"]
+[connection signal="toggled" from="Gynths/Gynth_Console3/Controls/VBoxContainer/EnvelopeOptions/CheckBox_LoopEnvelope" to="Gynths/Gynth_Console3" method="_on_check_box_loop_envelope_toggled"]
+[connection signal="value_changed" from="Gynths/Gynth_Console3/Controls/VBoxContainer/SpeedSlider" to="Gynths/Gynth_Console3" method="_on_speed_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console3/Controls/VBoxContainer/AttackSlider" to="Gynths/Gynth_Console3" method="_on_attack_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console3/Controls/VBoxContainer/DecaySlider" to="Gynths/Gynth_Console3" method="_on_decay_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console3/Controls/VBoxContainer/SustainSlider" to="Gynths/Gynth_Console3" method="_on_sustain_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console3/Controls/VBoxContainer/ReleaseSlider" to="Gynths/Gynth_Console3" method="_on_release_slider_value_changed"]
+[connection signal="resized" from="Gynths/Gynth_Console3/wav_vis" to="Gynths/Gynth_Console3/wav_vis" method="_on_resized"]
+[connection signal="toggled" from="Gynths/Gynth_Console4/Controls/VBoxContainer/HFO/CheckBox_Generating" to="Gynths/Gynth_Console4" method="_on_check_box_generating_toggled"]
+[connection signal="toggled" from="Gynths/Gynth_Console4/Controls/VBoxContainer/HFO/CheckBox_Controls_Visible" to="Gynths/Gynth_Console4" method="_on_controls_visible_box_toggled"]
+[connection signal="value_changed" from="Gynths/Gynth_Console4/Controls/VBoxContainer/PitchSlider" to="Gynths/Gynth_Console4" method="_on_pitch_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console4/Controls/VBoxContainer/LimiterSlider" to="Gynths/Gynth_Console4" method="_on_limiter_slider_value_changed"]
+[connection signal="button_down" from="Gynths/Gynth_Console4/Controls/VBoxContainer/EnvelopeOptions/CheckBox_Bang" to="Gynths/Gynth_Console4" method="_on_check_box_bang_button_down"]
+[connection signal="toggled" from="Gynths/Gynth_Console4/Controls/VBoxContainer/EnvelopeOptions/CheckBox_EnvelopeEnable" to="Gynths/Gynth_Console4" method="_on_check_box_envelope_enable_toggled"]
+[connection signal="toggled" from="Gynths/Gynth_Console4/Controls/VBoxContainer/EnvelopeOptions/CheckBox_LoopEnvelope" to="Gynths/Gynth_Console4" method="_on_check_box_loop_envelope_toggled"]
+[connection signal="value_changed" from="Gynths/Gynth_Console4/Controls/VBoxContainer/SpeedSlider" to="Gynths/Gynth_Console4" method="_on_speed_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console4/Controls/VBoxContainer/AttackSlider" to="Gynths/Gynth_Console4" method="_on_attack_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console4/Controls/VBoxContainer/DecaySlider" to="Gynths/Gynth_Console4" method="_on_decay_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console4/Controls/VBoxContainer/SustainSlider" to="Gynths/Gynth_Console4" method="_on_sustain_slider_value_changed"]
+[connection signal="value_changed" from="Gynths/Gynth_Console4/Controls/VBoxContainer/ReleaseSlider" to="Gynths/Gynth_Console4" method="_on_release_slider_value_changed"]
+[connection signal="resized" from="Gynths/Gynth_Console4/wav_vis" to="Gynths/Gynth_Console4/wav_vis" method="_on_resized"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
