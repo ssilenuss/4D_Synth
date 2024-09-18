@@ -130,17 +130,20 @@ func _process(delta: float) -> void:
 			
 	
 func _on_tree_exiting()->void:
-	remove_bus()
+	#remove_bus()
+	pass
 	
 func init_bus()->void:
-	AudioServer.add_bus()
-	bus_idx = AudioServer.bus_count-1
-	bus_name = "Gynth" + str(bus_idx)
-	AudioServer.set_bus_name(bus_idx,bus_name)
-	set_bus(bus_name)
-	AudioServer.bus_layout_changed.emit()
-	#AudioServer.bus_renamed.emit()
-	AudioServer.set_bus_send(bus_idx, AudioServer.get_bus_name(0))
+	bus_idx = 2
+	bus_name = "Gynths"
+	#AudioServer.add_bus()
+	#bus_idx = AudioServer.bus_count-1
+	#bus_name = "Gynth" + str(bus_idx)
+	#AudioServer.set_bus_name(bus_idx,bus_name)
+	#set_bus(bus_name)
+	#AudioServer.bus_layout_changed.emit()
+	##AudioServer.bus_renamed.emit()
+	#AudioServer.set_bus_send(bus_idx, AudioServer.get_bus_name(0))
 	
 func init_envelope()->void:
 	envelope = Curve.new()

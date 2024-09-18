@@ -17,18 +17,21 @@ var gynth : AudioOsc2D
 @onready var sustain_slider: HSlider = $VBoxContainer/Controls/VBoxContainer/SustainSlider
 @onready var release_slider : HSlider = $VBoxContainer/Controls/VBoxContainer/ReleaseSlider
 @onready var speed_slider : HSlider = $VBoxContainer/Controls/VBoxContainer/SpeedSlider
-
+@onready var keyboard_box: CheckBox = $VBoxContainer/Controls/VBoxContainer/Keyboard_Controlle
 
 @export var playhead_color: Color = Color(0,0,1,1)
 var playhead_position : float = 0.0
 
 @export var env_color : Color
 
+var keyboard_controlled := false
+var base_pitch : float 
+
 func _ready() -> void:
 	#wav_menu.get_popup().id_pressed.connect(wavetype_selected)
 	gynth = $AudioOsc2D
 	wav_vis.gynth = gynth
-	
+	base_pitch = gynth.pitch
 	enable_envelope_box.button_pressed = gynth.env_enabled
 	loop_envelope_box.button_pressed = gynth.env_enabled
 	_on_check_box_envelope_enable_toggled(gynth.env_enabled)
@@ -79,8 +82,14 @@ func wavetype_selected(idx: int)->void:
 func _on_pitch_slider_value_changed(value: float) -> void:
 	gynth.pitch = value
 	pitchlabel.text = "Pitch: " + str(gynth.frequency*gynth.pitch_scale)
+	base_pitch = gynth.pitch
 
-
+func _on_keyboard_pressed(new_pitch: float) -> void:
+	if keyboard_controlled:
+		var value :float = new_pitch
+		gynth.pitch = base_pitch+new_pitch
+		pitchlabel.text = "Pitch: " + str(gynth.frequency*gynth.pitch_scale)
+		
 func _on_limiter_slider_value_changed(value: float) -> void:
 	gynth.limiter = value
 
@@ -107,3 +116,8 @@ func _on_speed_slider_value_changed(value: float) -> void:
 func _on_controls_visible_box_toggled(toggled_on: bool) -> void:
 	$Controls.visible = false
 	
+
+
+func _on_keyboard_controlle_toggled(toggled_on: bool) -> void:
+	keyboard_controlled = toggled_on
+	print(keyboard_controlled)

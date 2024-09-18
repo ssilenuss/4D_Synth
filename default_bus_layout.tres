@@ -1,40 +1,21 @@
 [gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://cio742mfykx27"]
 
-[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_xdeqk"]
-resource_name = "Reverb"
-predelay_feedback = 0.47
-room_size = 0.19
-damping = 0.82
-spread = 0.64
-hipass = 0.74
-dry = 0.28
-wet = 0.7
+[sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vtt0g"]
+resource_name = "Record"
 
 [resource]
-bus/0/volume_db = -8.39524
-bus/0/effect/0/effect = SubResource("AudioEffectReverb_xdeqk")
-bus/0/effect/0/enabled = false
-bus/1/name = &"Gynth3"
+bus/0/volume_db = -1.12151
+bus/0/effect/0/effect = SubResource("AudioEffectRecord_vtt0g")
+bus/0/effect/0/enabled = true
+bus/1/name = &"Playback"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = &"Master"
-bus/2/name = &"Gynth5"
+bus/2/name = &"Gynths"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Master"
-bus/3/name = &"Gynth3 2"
-bus/3/solo = false
-bus/3/mute = false
-bus/3/bypass_fx = false
-bus/3/volume_db = 0.0
-bus/3/send = &"Master"
-bus/4/name = &"Gynth4"
-bus/4/solo = false
-bus/4/mute = false
-bus/4/bypass_fx = false
-bus/4/volume_db = 0.0
-bus/4/send = &"Master"
