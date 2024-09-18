@@ -25,19 +25,22 @@ var playhead_position : float = 0.0
 @export var env_color : Color
 
 var keyboard_controlled := false
-var base_pitch : float 
+var base_frequency : float :
+	set(value):
+		base_frequency= value
+		print("base frequency set: ", base_frequency, "gynth_frequency: ", gynth.frequency )
 
 func _ready() -> void:
 	#wav_menu.get_popup().id_pressed.connect(wavetype_selected)
 	gynth = $AudioOsc2D
 	wav_vis.gynth = gynth
-	base_pitch = gynth.pitch
+	base_frequency = gynth.frequency
+
 	enable_envelope_box.button_pressed = gynth.env_enabled
 	loop_envelope_box.button_pressed = gynth.env_enabled
 	_on_check_box_envelope_enable_toggled(gynth.env_enabled)
 	_on_check_box_loop_envelope_toggled(gynth.loop)
 		
-
 func _on_check_box_generating_toggled(toggled_on: bool) -> void:
 	gynth.set_generating(toggled_on)
 
@@ -80,15 +83,18 @@ func wavetype_selected(idx: int)->void:
 
 
 func _on_pitch_slider_value_changed(value: float) -> void:
+	#gynth.set_effective_frequency(value)
 	gynth.pitch = value
-	pitchlabel.text = "Pitch: " + str(gynth.frequency*gynth.pitch_scale)
-	base_pitch = gynth.pitch
+	
+	base_frequency = gynth.get_effective_frequency()
+	pitchlabel.text = "Pitch: " + str(base_frequency)
 
-func _on_keyboard_pressed(new_pitch: float) -> void:
+func _on_keyboard_pressed(pitch_mod: float) -> void:
 	if keyboard_controlled:
-		var value :float = new_pitch
-		gynth.pitch = base_pitch+new_pitch
-		pitchlabel.text = "Pitch: " + str(gynth.frequency*gynth.pitch_scale)
+		var new_frequncy : float = base_frequency * pow(2, pitch_mod)
+		gynth.set_effective_frequency(new_frequncy)
+		#gynth.pitch = base_pitch+new_pitch
+		pitchlabel.text = "Pitch: " + str(gynth.get_effective_frequency())
 		
 func _on_limiter_slider_value_changed(value: float) -> void:
 	gynth.limiter = value

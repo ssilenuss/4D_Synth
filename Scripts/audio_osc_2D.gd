@@ -183,6 +183,9 @@ func audio_osc()->void:
 			
 
 
-func set_f(_pitch: float)-> void:
+func set_effective_frequency(_pitch: float)-> void:
 	var p_scale : float = _pitch/frequency
 	set_pitch_scale(p_scale)
+	
+func get_effective_frequency()->float:
+	return frequency*pitch_scale
