@@ -7,11 +7,11 @@
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_gy5ml"]
 mix_rate = 48000.0
 
-[sub_resource type="Curve" id="Curve_dl52s"]
+[sub_resource type="Curve" id="Curve_hej6u"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.571429, 1), 0.0, 0.0, 0, 0, Vector2(0.857143, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[node name="Gynth_Console" type="Control"]
+[node name="Gynth_Console" type="Control" node_paths=PackedStringArray("bang_box", "gen_box", "enable_envelope_box", "loop_envelope_box", "wav_menu", "wav_vis", "frequency_label", "frequency_slider", "limiter_label", "limiter_slider", "attack_slider", "decay_slider", "sustain_slider", "release_slider", "speed_slider", "keyboard_box", "wav_controls", "env_title", "env_controls", "speed_label", "attack_label", "decay_label", "release_label", "sustain_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,8 +21,33 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_p0bg2")
+bang_box = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_Bang")
+gen_box = NodePath("VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_Generating")
+enable_envelope_box = NodePath("VBoxContainer/Controls/VBoxContainer/ENV_TITLE/CheckBox_EnvelopeEnable")
+loop_envelope_box = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_LoopEnvelope")
+wav_menu = NodePath("VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/WaveType_Menu")
+wav_vis = NodePath("VBoxContainer/wav_vis")
+frequency_label = NodePath("VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/FreqLineEdit")
+frequency_slider = NodePath("VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/FrequencySlider")
+limiter_label = NodePath("VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer2/LimiterLineEdit")
+limiter_slider = NodePath("VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/LimiterSlider")
+attack_slider = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/AttackSlider")
+decay_slider = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/DecaySlider")
+sustain_slider = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/SustainSlider")
+release_slider = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/ReleaseSlider")
+speed_slider = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/SpeedSlider")
+keyboard_box = NodePath("VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/Keyboard_Controlle")
+wav_controls = NodePath("VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS")
+env_title = NodePath("VBoxContainer/Controls/VBoxContainer/ENV_TITLE")
+env_controls = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS")
+speed_label = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer0/SpeedLineEdit")
+attack_label = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer1/AttackLineEdit")
+decay_label = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer2/DecayLineEdit")
+release_label = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer4/Release_LineEdit")
+sustain_label = NodePath("VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer3/SustainLineEdit")
+env_color = Color(1, 0, 1, 1)
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,25 +70,31 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Controls"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="TITLE" type="VBoxContainer" parent="VBoxContainer/Controls/VBoxContainer"]
 layout_mode = 2
-text = "HFO"
-horizontal_alignment = 1
-
-[node name="HFO" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer"]
-layout_mode = 2
+size_flags_horizontal = 4
 alignment = 1
 
-[node name="CheckBox_Generating" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/HFO"]
+[node name="BoxTitle" type="Label" parent="VBoxContainer/Controls/VBoxContainer/TITLE"]
+layout_mode = 2
+text = "OSCILLATOR"
+horizontal_alignment = 1
+
+[node name="SUBTITLE" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/TITLE"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="CheckBox_Generating" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE"]
 layout_mode = 2
 text = "Generating"
 
-[node name="WaveType_Menu" type="MenuButton" parent="VBoxContainer/Controls/VBoxContainer/HFO"]
+[node name="WaveType_Menu" type="MenuButton" parent="VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "WaveType
 "
-item_count = 5
+item_count = 4
 popup/item_0/text = "SIN"
 popup/item_1/text = "SAW"
 popup/item_1/id = 1
@@ -71,113 +102,169 @@ popup/item_2/text = "PULSE"
 popup/item_2/id = 2
 popup/item_3/text = "SQUARE"
 popup/item_3/id = 3
-popup/item_4/text = "NOISE"
-popup/item_4/id = 4
 
-[node name="CheckBox_Controls_Visible" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/HFO"]
-visible = false
+[node name="WAVE_CONTROLS" type="VBoxContainer" parent="VBoxContainer/Controls/VBoxContainer"]
 layout_mode = 2
-text = "Controls Visible"
+alignment = 1
 
-[node name="PitchLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS"]
 layout_mode = 2
-text = "Pitch: "
+alignment = 1
+
+[node name="FreqLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer"]
+layout_mode = 2
+text = "FREQUENCY"
 horizontal_alignment = 1
 
-[node name="PitchSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="FreqLineEdit" type="LineEdit" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer"]
+layout_mode = 2
+
+[node name="FrequencySlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS"]
 layout_mode = 2
 max_value = 10.0
 step = 0.001
 
-[node name="Keyboard_Controlle" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS"]
+layout_mode = 2
+alignment = 1
+
+[node name="AmplitudeLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer2"]
+layout_mode = 2
+text = "AMPLITUDE ATTENUATION"
+horizontal_alignment = 1
+
+[node name="LimiterLineEdit" type="LineEdit" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer2"]
+layout_mode = 2
+
+[node name="LimiterSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS"]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="Keyboard_Controlle" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
-text = "Keyboard Affects Pitch"
+text = "KEYBOARD CONTROLLED"
 alignment = 1
 
-[node name="LimiterLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="ENV_TITLE" type="VBoxContainer" parent="VBoxContainer/Controls/VBoxContainer"]
 layout_mode = 2
-text = "Attenuation"
-horizontal_alignment = 1
-
-[node name="LimiterSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer"]
-layout_mode = 2
-max_value = 10.0
-step = 0.001
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer"]
-layout_mode = 2
+size_flags_horizontal = 4
 alignment = 1
 
-[node name="EnvelopeLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="EnvelopeLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer/ENV_TITLE"]
 layout_mode = 2
 text = "ENVELOPE"
 horizontal_alignment = 1
 
-[node name="EnvelopeOptions" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="CheckBox_Bang" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/EnvelopeOptions"]
-layout_mode = 2
-text = "Bang"
-
-[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/EnvelopeOptions"]
+[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/ENV_TITLE"]
 layout_mode = 2
 text = "Enable"
 
-[node name="CheckBox_LoopEnvelope" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/EnvelopeOptions"]
+[node name="SUBTITLE" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/ENV_TITLE"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="ENVELOPE_CONTROLS" type="VBoxContainer" parent="VBoxContainer/Controls/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="EnvelopeOptions" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
+layout_mode = 2
+alignment = 1
+
+[node name="CheckBox_Bang" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions"]
+layout_mode = 2
+text = "Bang"
+
+[node name="CheckBox_LoopEnvelope" type="CheckBox" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions"]
 layout_mode = 2
 text = "Loop"
 
-[node name="SpeedLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer0" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
 layout_mode = 2
-text = "Speed"
+alignment = 1
+
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer0"]
+layout_mode = 2
+text = "Speed:"
 horizontal_alignment = 1
 
-[node name="SpeedSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="SpeedLineEdit" type="LineEdit" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer0"]
+layout_mode = 2
+
+[node name="SpeedSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
 layout_mode = 2
 max_value = 10.0
 step = 0.001
 
-[node name="AttackLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer1" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
+layout_mode = 2
+alignment = 1
+
+[node name="AttackLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer1"]
 layout_mode = 2
 text = "Attack"
 horizontal_alignment = 1
 
-[node name="AttackSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="AttackLineEdit" type="LineEdit" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer1"]
+layout_mode = 2
+
+[node name="AttackSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
 layout_mode = 2
 max_value = 10.0
 step = 0.001
 
-[node name="DecayLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
+layout_mode = 2
+alignment = 1
+
+[node name="DecayLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer2"]
 layout_mode = 2
 text = "Decay
 "
 horizontal_alignment = 1
 
-[node name="DecaySlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="DecayLineEdit" type="LineEdit" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer2"]
+layout_mode = 2
+
+[node name="DecaySlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
 layout_mode = 2
 max_value = 10.0
 step = 0.001
 
-[node name="SustainLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
+layout_mode = 2
+alignment = 1
+
+[node name="SustainLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer3"]
 layout_mode = 2
 text = "Sustain"
 horizontal_alignment = 1
 
-[node name="SustainSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="SustainLineEdit" type="LineEdit" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer3"]
+layout_mode = 2
+
+[node name="SustainSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
 layout_mode = 2
 max_value = 10.0
 step = 0.001
 
-[node name="ReleaseLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
+layout_mode = 2
+alignment = 1
+
+[node name="ReleaseLabel" type="Label" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer4"]
 layout_mode = 2
 text = "Release"
 horizontal_alignment = 1
 
-[node name="ReleaseSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer"]
+[node name="Release_LineEdit" type="LineEdit" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer4"]
+layout_mode = 2
+
+[node name="ReleaseSlider" type="HSlider" parent="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS"]
 layout_mode = 2
 max_value = 10.0
 step = 0.001
@@ -199,19 +286,25 @@ stream = SubResource("AudioStreamGenerator_gy5ml")
 script = ExtResource("3_o8jjk")
 env_enabled = false
 loop = false
-envelope = SubResource("Curve_dl52s")
+envelope = SubResource("Curve_hej6u")
 
-[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/HFO/CheckBox_Generating" to="." method="_on_check_box_generating_toggled"]
-[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/HFO/CheckBox_Controls_Visible" to="." method="_on_controls_visible_box_toggled"]
-[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/PitchSlider" to="." method="_on_pitch_slider_value_changed"]
-[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/Keyboard_Controlle" to="." method="_on_keyboard_controlle_toggled"]
-[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/LimiterSlider" to="." method="_on_limiter_slider_value_changed"]
-[connection signal="button_down" from="VBoxContainer/Controls/VBoxContainer/EnvelopeOptions/CheckBox_Bang" to="." method="_on_check_box_bang_button_down"]
-[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/EnvelopeOptions/CheckBox_EnvelopeEnable" to="." method="_on_check_box_envelope_enable_toggled"]
-[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/EnvelopeOptions/CheckBox_LoopEnvelope" to="." method="_on_check_box_loop_envelope_toggled"]
-[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/SpeedSlider" to="." method="_on_speed_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/AttackSlider" to="." method="_on_attack_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/DecaySlider" to="." method="_on_decay_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/SustainSlider" to="." method="_on_sustain_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/ReleaseSlider" to="." method="_on_release_slider_value_changed"]
+[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_Generating" to="." method="_on_check_box_generating_toggled"]
+[connection signal="text_submitted" from="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/FreqLineEdit" to="." method="_on_frequency_text_submitted"]
+[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/FrequencySlider" to="." method="_on_pitch_slider_value_changed"]
+[connection signal="text_submitted" from="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer2/LimiterLineEdit" to="." method="_on_limiter_text_submitted"]
+[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/LimiterSlider" to="." method="_on_limiter_slider_value_changed"]
+[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/Keyboard_Controlle" to="." method="_on_keyboard_controlle_toggled"]
+[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/ENV_TITLE/CheckBox_EnvelopeEnable" to="." method="_on_check_box_envelope_enable_toggled"]
+[connection signal="button_down" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_Bang" to="." method="_on_check_box_bang_button_down"]
+[connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_LoopEnvelope" to="." method="_on_check_box_loop_envelope_toggled"]
+[connection signal="text_submitted" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer0/SpeedLineEdit" to="." method="_on_speed_text_submitted"]
+[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/SpeedSlider" to="." method="_on_speed_slider_value_changed"]
+[connection signal="text_submitted" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer1/AttackLineEdit" to="." method="_on_attack_line_submitted"]
+[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/AttackSlider" to="." method="_on_attack_slider_value_changed"]
+[connection signal="text_submitted" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer2/DecayLineEdit" to="." method="_on_decay_text_submitted"]
+[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/DecaySlider" to="." method="_on_decay_slider_value_changed"]
+[connection signal="text_submitted" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer3/SustainLineEdit" to="." method="_on_sustain_text_submitted"]
+[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/SustainSlider" to="." method="_on_sustain_slider_value_changed"]
+[connection signal="text_submitted" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer4/Release_LineEdit" to="." method="_on_release_text_submitted"]
+[connection signal="value_changed" from="VBoxContainer/Controls/VBoxContainer/ENVELOPE_CONTROLS/ReleaseSlider" to="." method="_on_release_slider_value_changed"]
 [connection signal="resized" from="VBoxContainer/wav_vis" to="VBoxContainer/wav_vis" method="_on_resized"]

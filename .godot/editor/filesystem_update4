@@ -1,5 +1,4 @@
 res://default_bus_layout.tres
-res://Scenes/Demo-3Osc.tscn
-res://Scenes/Gynth_Console_2D.tscn
+res://Scenes/Gynth0.tscn
 res://Scripts/gynth_console_2D.gd
-res://Scripts/audio_osc_2D.gd
+res://Scenes/Gynth_Console_2D.tscn

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bur5odtjg4mqk"]
 
-[ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_5ertr"]
-[ext_resource type="Script" path="res://Scripts/recorder.gd" id="2_b373d"]
-[ext_resource type="Script" path="res://Scenes/PianoKey.gd" id="2_yaubc"]
+[ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
+[ext_resource type="Script" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
+[ext_resource type="Script" path="res://Scripts/recorder.gd" id="3_yxfa4"]
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -28,14 +28,16 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/separation = 20
 
-[node name="Gynth_Console" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_5ertr")]
+[node name="Gynth_Console" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 layout_mode = 2
 focus_mode = 1
 
-[node name="Gynth_Console2" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_5ertr")]
+[node name="Gynth_Console2" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
+visible = false
 layout_mode = 2
 
-[node name="Gynth_Console3" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_5ertr")]
+[node name="Gynth_Console3" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
+visible = false
 layout_mode = 2
 
 [node name="Keyboard" type="Control" parent="VBoxContainer"]
@@ -66,7 +68,7 @@ alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
@@ -93,7 +95,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 flat = NodePath("B_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
@@ -106,7 +108,7 @@ offset_right = 19.5
 offset_bottom = 50.0
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
 [node name="Label" type="Label" parent="VBoxContainer/Keyboard/VBoxContainer/keys/B/B_FLAT"]
@@ -151,7 +153,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
@@ -178,7 +180,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 flat = NodePath("D_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
@@ -191,7 +193,7 @@ offset_right = 19.3333
 offset_bottom = 50.0
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
 [node name="Label" type="Label" parent="VBoxContainer/Keyboard/VBoxContainer/keys/D/D_FLAT"]
@@ -236,7 +238,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 flat = NodePath("E_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
@@ -249,7 +251,7 @@ offset_right = 19.5
 offset_bottom = 50.0
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
 [node name="Label" type="Label" parent="VBoxContainer/Keyboard/VBoxContainer/keys/E/E_FLAT"]
@@ -294,7 +296,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
@@ -321,7 +323,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 flat = NodePath("G_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
@@ -334,7 +336,7 @@ offset_right = 19.3333
 offset_bottom = 50.0
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
 [node name="Label" type="Label" parent="VBoxContainer/Keyboard/VBoxContainer/keys/G/G_FLAT"]
@@ -379,7 +381,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 flat = NodePath("A1_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
@@ -392,7 +394,7 @@ offset_right = 19.5
 offset_bottom = 50.0
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
 [node name="Label" type="Label" parent="VBoxContainer/Keyboard/VBoxContainer/keys/A1/A1_FLAT"]
@@ -437,7 +439,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 flat = NodePath("B1_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
@@ -450,7 +452,7 @@ offset_right = 19.3333
 offset_bottom = 50.0
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
 [node name="Label" type="Label" parent="VBoxContainer/Keyboard/VBoxContainer/keys/B1/B1_FLAT"]
@@ -495,7 +497,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_yaubc")
+script = ExtResource("2_oxfv1")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
@@ -520,7 +522,7 @@ vertical_alignment = 1
 
 [node name="Recorder" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-script = ExtResource("2_b373d")
+script = ExtResource("3_yxfa4")
 
 [node name="RecordButton" type="Button" parent="VBoxContainer/Recorder"]
 layout_mode = 2
