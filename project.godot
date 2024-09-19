@@ -13,6 +13,7 @@ config_version=5
 config/name="Gynth"
 run/main_scene="res://Scenes/Gynth0.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
+boot_splash/image="res://icon.png"
 config/icon="res://icon.png"
 
 [display]

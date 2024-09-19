@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bur5odtjg4mqk"]
+[gd_scene load_steps=5 format=3 uid="uid://bur5odtjg4mqk"]
 
 [ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
 [ext_resource type="Script" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
 [ext_resource type="Script" path="res://Scripts/recorder.gd" id="3_yxfa4"]
+[ext_resource type="Script" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -33,11 +34,9 @@ layout_mode = 2
 focus_mode = 1
 
 [node name="Gynth_Console2" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
-visible = false
 layout_mode = 2
 
 [node name="Gynth_Console3" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
-visible = false
 layout_mode = 2
 
 [node name="Keyboard" type="Control" parent="VBoxContainer"]
@@ -522,6 +521,7 @@ vertical_alignment = 1
 
 [node name="Recorder" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+alignment = 1
 script = ExtResource("3_yxfa4")
 
 [node name="RecordButton" type="Button" parent="VBoxContainer/Recorder"]
@@ -552,6 +552,27 @@ title = "Save WAV"
 initial_position = 1
 size = Vector2i(800, 400)
 access = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Recorder"]
+layout_mode = 2
+text = "                        SYNTH FX:"
+
+[node name="ReverbCheckBox" type="CheckBox" parent="VBoxContainer/Recorder"]
+layout_mode = 2
+text = "REVERB"
+script = ExtResource("4_ns3sq")
+
+[node name="DistortionCheckBox" type="CheckBox" parent="VBoxContainer/Recorder"]
+layout_mode = 2
+text = "DISTORTION"
+script = ExtResource("4_ns3sq")
+effect_idx = 1
+
+[node name="DelayCheckBox" type="CheckBox" parent="VBoxContainer/Recorder"]
+layout_mode = 2
+text = "DELAY"
+script = ExtResource("4_ns3sq")
+effect_idx = 2
 
 [connection signal="pressed" from="VBoxContainer/Recorder/RecordButton" to="VBoxContainer/Recorder" method="_on_record_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Recorder/PlayButton" to="VBoxContainer/Recorder" method="_on_play_button_pressed"]

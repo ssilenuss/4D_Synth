@@ -1,4 +1,4 @@
 res://default_bus_layout.tres
+res://Scenes/Gynth_Console_2D.tscn
 res://Scenes/Gynth0.tscn
 res://Scripts/gynth_console_2D.gd
-res://Scenes/Gynth_Console_2D.tscn

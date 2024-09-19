@@ -58,6 +58,8 @@ func _ready() -> void:
 	_on_check_box_loop_envelope_toggled(false)
 
 	_on_check_box_generating_toggled(false)
+	
+	_on_keyboard_controlle_toggled(true)
 
 	_on_speed_text_submitted("1.0")
 	
@@ -76,8 +78,10 @@ func _ready() -> void:
 func _on_check_box_generating_toggled(toggled_on: bool) -> void:
 	gynth.set_generating(toggled_on)
 	wav_controls.visible = toggled_on
-	env_title.visible = toggled_on
-	wav_vis.visible = toggled_on
+	gen_box.button_pressed = toggled_on
+	#env_title.visible = toggled_on
+	#wav_vis.visible = toggled_on
+	
 
 
 func _on_check_box_bang_button_down() -> void:

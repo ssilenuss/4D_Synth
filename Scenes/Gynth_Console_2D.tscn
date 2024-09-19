@@ -4,10 +4,10 @@
 [ext_resource type="Script" path="res://Scripts/wav_vis_2D.gd" id="1_pqsbc"]
 [ext_resource type="Script" path="res://Scripts/audio_osc_2D.gd" id="3_o8jjk"]
 
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_gy5ml"]
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_1lecl"]
 mix_rate = 48000.0
 
-[sub_resource type="Curve" id="Curve_hej6u"]
+[sub_resource type="Curve" id="Curve_o121r"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.571429, 1), 0.0, 0.0, 0, 0, Vector2(0.857143, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -145,6 +145,7 @@ step = 0.001
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
+button_pressed = true
 text = "KEYBOARD CONTROLLED"
 alignment = 1
 
@@ -282,11 +283,12 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="AudioOsc2D" type="AudioStreamPlayer2D" parent="."]
-stream = SubResource("AudioStreamGenerator_gy5ml")
+stream = SubResource("AudioStreamGenerator_1lecl")
+bus = &"Gynths"
 script = ExtResource("3_o8jjk")
 env_enabled = false
 loop = false
-envelope = SubResource("Curve_hej6u")
+envelope = SubResource("Curve_o121r")
 
 [connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_Generating" to="." method="_on_check_box_generating_toggled"]
 [connection signal="text_submitted" from="VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/FreqLineEdit" to="." method="_on_frequency_text_submitted"]

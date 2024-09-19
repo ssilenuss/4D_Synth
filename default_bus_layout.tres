@@ -1,7 +1,19 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://cio742mfykx27"]
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://cio742mfykx27"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vtt0g"]
 resource_name = "Record"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_tkt3u"]
+resource_name = "Reverb"
+
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_8bcck"]
+resource_name = "Distortion"
+drive = 1.0
+
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_g77q4"]
+resource_name = "Delay"
+tap1_delay_ms = 500.0
+tap2_delay_ms = 1.0
 
 [resource]
 bus/0/volume_db = -1.12151
@@ -19,3 +31,9 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectReverb_tkt3u")
+bus/2/effect/0/enabled = false
+bus/2/effect/1/effect = SubResource("AudioEffectDistortion_8bcck")
+bus/2/effect/1/enabled = false
+bus/2/effect/2/effect = SubResource("AudioEffectDelay_g77q4")
+bus/2/effect/2/enabled = false
