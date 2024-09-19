@@ -62,12 +62,11 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="A" type="ColorRect" parent="VBoxContainer/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+[node name="A" type="ColorRect" parent="VBoxContainer/Keyboard/VBoxContainer/keys"]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_yaubc")
-flat = NodePath("")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
