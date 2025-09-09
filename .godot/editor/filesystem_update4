@@ -1,4 +1,6 @@
 res://default_bus_layout.tres
-res://Scenes/Gynth_Console_2D.tscn
 res://Scenes/Gynth0.tscn
-res://Scripts/gynth_console_2D.gd
+res://Demo/Gynth_Console_2D.tscn
+res://Scenes/Gynth_Console_2D.tscn
+res://Scenes/WhiteNoiseGenerator.tscn
+res://Scripts/white_noise_generator.gd

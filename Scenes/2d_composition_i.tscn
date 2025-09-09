@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://bl7dmsbxw245g"]
 
 [ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_swp6a"]
-[ext_resource type="Script" path="res://Scripts/2d_composition_i.gd" id="1_uplnc"]
-[ext_resource type="Script" path="res://Scripts/gynth_console_2D.gd" id="3_iig5x"]
-[ext_resource type="Script" path="res://Scripts/wav_vis_2D.gd" id="4_bvbfg"]
-[ext_resource type="Script" path="res://Scripts/audio_osc_2D.gd" id="5_r26rs"]
-[ext_resource type="Script" path="res://Scripts/fifth_scalor.gd" id="6_rnaap"]
+[ext_resource type="Script" uid="uid://cbf3gg2cm0bgb" path="res://Scripts/2d_composition_i.gd" id="1_uplnc"]
+[ext_resource type="Script" uid="uid://dyfcgqeh0phwi" path="res://Scripts/gynth_console_2D.gd" id="3_iig5x"]
+[ext_resource type="Script" uid="uid://p3ils4w62ntp" path="res://Scripts/wav_vis_2D.gd" id="4_bvbfg"]
+[ext_resource type="Script" uid="uid://dghpohjqvm5sm" path="res://Scripts/audio_osc_2D.gd" id="5_r26rs"]
+[ext_resource type="Script" uid="uid://bi14h781jlij4" path="res://Scripts/fifth_scalor.gd" id="6_rnaap"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_qyufe"]
 mix_rate = 48000.0

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkommkjy82ri0"]
+
+[ext_resource type="Script" uid="uid://m25tboaue1vp" path="res://Scripts/white_noise_generator.gd" id="1_oi2lq"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_f36i2"]
+seed = 4
+frequency = 0.0089
+offset = Vector3(2, 460.11, -822.22)
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_f36i2"]
+buffer_length = 0.1
+
+[node name="WhiteNoiseGenerator" type="Node"]
+script = ExtResource("1_oi2lq")
+freq = 0.0036
+fast_noise = SubResource("FastNoiseLite_f36i2")
+
+[node name="Player" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_f36i2")
+autoplay = true

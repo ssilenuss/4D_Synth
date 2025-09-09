@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bur5odtjg4mqk"]
+[gd_scene load_steps=6 format=3 uid="uid://bur5odtjg4mqk"]
 
 [ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
-[ext_resource type="Script" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
-[ext_resource type="Script" path="res://Scripts/recorder.gd" id="3_yxfa4"]
-[ext_resource type="Script" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
+[ext_resource type="Script" uid="uid://dnspbqtgycg0w" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
+[ext_resource type="Script" uid="uid://bof7670j82m8g" path="res://Scripts/recorder.gd" id="3_yxfa4"]
+[ext_resource type="Script" uid="uid://dw3c4tyhfbqfc" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
+
+[sub_resource type="Curve" id="Curve_iutri"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.571429, 1), 0.0, 0.0, 0, 0, Vector2(0.857143, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -38,6 +42,12 @@ layout_mode = 2
 
 [node name="Gynth_Console3" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 layout_mode = 2
+
+[node name="WaveType_Menu" parent="VBoxContainer/Gynths/Gynth_Console3/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE" index="1"]
+popup/item_0/id = 0
+
+[node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
+envelope = SubResource("Curve_iutri")
 
 [node name="Keyboard" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -578,3 +588,5 @@ effect_idx = 2
 [connection signal="pressed" from="VBoxContainer/Recorder/PlayButton" to="VBoxContainer/Recorder" method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Recorder/SaveButton" to="VBoxContainer/Recorder" method="_on_save_button_pressed"]
 [connection signal="finished" from="VBoxContainer/Recorder/Playback" to="VBoxContainer/Recorder" method="_on_playback_finished"]
+
+[editable path="VBoxContainer/Gynths/Gynth_Console3"]
