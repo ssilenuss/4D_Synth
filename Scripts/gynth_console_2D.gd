@@ -183,9 +183,9 @@ func _on_keyboard_controlle_toggled(toggled_on: bool) -> void:
 
 
 func _on_frequency_text_submitted(new_text: String) -> void:
-	var old_text = frequency_label.text
+	var _old_text = frequency_label.text
 	if new_text.is_valid_float():
-		old_text = new_text
+		_old_text = new_text
 		frequency_label.text = new_text
 		gynth.set_effective_frequency(float(new_text))
 		frequency_slider.value = gynth.pitch_scale
@@ -195,9 +195,9 @@ func _on_frequency_text_submitted(new_text: String) -> void:
 
 
 func _on_limiter_text_submitted(new_text: String) -> void:
-	var old_text = limiter_label.text
+	var _old_text = limiter_label.text
 	if new_text.is_valid_float():
-		old_text = new_text
+		_old_text = new_text
 		limiter_label.text = new_text
 		limiter_slider.value = float(new_text)
 		
@@ -208,9 +208,9 @@ func _on_limiter_text_submitted(new_text: String) -> void:
 
 
 func _on_speed_text_submitted(new_text: String) -> void:
-	var old_text = speed_label.text
+	var _old_text = speed_label.text
 	if new_text.is_valid_float():
-		old_text = new_text
+		_old_text = new_text
 		speed_label.text = new_text
 		speed_slider.value = float(new_text)
 		
@@ -219,9 +219,9 @@ func _on_speed_text_submitted(new_text: String) -> void:
 
 
 func _on_attack_line_submitted(new_text: String) -> void:
-	var old_text = attack_label.text
+	var _old_text = attack_label.text
 	if new_text.is_valid_float():
-		old_text = new_text
+		_old_text = new_text
 		attack_label.text = new_text
 		attack_slider.value = float(new_text)
 		
@@ -230,9 +230,9 @@ func _on_attack_line_submitted(new_text: String) -> void:
 
 
 func _on_decay_text_submitted(new_text: String) -> void:
-	var old_text = decay_label.text
+	var _old_text = decay_label.text
 	if new_text.is_valid_float():
-		old_text = new_text
+		_old_text = new_text
 		decay_label.text = new_text
 		decay_slider.value = float(new_text)
 		
@@ -241,9 +241,9 @@ func _on_decay_text_submitted(new_text: String) -> void:
 
 
 func _on_release_text_submitted(new_text: String) -> void:
-	var old_text = release_label.text
+	var _old_text = release_label.text
 	if new_text.is_valid_float():
-		old_text = new_text
+		_old_text = new_text
 		release_label.text = new_text
 		release_slider.value = float(new_text)
 		
@@ -252,9 +252,9 @@ func _on_release_text_submitted(new_text: String) -> void:
 
 
 func _on_sustain_text_submitted(new_text: String) -> void:
-	var old_text = sustain_label.text
+	var _old_text = sustain_label.text
 	if new_text.is_valid_float():
-		old_text = new_text
+		_old_text = new_text
 		sustain_label.text = new_text
 		sustain_slider.value = float(new_text)
 		

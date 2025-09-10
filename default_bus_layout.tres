@@ -1,7 +1,10 @@
-[gd_resource type="AudioBusLayout" load_steps=7 format=3 uid="uid://cio742mfykx27"]
+[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://cio742mfykx27"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vtt0g"]
 resource_name = "Record"
+
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_covdg"]
+resource_name = "SpectrumAnalyzer"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_tkt3u"]
 resource_name = "Reverb"
@@ -15,17 +18,12 @@ resource_name = "Delay"
 tap1_delay_ms = 500.0
 tap2_delay_ms = 1.0
 
-[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_j3pel"]
-resource_name = "EQ"
-band_db/32_hz = -34.2
-
-[sub_resource type="AudioEffectEQ21" id="AudioEffectEQ21_j3pel"]
-resource_name = "EQ21"
-
 [resource]
 bus/0/volume_db = -1.12151
 bus/0/effect/0/effect = SubResource("AudioEffectRecord_vtt0g")
 bus/0/effect/0/enabled = true
+bus/0/effect/1/effect = SubResource("AudioEffectSpectrumAnalyzer_covdg")
+bus/0/effect/1/enabled = true
 bus/1/name = &"Playback"
 bus/1/solo = false
 bus/1/mute = false
@@ -44,13 +42,3 @@ bus/2/effect/1/effect = SubResource("AudioEffectDistortion_8bcck")
 bus/2/effect/1/enabled = false
 bus/2/effect/2/effect = SubResource("AudioEffectDelay_g77q4")
 bus/2/effect/2/enabled = false
-bus/3/name = &"WhiteNoise"
-bus/3/solo = false
-bus/3/mute = false
-bus/3/bypass_fx = false
-bus/3/volume_db = 0.0
-bus/3/send = &"Master"
-bus/3/effect/0/effect = SubResource("AudioEffectEQ_j3pel")
-bus/3/effect/0/enabled = false
-bus/3/effect/1/effect = SubResource("AudioEffectEQ21_j3pel")
-bus/3/effect/1/enabled = false

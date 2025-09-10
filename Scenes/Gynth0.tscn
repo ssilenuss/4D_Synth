@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bur5odtjg4mqk"]
+[gd_scene load_steps=7 format=3 uid="uid://bur5odtjg4mqk"]
 
 [ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
-[ext_resource type="Script" uid="uid://dnspbqtgycg0w" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
-[ext_resource type="Script" uid="uid://bof7670j82m8g" path="res://Scripts/recorder.gd" id="3_yxfa4"]
-[ext_resource type="Script" uid="uid://dw3c4tyhfbqfc" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
+[ext_resource type="Script" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
+[ext_resource type="Script" path="res://Scripts/recorder.gd" id="3_yxfa4"]
+[ext_resource type="Script" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
+[ext_resource type="Script" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
 
-[sub_resource type="Curve" id="Curve_iutri"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.571429, 1), 0.0, 0.0, 0, 0, Vector2(0.857143, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_f0c1m"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [node name="MarginContainer" type="MarginContainer"]
@@ -43,11 +44,8 @@ layout_mode = 2
 [node name="Gynth_Console3" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 layout_mode = 2
 
-[node name="WaveType_Menu" parent="VBoxContainer/Gynths/Gynth_Console3/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE" index="1"]
-popup/item_0/id = 0
-
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
-envelope = SubResource("Curve_iutri")
+envelope = SubResource("Curve_f0c1m")
 
 [node name="Keyboard" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -583,6 +581,12 @@ layout_mode = 2
 text = "DELAY"
 script = ExtResource("4_ns3sq")
 effect_idx = 2
+
+[node name="BusVis" type="ColorRect" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.0142752, 0.0142752, 0.0142752, 1)
+script = ExtResource("5_s6rx5")
 
 [connection signal="pressed" from="VBoxContainer/Recorder/RecordButton" to="VBoxContainer/Recorder" method="_on_record_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Recorder/PlayButton" to="VBoxContainer/Recorder" method="_on_play_button_pressed"]

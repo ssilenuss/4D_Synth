@@ -6,7 +6,7 @@ signal end
 
 var osc := Osc.new()
 @export var bang := false : set = receive_bang
-func receive_bang(value:bool)->void:
+func receive_bang(_value:bool)->void:
 		if get_stream_paused():
 			set_stream_paused(false)
 var playback : AudioStreamPlayback
@@ -16,7 +16,7 @@ var frequency := 440.0 :
 	set(value):
 		frequency = value
 		osc.frequency = value
-var mix_rate := 48000.0 : 
+var mix_rate : float = 48000.0 : 
 	set(value):
 		mix_rate = value
 		osc.mix_rate = value
@@ -41,7 +41,7 @@ enum {SIN,SAW, PULSE, SQUARE, NOISE}
 	set(value):
 		pitch = value
 		set_pitch_scale(pitch+0.01)
-		buffer_limit = mix_rate
+		buffer_limit = int(mix_rate)
 		#buffer_limit = frequency*pitch_scale*2
 		#if buffer_limit < 440:
 			#buffer_limit = 440

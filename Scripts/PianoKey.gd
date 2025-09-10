@@ -3,7 +3,7 @@ extends ColorRect
 class_name Piano_Key
 
 var label = Label
-signal piano_key_pitch(pitch_cv: float)
+#signal piano_key_pitch(pitch_cv: float)
 signal piano_key_gate(pitch_cv: float)
 
 
@@ -73,7 +73,7 @@ func _on_gui_input(event: InputEvent):
 		
 func cv_out(_note: String)->void:
 	color = pressed_color
-	var v : float = notes[_note]
+	#var v : float = notes[_note]
 	#piano_key_pitch.emit(v)
 	#piano_key_gate.emit(1.0)
 	for g in get_tree().get_nodes_in_group("gynth_consoles"):
@@ -88,7 +88,7 @@ func release_key()->void:
 	piano_key_gate.emit(0.0)
 	color = key_color
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed(get_name()):
 		cv_out(get_name())
