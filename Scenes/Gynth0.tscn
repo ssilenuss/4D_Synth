@@ -1,12 +1,12 @@
 [gd_scene load_steps=7 format=3 uid="uid://bur5odtjg4mqk"]
 
 [ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
-[ext_resource type="Script" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
-[ext_resource type="Script" path="res://Scripts/recorder.gd" id="3_yxfa4"]
-[ext_resource type="Script" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
-[ext_resource type="Script" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
+[ext_resource type="Script" uid="uid://dnspbqtgycg0w" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
+[ext_resource type="Script" uid="uid://bof7670j82m8g" path="res://Scripts/recorder.gd" id="3_yxfa4"]
+[ext_resource type="Script" uid="uid://dw3c4tyhfbqfc" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
+[ext_resource type="Script" uid="uid://c2tu4feth42ws" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
 
-[sub_resource type="Curve" id="Curve_d6hex"]
+[sub_resource type="Curve" id="Curve_vj3de"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -45,7 +45,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
-envelope = SubResource("Curve_d6hex")
+envelope = SubResource("Curve_vj3de")
 
 [node name="Keyboard" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -582,15 +582,47 @@ text = "DELAY"
 script = ExtResource("4_ns3sq")
 effect_idx = 2
 
-[node name="BusVis" type="ColorRect" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="osc_trigger_slider" type="VSlider" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="BusVis" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color(0.0142752, 0.0142752, 0.0142752, 1)
 script = ExtResource("5_s6rx5")
+capture_index = 0
+osc_color = Color(1, 1, 1, 1)
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Trigger" type="CheckBox" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "TriggerY"
+vertical_icon_alignment = 0
+
+[node name="osc_hscale_slider" type="HSlider" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 2000.0
+value = 1000.0
 
 [connection signal="pressed" from="VBoxContainer/Recorder/RecordButton" to="VBoxContainer/Recorder" method="_on_record_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Recorder/PlayButton" to="VBoxContainer/Recorder" method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Recorder/SaveButton" to="VBoxContainer/Recorder" method="_on_save_button_pressed"]
 [connection signal="finished" from="VBoxContainer/Recorder/Playback" to="VBoxContainer/Recorder" method="_on_playback_finished"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/osc_trigger_slider" to="VBoxContainer/HBoxContainer/BusVis" method="_on_osc_trigger_slider_value_changed"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer2/Trigger" to="VBoxContainer/HBoxContainer/BusVis" method="_on_trigger_toggled"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer2/osc_hscale_slider" to="VBoxContainer/HBoxContainer/BusVis" method="_on_osc_hscale_slider_value_changed"]
 
 [editable path="VBoxContainer/Gynths/Gynth_Console3"]

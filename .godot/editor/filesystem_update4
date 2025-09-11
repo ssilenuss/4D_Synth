@@ -1,4 +1,8 @@
+res://Demo/2d_composition_i.tscn
 res://default_bus_layout.tres
+res://Demo/Gynth_Console_2D.tscn
+res://Scenes/2d_composition_i.tscn
 res://Scenes/Gynth0.tscn
-res://Scripts/bus_vis.gd
 res://Scenes/Gynth_Console_2D.tscn
+res://Scripts/bus_vis.gd
+res://Scripts/gynth_console_2D.gd
