@@ -1,7 +1,7 @@
 extends ColorRect
 @export var audio_bus_name: String = "Buffer"
 @export var analyzer_index: int = 1 # Index of the SpectrumAnalyzer effect on the bus
-@export var capture_index: int = 2 # Index of the SpectrumAnalyzer effect on the bus
+@export var capture_index: int = 0 # Index of the SpectrumAnalyzer effect on the bus
 @export var osc_color : Color
 var spectrum_analyzer: AudioEffectSpectrumAnalyzerInstance
 var ring_buffer : AudioEffectCapture
@@ -18,7 +18,7 @@ func _ready() -> void:
 	if bus_idx != -1:
 		#spectrum_analyzer = AudioServer.get_bus_effect_instance(bus_idx, analyzer_index)
 		ring_buffer = AudioServer.get_bus_effect(bus_idx, capture_index)
-		print(bus_idx, ring_buffer)
+	
 	else:
 		print("Audio bus not found:", audio_bus_name)
 
@@ -57,7 +57,7 @@ func _process(_delta)->void:
 		#queue_redraw() # Request a redraw
 
 func _draw():
-	print(waveform_points.size())
+	#print(waveform_points.size())
 	if not waveform_points.is_empty():
 		var x_index:int = 0
 		var draw_buffer : PackedVector2Array = []

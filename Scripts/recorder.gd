@@ -16,6 +16,8 @@ var last_file: AudioStreamWAV
 @onready var loop_button : CheckBox = $LoopButton
 @onready var status : Label = $Status
 
+@export var playback_visualizer: Control 
+
 var recording : bool : set = set_recording
 func set_recording(v: bool)->void:
 	recording = v
@@ -78,6 +80,10 @@ func _on_record_button_pressed() -> void:
 		file.set_stereo(stereo)
 		record_button.modulate = Color(1.0,1.0,1.0,1.0)
 		status.text = "File recorded."
+		if playback_visualizer:
+			playback_visualizer.visible=true
+			playback_visualizer.file = file
+			playback_visualizer.update_preview
 	else:
 		#play_button.disabled = true
 		save_button.disabled = true

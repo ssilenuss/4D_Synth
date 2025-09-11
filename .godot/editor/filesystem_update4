@@ -1,8 +1,9 @@
-res://Demo/2d_composition_i.tscn
 res://default_bus_layout.tres
-res://Demo/Gynth_Console_2D.tscn
-res://Scenes/2d_composition_i.tscn
 res://Scenes/Gynth0.tscn
 res://Scenes/Gynth_Console_2D.tscn
+res://Scenes/Bus_Oscilloscope.gd
 res://Scripts/bus_vis.gd
-res://Scripts/gynth_console_2D.gd
+res://Scripts/recorder.gd
+res://Scripts/playback_visualizer.gd
+res://addons/audio_preview/AudioStreamPreview.tscn
+res://addons/audio_preview/AudioStreamPreview.gd

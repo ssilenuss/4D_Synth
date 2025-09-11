@@ -1,14 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://1vr8g2dxrg65"]
 
-[ext_resource type="Script" uid="uid://dyfcgqeh0phwi" path="res://Scripts/gynth_console_2D.gd" id="1_p0bg2"]
-[ext_resource type="Script" uid="uid://p3ils4w62ntp" path="res://Scripts/wav_vis_2D.gd" id="1_pqsbc"]
-[ext_resource type="Script" uid="uid://dghpohjqvm5sm" path="res://Scripts/audio_osc_2D.gd" id="3_o8jjk"]
+[ext_resource type="Script" path="res://Scripts/gynth_console_2D.gd" id="1_p0bg2"]
+[ext_resource type="Script" path="res://Scripts/wav_vis_2D.gd" id="1_pqsbc"]
+[ext_resource type="Script" path="res://Scripts/audio_osc_2D.gd" id="3_o8jjk"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_paisn"]
 mix_rate = 48000.0
 buffer_length = 0.1
 
-[sub_resource type="Curve" id="Curve_gi2ox"]
+[sub_resource type="Curve" id="Curve_ky2cr"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -97,7 +97,6 @@ text = "WaveType
 "
 item_count = 5
 popup/item_0/text = "SIN"
-popup/item_0/id = 0
 popup/item_1/text = "SAW"
 popup/item_1/id = 1
 popup/item_2/text = "PULSE"
@@ -305,7 +304,7 @@ osc_type = 4
 pitch = 1.0
 env_enabled = false
 loop = false
-envelope = SubResource("Curve_gi2ox")
+envelope = SubResource("Curve_ky2cr")
 attack = 0.075
 
 [connection signal="toggled" from="VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_Generating" to="." method="_on_check_box_generating_toggled"]
