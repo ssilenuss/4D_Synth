@@ -1,10 +1,14 @@
-[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://cio742mfykx27"]
+[gd_resource type="AudioBusLayout" load_steps=7 format=3 uid="uid://cio742mfykx27"]
 
-[sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vtt0g"]
+[sub_resource type="AudioEffectRecord" id="AudioEffectRecord_8bfbl"]
 resource_name = "Record"
 
-[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_covdg"]
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_xmjhm"]
 resource_name = "SpectrumAnalyzer"
+
+[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_gk877"]
+resource_name = "Capture"
+buffer_length = 0.01
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_tkt3u"]
 resource_name = "Reverb"
@@ -20,10 +24,12 @@ tap2_delay_ms = 1.0
 
 [resource]
 bus/0/volume_db = -1.12151
-bus/0/effect/0/effect = SubResource("AudioEffectRecord_vtt0g")
+bus/0/effect/0/effect = SubResource("AudioEffectRecord_8bfbl")
 bus/0/effect/0/enabled = true
-bus/0/effect/1/effect = SubResource("AudioEffectSpectrumAnalyzer_covdg")
+bus/0/effect/1/effect = SubResource("AudioEffectSpectrumAnalyzer_xmjhm")
 bus/0/effect/1/enabled = true
+bus/0/effect/2/effect = SubResource("AudioEffectCapture_gk877")
+bus/0/effect/2/enabled = true
 bus/1/name = &"Playback"
 bus/1/solo = false
 bus/1/mute = false

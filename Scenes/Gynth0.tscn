@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
 [ext_resource type="Script" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
 
-[sub_resource type="Curve" id="Curve_f0c1m"]
+[sub_resource type="Curve" id="Curve_d6hex"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -45,7 +45,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
-envelope = SubResource("Curve_f0c1m")
+envelope = SubResource("Curve_d6hex")
 
 [node name="Keyboard" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)

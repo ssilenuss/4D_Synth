@@ -1,8 +1,4 @@
 res://default_bus_layout.tres
 res://Scenes/Gynth0.tscn
-res://Scenes/Gynth_Console_2D.tscn
-res://Scripts/audio_osc_2D.gd
-res://Scripts/gynth_console_2D.gd
-res://Scripts/PianoKey.gd
-res://Scripts/wav_vis_2D.gd
 res://Scripts/bus_vis.gd
+res://Scenes/Gynth_Console_2D.tscn
