@@ -37,7 +37,7 @@ var keyboard_controlled := false
 var playhead_position : float = 0.0
 var wav_menu_popup : PopupMenu
 var base_frequency : float
-	
+var keypressed: bool = false	
 
 func _ready() -> void:
 	#wav_menu.get_popup().id_pressed.connect(wavetype_selected)
@@ -135,10 +135,15 @@ func _on_pitch_slider_value_changed(value: float) -> void:
 
 func _on_keyboard_pressed(pitch_mod: float) -> void:
 	if keyboard_controlled:
+		#gynth.keypressed = true
+		#print("keypressed")
 		var new_frequency : float = base_frequency * pow(2, pitch_mod)
 		gynth.set_effective_frequency(new_frequency)
 		#gynth.pitch = base_pitch+new_pitch
 		frequency_label.text = str(gynth.get_effective_frequency())
+
+func _on_keyboard_released()->void:
+	gynth.keypressed = false
 		
 func _on_limiter_slider_value_changed(value: float) -> void:
 	gynth.limiter = value

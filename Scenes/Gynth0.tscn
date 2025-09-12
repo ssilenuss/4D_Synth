@@ -1,16 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://bur5odtjg4mqk"]
+[gd_scene load_steps=10 format=3 uid="uid://bur5odtjg4mqk"]
 
 [ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
-[ext_resource type="Script" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
-[ext_resource type="Script" path="res://Scripts/recorder.gd" id="3_yxfa4"]
-[ext_resource type="Script" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
-[ext_resource type="Script" path="res://Scenes/Bus_Oscilloscope.gd" id="5_pfloi"]
-[ext_resource type="Script" path="res://Scripts/playback_visualizer.gd" id="5_pg0e7"]
-[ext_resource type="Script" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
+[ext_resource type="Script" uid="uid://dnspbqtgycg0w" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
+[ext_resource type="Script" uid="uid://bof7670j82m8g" path="res://Scripts/recorder.gd" id="3_yxfa4"]
+[ext_resource type="Script" uid="uid://dw3c4tyhfbqfc" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
+[ext_resource type="Script" uid="uid://ds6mdf5cfhaku" path="res://Scenes/Bus_Oscilloscope.gd" id="5_pfloi"]
+[ext_resource type="Script" uid="uid://bffepwlwfo5e3" path="res://Scripts/playback_visualizer.gd" id="5_pg0e7"]
+[ext_resource type="Script" uid="uid://c2tu4feth42ws" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
 
-[sub_resource type="Curve" id="Curve_xfcqe"]
+[sub_resource type="Curve" id="Curve_c7qjh"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_c7qjh"]
+format = 1
+mix_rate = 48000
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -47,7 +51,8 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
-envelope = SubResource("Curve_xfcqe")
+position = Vector2(962, 826)
+envelope = SubResource("Curve_c7qjh")
 
 [node name="Keyboard" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -561,6 +566,7 @@ layout_mode = 2
 text = "NO RECORDING"
 
 [node name="Playback" type="AudioStreamPlayer" parent="VBoxContainer/Recorder"]
+stream = SubResource("AudioStreamWAV_c7qjh")
 bus = &"Playback"
 
 [node name="FileDialog" type="FileDialog" parent="VBoxContainer/Recorder"]
@@ -590,16 +596,29 @@ text = "DELAY"
 script = ExtResource("4_ns3sq")
 effect_idx = 2
 
-[node name="PlaybackVisualizer" type="Control" parent="VBoxContainer"]
+[node name="PlaybackVisualizer" type="Control" parent="VBoxContainer" node_paths=PackedStringArray("player")]
 visible = false
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-size_flags_vertical = 3
 script = ExtResource("5_pg0e7")
 background_color = Color(0, 0, 1, 1)
+playhead_color = Color(0, 1, 0, 1)
+player = NodePath("../Recorder/Playback")
+
+[node name="Playback_Speed_Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Playback Speed"
+
+[node name="Playback_Speed_Slider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+min_value = 0.1
+max_value = 4.0
+step = 0.01
+value = 1.0
 
 [node name="Bus_Oscilloscope" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-size_flags_vertical = 3
 script = ExtResource("5_pfloi")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Bus_Oscilloscope"]
@@ -647,6 +666,7 @@ vertical_icon_alignment = 0
 [connection signal="pressed" from="VBoxContainer/Recorder/PlayButton" to="VBoxContainer/Recorder" method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Recorder/SaveButton" to="VBoxContainer/Recorder" method="_on_save_button_pressed"]
 [connection signal="finished" from="VBoxContainer/Recorder/Playback" to="VBoxContainer/Recorder" method="_on_playback_finished"]
+[connection signal="value_changed" from="VBoxContainer/Playback_Speed_Slider" to="VBoxContainer/PlaybackVisualizer" method="_on_playback_speed_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/Bus_Oscilloscope/VBoxContainer/HBoxContainer/osc_trigger_slider" to="VBoxContainer/Bus_Oscilloscope/VBoxContainer/HBoxContainer/BusVis" method="_on_osc_trigger_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/Bus_Oscilloscope/VBoxContainer/osc_hscale_slider" to="VBoxContainer/Bus_Oscilloscope/VBoxContainer/HBoxContainer/BusVis" method="_on_osc_hscale_slider_value_changed"]
 [connection signal="toggled" from="VBoxContainer/Bus_Oscilloscope/VBoxContainer/Trigger" to="VBoxContainer/Bus_Oscilloscope/VBoxContainer/HBoxContainer/BusVis" method="_on_trigger_toggled"]

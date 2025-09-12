@@ -7,8 +7,11 @@ signal end
 var osc := Osc.new()
 @export var bang := false : set = receive_bang
 func receive_bang(_value:bool)->void:
-		if get_stream_paused():
-			set_stream_paused(false)
+	set_stream_paused(true)
+	time = 0.0
+	if get_stream_paused():
+		set_stream_paused(false)
+
 var playback : AudioStreamPlayback
 var time := 0.0
 var voltage : float = 0.0
@@ -16,7 +19,9 @@ var frequency := 440.0 :
 	set(value):
 		frequency = value
 		osc.frequency = value
-var mix_rate : float = 48000.0 : 
+		
+#AudioServer mix rate in settings, macOS always 44.1 it seems...
+var mix_rate : float = AudioServer.get_mix_rate():#48000.0 : 
 	set(value):
 		mix_rate = value
 		osc.mix_rate = value
@@ -92,6 +97,8 @@ func set_env_enabled(_v: bool)->void:
 	set(value):
 		release = value
 		init_envelope()
+		
+var keypressed: bool = false
 
 
 
@@ -102,6 +109,7 @@ func _ready() -> void:
 	init_bus()
 	init_envelope()
 	pitch=pitch
+	position = get_viewport_rect().size/2.0
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -125,7 +133,7 @@ func _process(delta: float) -> void:
 		else: 
 			volume_db = linear_to_db(limiter)
 				
-	if playing:
+	if playing and not keypressed:
 		time += delta
 			
 	

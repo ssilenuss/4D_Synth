@@ -2,7 +2,8 @@ extends Node
 
 
 var stereo := true
-var mix_rate := 48000
+#AudioServer mix rate in settings, macOS always 44.1 it seems...
+var mix_rate := AudioServer.get_mix_rate()#48000
 var format := 1
 var file : AudioStreamWAV
 var last_file: AudioStreamWAV
@@ -83,7 +84,7 @@ func _on_record_button_pressed() -> void:
 		if playback_visualizer:
 			playback_visualizer.visible=true
 			playback_visualizer.file = file
-			playback_visualizer.update_preview
+			playback_visualizer.update_preview()
 	else:
 		#play_button.disabled = true
 		save_button.disabled = true
