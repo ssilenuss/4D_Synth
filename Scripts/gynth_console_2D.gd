@@ -8,6 +8,7 @@ var gynth : AudioOsc2D
 @export var enable_envelope_box : CheckBox 
 @export var loop_envelope_box : CheckBox 
 @export var wav_menu : MenuButton 
+@export var fx_menu: Control
 @export var wav_vis : ColorRect 
 @export var frequency_label : LineEdit 
 @export var frequency_slider : HSlider 
@@ -22,6 +23,8 @@ var gynth : AudioOsc2D
 @export var wav_controls : VBoxContainer
 @export var env_title : VBoxContainer
 @export var env_controls : VBoxContainer
+@export var filter_title: Control
+@export var filter_controls: Control
 @export var speed_label : LineEdit
 @export var attack_label : LineEdit
 @export var decay_label : LineEdit
@@ -33,11 +36,15 @@ var gynth : AudioOsc2D
 
 @export var env_color : Color
 
+
+
+
 var keyboard_controlled := false
 var playhead_position : float = 0.0
 var wav_menu_popup : PopupMenu
 var base_frequency : float
-var keypressed: bool = false	
+var keypressed: bool = false
+
 
 func _ready() -> void:
 	#wav_menu.get_popup().id_pressed.connect(wavetype_selected)
@@ -45,31 +52,23 @@ func _ready() -> void:
 	wav_vis.gynth = gynth
 	base_frequency = gynth.frequency
 	
+	
 	wav_menu_popup = wav_menu.get_popup()
 	wav_menu_popup.id_pressed.connect(_on_wav_menu_popup_selected)
+	
 	_on_wav_menu_popup_selected(0)
-
 	_on_frequency_text_submitted("440.0")
-	
 	_on_limiter_text_submitted("0.0")
-	
 	_on_check_box_envelope_enable_toggled(false)	
-	
 	_on_check_box_loop_envelope_toggled(false)
-
 	_on_check_box_generating_toggled(false)
-	
 	_on_keyboard_controlle_toggled(true)
-
 	_on_speed_text_submitted("1.0")
-	
 	_on_attack_line_submitted("0.5")
-	
 	_on_decay_text_submitted("0.5")
-	
 	_on_sustain_text_submitted("5.0")
-	
 	_on_release_text_submitted("1.0")
+	_on_check_box_loop_envelope_toggled(true)
 
 
 
@@ -79,7 +78,9 @@ func _on_check_box_generating_toggled(toggled_on: bool) -> void:
 	gynth.set_generating(toggled_on)
 	wav_controls.visible = toggled_on
 	gen_box.button_pressed = toggled_on
-	#env_title.visible = toggled_on
+	env_title.visible = toggled_on
+	fx_menu.visible = toggled_on
+	filter_title.visible = toggled_on
 	#wav_vis.visible = toggled_on
 	
 
@@ -265,3 +266,7 @@ func _on_sustain_text_submitted(new_text: String) -> void:
 		
 	else:
 		sustain_label.text = str(sustain_slider.value) + "(s)"
+
+
+func _on_audio_effects_visibility_toggled(toggled_on: bool) -> void:
+	fx_menu.visible = toggled_on

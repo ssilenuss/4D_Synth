@@ -1,23 +1,21 @@
-[gd_scene load_steps=12 format=3 uid="uid://1vr8g2dxrg65"]
+[gd_scene load_steps=10 format=3 uid="uid://1vr8g2dxrg65"]
 
-[ext_resource type="Script" uid="uid://dyfcgqeh0phwi" path="res://Scripts/gynth_console_2D.gd" id="1_p0bg2"]
-[ext_resource type="Script" uid="uid://p3ils4w62ntp" path="res://Scripts/wav_vis_2D.gd" id="1_pqsbc"]
-[ext_resource type="Script" uid="uid://dghpohjqvm5sm" path="res://Scripts/audio_osc_2D.gd" id="3_o8jjk"]
-[ext_resource type="Script" uid="uid://qktol1mxc4g5" path="res://Scripts/hide_button.gd" id="3_v5rwn"]
-[ext_resource type="Script" uid="uid://o3pvsa0qobfw" path="res://Scripts/SettingsLabel.gd" id="4_3g0wi"]
-[ext_resource type="Script" uid="uid://4285sf8sry7n" path="res://Scripts/distortion_settings.gd" id="4_11v4e"]
-[ext_resource type="Script" uid="uid://d4egqjk2ijnum" path="res://Scripts/LowPassController.gd" id="4_43mi8"]
-[ext_resource type="Script" uid="uid://jk82mpum7as" path="res://Scripts/reset_button.gd" id="4_vjg4x"]
-[ext_resource type="Script" uid="uid://bufblpkqwusdm" path="res://Scripts/reverb_settings.gd" id="4_wncvk"]
+[ext_resource type="Script" path="res://Scripts/gynth_console_2D.gd" id="1_p0bg2"]
+[ext_resource type="Script" path="res://Scripts/wav_vis_2D.gd" id="1_pqsbc"]
+[ext_resource type="Script" path="res://Scripts/audio_osc_2D.gd" id="3_o8jjk"]
+[ext_resource type="Script" path="res://Scripts/SettingsLabel.gd" id="4_3g0wi"]
+[ext_resource type="Script" path="res://Scripts/distortion_settings.gd" id="4_11v4e"]
+[ext_resource type="Script" path="res://Scripts/reset_button.gd" id="4_vjg4x"]
+[ext_resource type="Script" path="res://Scripts/reverb_settings.gd" id="4_wncvk"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_p1236"]
 mix_rate = 48000.0
 
-[sub_resource type="Curve" id="Curve_11dff"]
+[sub_resource type="Curve" id="Curve_o0i78"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[node name="Gynth_Console" type="Control" node_paths=PackedStringArray("bang_box", "gen_box", "enable_envelope_box", "loop_envelope_box", "wav_menu", "fx_menu", "wav_vis", "frequency_label", "frequency_slider", "limiter_label", "limiter_slider", "attack_slider", "decay_slider", "sustain_slider", "release_slider", "speed_slider", "keyboard_box", "wav_controls", "env_title", "env_controls", "filter_title", "filter_controls", "speed_label", "attack_label", "decay_label", "release_label", "sustain_label")]
+[node name="Gynth_Console" type="Control" node_paths=PackedStringArray("bang_box", "gen_box", "enable_envelope_box", "loop_envelope_box", "wav_menu", "fx_menu", "wav_vis", "frequency_label", "frequency_slider", "limiter_label", "limiter_slider", "attack_slider", "decay_slider", "sustain_slider", "release_slider", "speed_slider", "keyboard_box", "wav_controls", "env_title", "env_controls", "speed_label", "attack_label", "decay_label", "release_label", "sustain_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,7 +27,7 @@ size_flags_vertical = 3
 script = ExtResource("1_p0bg2")
 bang_box = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_Bang")
 gen_box = NodePath("ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_Generating")
-enable_envelope_box = NodePath("ScrollContainer/VBoxContainer/ENV_TITLE/SUBTITLE/CheckBox_EnvelopeEnable")
+enable_envelope_box = NodePath("ScrollContainer/VBoxContainer/ENV_TITLE/CheckBox_EnvelopeEnable")
 loop_envelope_box = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_LoopEnvelope")
 wav_menu = NodePath("ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/WaveType_Menu")
 fx_menu = NodePath("ScrollContainer/VBoxContainer/FX")
@@ -47,8 +45,6 @@ keyboard_box = NodePath("ScrollContainer/VBoxContainer/HBoxContainer/Keyboard_Co
 wav_controls = NodePath("ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS")
 env_title = NodePath("ScrollContainer/VBoxContainer/ENV_TITLE")
 env_controls = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS")
-filter_title = NodePath("ScrollContainer/VBoxContainer/FILTER_TITLE")
-filter_controls = NodePath("ScrollContainer/VBoxContainer/FilterControls")
 speed_label = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer0/SpeedLineEdit")
 attack_label = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer1/AttackLineEdit")
 decay_label = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer2/DecayLineEdit")
@@ -109,7 +105,6 @@ text = "WaveType
 flat = false
 item_count = 5
 popup/item_0/text = "SIN"
-popup/item_0/id = 0
 popup/item_1/text = "SAW"
 popup/item_1/id = 1
 popup/item_2/text = "PULSE"
@@ -161,9 +156,14 @@ step = 0.001
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_vertical = 3
-color = Color(0.20871, 0.20871, 0.20871, 1)
+color = Color(0.129558, 0.129558, 0.129558, 1)
 script = ExtResource("1_pqsbc")
-analyzer_idx = 4
+playhead_color = null
+envelope_color = null
+osc_color = null
+limiter_color = null
+frequency_color = Color(1, 1, 1, 1)
+analyzer_idx = null
 gynth = NodePath("../../../AudioOsc2D")
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/wav_vis"]
@@ -178,19 +178,20 @@ size_flags_horizontal = 4
 alignment = 1
 
 [node name="SUBTITLE" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/ENV_TITLE"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/ENV_TITLE/SUBTITLE"]
+[node name="EnvelopeLabel" type="Label" parent="ScrollContainer/VBoxContainer/ENV_TITLE"]
+visible = false
 layout_mode = 2
 text = "ENVELOPE"
+horizontal_alignment = 1
 
-[node name="CheckBox_EnvelopeShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/ENV_TITLE/SUBTITLE" node_paths=PackedStringArray("control_node")]
+[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/ENV_TITLE"]
 layout_mode = 2
-text = "CONTROLS"
-script = ExtResource("3_v5rwn")
-control_node = NodePath("../../../ENVELOPE_CONTROLS")
+text = "ENVELOPE"
 
 [node name="ENVELOPE_CONTROLS" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
 visible = false
@@ -306,96 +307,26 @@ max_value = 10.0
 step = 0.001
 value = 0.01
 
-[node name="FILTER_TITLE" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="ENV_TITLE2" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="SUBTITLE" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FILTER_TITLE"]
-layout_mode = 2
-size_flags_horizontal = 4
-alignment = 1
-
-[node name="CheckBox_FilterEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/FILTER_TITLE/SUBTITLE"]
+[node name="SUBTITLE" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/ENV_TITLE2"]
 visible = false
 layout_mode = 2
-text = "FILTERS"
-
-[node name="CheckBox_FilterShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/FILTER_TITLE/SUBTITLE" node_paths=PackedStringArray("control_node")]
-layout_mode = 2
-text = "FILTERS"
-script = ExtResource("3_v5rwn")
-control_node = NodePath("../../../FilterControls")
-
-[node name="FilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="LowPassFilter" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls"]
-layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="CheckBox_LowPassFilterEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter"]
+[node name="EnvelopeLabel" type="Label" parent="ScrollContainer/VBoxContainer/ENV_TITLE2"]
+visible = false
 layout_mode = 2
-text = "LOW PASS FILTER"
-
-[node name="CheckBox_FilterShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter" node_paths=PackedStringArray("control_node")]
-layout_mode = 2
-text = "CONTROLS"
-script = ExtResource("3_v5rwn")
-control_node = NodePath("../../LowPassFilterControls")
-
-[node name="LowPassFilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("gynth", "effect_enable_button", "cutoff_hz_input", "cutoff_hz_slider", "resonance_input", "resonance_slider")]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-script = ExtResource("4_43mi8")
-effect_name = &"LowPassFilter"
-gynth = NodePath("../../../../AudioOsc2D")
-effect_enable_button = NodePath("../LowPassFilter/CheckBox_LowPassFilterEnable")
-cutoff_hz_input = NodePath("HBoxContainer0/CutoffHzEdit")
-cutoff_hz_slider = NodePath("CutoffHzSlider")
-resonance_input = NodePath("HBoxContainer1/ResonanceEdit")
-resonance_slider = NodePath("ResonanceSlider")
-
-[node name="HBoxContainer0" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
-layout_mode = 2
-alignment = 1
-
-[node name="CutoffLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer0"]
-layout_mode = 2
-text = "Cutoff_Hz:"
+text = "ENVELOPE"
 horizontal_alignment = 1
 
-[node name="CutoffHzEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer0"]
+[node name="CheckBox_FilterEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/ENV_TITLE2"]
 layout_mode = 2
-
-[node name="CutoffHzSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
-layout_mode = 2
-min_value = 1.0
-max_value = 20500.0
-value = 500.0
-
-[node name="HBoxContainer1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
-layout_mode = 2
-alignment = 1
-
-[node name="ResonanceLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer1"]
-layout_mode = 2
-tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
-text = "Cutoff_Hz:"
-horizontal_alignment = 1
-
-[node name="ResonanceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer1"]
-layout_mode = 2
-tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
-
-[node name="ResonanceSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
-layout_mode = 2
-max_value = 1.0
-step = 0.001
-value = 0.5
+text = "ENVELOPE"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -442,7 +373,7 @@ text = "Distortion"
 
 [node name="AudioOsc2D" type="AudioStreamPlayer2D" parent="."]
 visible = false
-position = Vector2(1, 1)
+position = Vector2(551, 220.5)
 stream = SubResource("AudioStreamGenerator_p1236")
 pitch_scale = 1.01
 bus = &"Gynth0"
@@ -450,7 +381,7 @@ script = ExtResource("3_o8jjk")
 pitch = 1.0
 env_enabled = false
 loop = false
-envelope = SubResource("Curve_11dff")
+envelope = SubResource("Curve_o0i78")
 attack = 0.075
 
 [node name="ReverbSettings" type="Control" parent="." node_paths=PackedStringArray("gynth")]
@@ -464,6 +395,7 @@ grow_vertical = 2
 script = ExtResource("4_wncvk")
 background_color = Color(0.281187, 0.281187, 0.281187, 1)
 gynth = NodePath("../AudioOsc2D")
+reverb_bus_idx = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ReverbSettings"]
 layout_mode = 1
@@ -637,7 +569,7 @@ grow_vertical = 2
 script = ExtResource("4_11v4e")
 background_color = Color(0.281187, 0.281187, 0.281187, 1)
 gynth = NodePath("../AudioOsc2D")
-effect_bus_idx = 1
+effect_bus_idx = 2
 mode_menu = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/Mode_Menu")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DistortionSettings"]
@@ -698,7 +630,6 @@ text = "Mode"
 flat = false
 item_count = 5
 popup/item_0/text = "Mode: Clip"
-popup/item_0/id = 0
 popup/item_1/text = "Mode: Atan"
 popup/item_1/id = 1
 popup/item_2/text = "Mode: LoFi"
@@ -782,7 +713,7 @@ text = "Close"
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer2/LimiterLineEdit" to="." method="_on_limiter_text_submitted"]
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/LimiterSlider" to="." method="_on_limiter_slider_value_changed"]
 [connection signal="resized" from="ScrollContainer/VBoxContainer/wav_vis" to="ScrollContainer/VBoxContainer/wav_vis" method="_on_resized"]
-[connection signal="toggled" from="ScrollContainer/VBoxContainer/ENV_TITLE/SUBTITLE/CheckBox_EnvelopeEnable" to="." method="_on_check_box_envelope_enable_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/ENV_TITLE/CheckBox_EnvelopeEnable" to="." method="_on_check_box_envelope_enable_toggled"]
 [connection signal="button_down" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_Bang" to="." method="_on_check_box_bang_button_down"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_LoopEnvelope" to="." method="_on_check_box_loop_envelope_toggled"]
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer0/SpeedLineEdit" to="." method="_on_speed_text_submitted"]

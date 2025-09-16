@@ -142,8 +142,10 @@ func _on_tree_exiting()->void:
 	pass
 	
 func init_bus()->void:
-	bus_idx = 2
-	bus_name = "Gynths"
+	bus_name = get_bus()
+	bus_idx = AudioServer.get_bus_index(bus_name)
+	#bus_idx = 2
+	#bus_name = "Gynths"
 	#AudioServer.add_bus()
 	#bus_idx = AudioServer.bus_count-1
 	#bus_name = "Gynth" + str(bus_idx)

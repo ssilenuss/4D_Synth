@@ -1,4 +1,3 @@
-@tool
 extends ColorRect
 
 @export var playhead_color: Color = Color(0,0,1,1)
@@ -6,21 +5,84 @@ extends ColorRect
 @export var osc_color : Color = Color(0,1,1,1)
 @export var limiter_color:= Color(1,0,1,1)
 
-var gynth : AudioOsc2D
+#spectrum analyzer
+@export var analyzer_idx : int
+var vu_count: int = 16
+var vu_scalor: float = 1
+var freq_max: float = 20000
+var min_db : float = 60
+var animation_speed :float = 0.1
+var spectrum: AudioEffectSpectrumAnalyzerInstance
+var frequency_peaks : PackedFloat32Array = []
+#var min_values : PackedFloat32Array = []
+#var max_values : PackedFloat32Array = []
+
+@export var gynth : AudioOsc2D
 
 var env_points : PackedVector2Array = []
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	init_spectrum()
 
+func init_spectrum()->void:
+	var bus_idx :int = AudioServer.get_bus_index(gynth.bus)
+	spectrum = AudioServer.get_bus_effect_instance(bus_idx, analyzer_idx, 0)
+	vu_count = size.x/vu_scalor
+	frequency_peaks.resize(vu_count)
+	frequency_peaks.fill(0.0)
+	#min_values.resize(vu_count)
+	#max_values.resize(vu_count)
+	#min_values.fill(0.0)
+	#max_values.fill(0.0)
 
+func process_spectrum()->void:
+	frequency_peaks = []
+	var prev_hz : float = 0
+	
+	for i in range(1, vu_count +1):
+		var hz : float = i*freq_max/float(vu_count)
+		var magnitude = spectrum.get_magnitude_for_frequency_range(prev_hz, hz).length()
+		var energy = clampf((min_db + linear_to_db(magnitude)) / min_db, 0, 1)
+		#var height : float = energy * size.y * height_scale
+		var height : float = energy * size.y
+		frequency_peaks.append(height)
+		prev_hz = hz
+
+		
+	#for i in range(vu_count):
+		#if data[i] > max_values[i]:
+			#max_values[i] = data[i]
+		#else:
+			#max_values[i] = lerpf(max_values[i], data[i], animation_speed)
+		#
+		#if data[i]<= 0.0:
+			#min_values[i] = lerpf(min_values[i], 0.0, animation_speed)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	queue_redraw()
 
+func _process(_delta: float) -> void:
+	if gynth.generating:
+		process_spectrum()
+		queue_redraw()
+
+
+func draw_spectrum()->void:
+
+	#var w : float = size.x/vu_count
+	for i in range(vu_count):
+		#var min_height : float = min_values[i]
+		#var max_height : float = max_values[i]
+		#var height = lerp(min_height, max_height, animation_speed)
+		var height = frequency_peaks[i]
+
+		var x : float = i*vu_scalor
+		var c : Color = Color.from_hsv(float(i*0.5/vu_count), 0.5, 0.75)
+		draw_line(Vector2(x, size.y),Vector2(x, size.y-height), c,vu_scalor)
+		
 
 func _on_resized() -> void:
+	init_spectrum()
 	queue_redraw()
 
 
@@ -28,16 +90,14 @@ func _on_resized() -> void:
 func _draw() -> void:
 	if gynth:
 		if gynth.generating:
+			draw_spectrum()
 		
-	
+			#draw playhead
 			var playhead_x : float = lerp(0.0, size.x, gynth.time/gynth.speed)
-			draw_line(Vector2(playhead_x, 0.1),Vector2(playhead_x, size.y),playhead_color)
+			draw_line(Vector2(playhead_x, 0.1),Vector2(playhead_x, size.y),playhead_color, 3.0)
 			
 			#draw waveform
-			#
 			var buffer_limit : float = gynth.mix_rate/gynth.frequency*gynth.pitch_scale*4.0#*10.0
-			
-			
 			var _draw_waveform : = false
 			if gynth.osc_type == gynth.NOISE:
 				_draw_waveform = true

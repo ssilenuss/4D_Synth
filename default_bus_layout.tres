@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://cio742mfykx27"]
+[gd_resource type="AudioBusLayout" load_steps=8 format=3 uid="uid://cio742mfykx27"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_8bfbl"]
 resource_name = "Record"
@@ -8,15 +8,21 @@ resource_name = "Capture"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_tkt3u"]
 resource_name = "Reverb"
+predelay_msec = 20.0
 
 [sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_8bcck"]
 resource_name = "Distortion"
-drive = 1.0
 
 [sub_resource type="AudioEffectDelay" id="AudioEffectDelay_g77q4"]
 resource_name = "Delay"
 tap1_delay_ms = 500.0
 tap2_delay_ms = 1.0
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_s0afi"]
+resource_name = "LowPassFilter"
+
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_0wexf"]
+resource_name = "SpectrumAnalyzer"
 
 [resource]
 bus/0/volume_db = -1.12151
@@ -30,7 +36,7 @@ bus/1/volume_db = 0.0
 bus/1/send = &"Master"
 bus/1/effect/0/effect = SubResource("AudioEffectCapture_j3pel")
 bus/1/effect/0/enabled = true
-bus/2/name = &"Gynths"
+bus/2/name = &"Gynth0"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
@@ -42,9 +48,37 @@ bus/2/effect/1/effect = SubResource("AudioEffectDistortion_8bcck")
 bus/2/effect/1/enabled = false
 bus/2/effect/2/effect = SubResource("AudioEffectDelay_g77q4")
 bus/2/effect/2/enabled = false
-bus/3/name = &"Playback"
+bus/2/effect/3/effect = SubResource("AudioEffectLowPassFilter_s0afi")
+bus/2/effect/3/enabled = false
+bus/2/effect/4/effect = SubResource("AudioEffectSpectrumAnalyzer_0wexf")
+bus/2/effect/4/enabled = true
+bus/3/name = &"Gynth1"
 bus/3/solo = false
 bus/3/mute = false
 bus/3/bypass_fx = false
 bus/3/volume_db = 0.0
 bus/3/send = &"Buffer"
+bus/3/effect/0/effect = SubResource("AudioEffectReverb_tkt3u")
+bus/3/effect/0/enabled = false
+bus/3/effect/1/effect = SubResource("AudioEffectDistortion_8bcck")
+bus/3/effect/1/enabled = false
+bus/3/effect/2/effect = SubResource("AudioEffectDelay_g77q4")
+bus/3/effect/2/enabled = false
+bus/4/name = &"Gynth2"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = 0.0
+bus/4/send = &"Buffer"
+bus/4/effect/0/effect = SubResource("AudioEffectReverb_tkt3u")
+bus/4/effect/0/enabled = false
+bus/4/effect/1/effect = SubResource("AudioEffectDistortion_8bcck")
+bus/4/effect/1/enabled = false
+bus/4/effect/2/effect = SubResource("AudioEffectDelay_g77q4")
+bus/4/effect/2/enabled = false
+bus/5/name = &"Playback"
+bus/5/solo = false
+bus/5/mute = false
+bus/5/bypass_fx = false
+bus/5/volume_db = 0.0
+bus/5/send = &"Buffer"
