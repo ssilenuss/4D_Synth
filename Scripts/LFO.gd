@@ -1,4 +1,5 @@
 extends Control
+class_name LFO_Controller
 
 @export var enable_checkbox: CheckBox
 @export var wav_vis: Control

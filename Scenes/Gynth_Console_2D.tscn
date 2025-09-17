@@ -7,9 +7,9 @@
 [ext_resource type="Script" uid="uid://qktol1mxc4g5" path="res://Scripts/hide_button.gd" id="3_v5rwn"]
 [ext_resource type="Script" uid="uid://o3pvsa0qobfw" path="res://Scripts/SettingsLabel.gd" id="4_3g0wi"]
 [ext_resource type="Script" uid="uid://4285sf8sry7n" path="res://Scripts/distortion_settings.gd" id="4_11v4e"]
-[ext_resource type="Script" uid="uid://d4egqjk2ijnum" path="res://Scripts/LowPassController.gd" id="4_43mi8"]
 [ext_resource type="Script" uid="uid://jk82mpum7as" path="res://Scripts/reset_button.gd" id="4_vjg4x"]
 [ext_resource type="Script" uid="uid://bufblpkqwusdm" path="res://Scripts/reverb_settings.gd" id="4_wncvk"]
+[ext_resource type="Script" uid="uid://bpupqp5tewq0" path="res://Scripts/FilterController.gd" id="5_eoux1"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_eoux1"]
 
@@ -409,162 +409,76 @@ layout_mode = 2
 text = "FILTERS"
 
 [node name="FilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 alignment = 1
 
-[node name="LowPassFilter2" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls"]
+[node name="AudioFilters Label" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls"]
 layout_mode = 2
-alignment = 1
-script = ExtResource("4_43mi8")
-
-[node name="SUBTITLE" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2"]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="LFO Controls" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
-layout_mode = 2
-text = "LFO Controls:  "
-
-[node name="WaveType_Menu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
-layout_mode = 2
-text = "WaveType
-"
-flat = false
-item_count = 5
-popup/item_0/text = "SIN"
-popup/item_0/id = 0
-popup/item_1/text = "SAW"
-popup/item_1/id = 1
-popup/item_2/text = "PULSE"
-popup/item_2/id = 2
-popup/item_3/text = "SQUARE"
-popup/item_3/id = 3
-popup/item_4/text = "NOISE"
-popup/item_4/id = 4
-
-[node name="SpeedLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
-layout_mode = 2
-text = "    Speed:"
-
-[node name="SpeedSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-min_value = 0.001
-max_value = 10.0
-step = 0.001
-value = 1.001
-
-[node name="CheckBox_FM" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
-layout_mode = 2
-text = "FM"
-
-[node name="FMVsliderPopupMenu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
-visible = false
-layout_mode = 2
-text = "FMDepth"
-flat = false
-item_count = 1
-popup/item_0/id = 0
-
-[node name="CheckBox_AM" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
-layout_mode = 2
-text = "AM"
-
-[node name="AMVsliderPopupMenu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
-visible = false
-layout_mode = 2
-text = "AM Depth:"
-flat = false
-item_count = 1
-popup/item_0/id = 0
-
-[node name="LowPassFilter" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls"]
-layout_mode = 2
-size_flags_horizontal = 4
-alignment = 1
-
-[node name="CheckBox_LowPassFilterEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter"]
-layout_mode = 2
-text = "LOW PASS FILTER"
-
-[node name="CheckBox_FilterShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter" node_paths=PackedStringArray("control_node")]
-layout_mode = 2
-text = "CONTROLS"
-script = ExtResource("3_v5rwn")
-control_node = NodePath("../../LowPassFilterControls")
-
-[node name="LowPassFilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("gynth", "effect_enable_button", "cutoff_hz_input", "cutoff_hz_slider", "resonance_input", "resonance_slider", "db_menu")]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-script = ExtResource("4_43mi8")
-effect_name = &"LowPassFilter"
-gynth = NodePath("../../../../AudioOsc2D")
-effect_enable_button = NodePath("../LowPassFilter/CheckBox_LowPassFilterEnable")
-cutoff_hz_input = NodePath("HBoxContainer0/CutoffHzEdit")
-cutoff_hz_slider = NodePath("CutoffHzSlider")
-resonance_input = NodePath("HBoxContainer1/ResonanceEdit")
-resonance_slider = NodePath("ResonanceSlider")
-db_menu = NodePath("HBoxContainer2/db_menu")
-
-[node name="HBoxContainer0" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
-layout_mode = 2
-alignment = 1
-
-[node name="CutoffLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer0"]
-layout_mode = 2
-text = "Cutoff_Hz:"
+text = "Audio Filters"
 horizontal_alignment = 1
 
-[node name="CutoffHzEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer0"]
+[node name="LowPassFilter" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("filter_controls", "gynth", "effect_enable_button", "lfo_checkbox", "cutoff_hz_input", "cutoff_hz_slider", "resonance_menu", "lfo_depth_menu", "db_menu", "lfo")]
 layout_mode = 2
+alignment = 1
+script = ExtResource("5_eoux1")
+filter_controls = NodePath("FilterControls")
+gynth = NodePath("../../../../AudioOsc2D")
+effect_enable_button = NodePath("EnableCheckbox")
+lfo_checkbox = NodePath("FilterControls/LFO_Checkbox")
+cutoff_hz_input = NodePath("FilterControls/HBoxContainer0/CutoffHzEdit")
+cutoff_hz_slider = NodePath("FilterControls/CutoffHzSlider")
+resonance_menu = NodePath("FilterControls/LFODepthsliderPopupMenu")
+lfo_depth_menu = NodePath("FilterControls/LFODepthsliderPopupMenu")
+db_menu = NodePath("FilterControls/db_menu")
+lfo = NodePath("../../LFO")
 
-[node name="CutoffHzSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
+[node name="EnableCheckbox" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter"]
 layout_mode = 2
+text = "Low Pass Filter"
+
+[node name="FilterControls" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CutoffHzSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter/FilterControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = 1.0
 max_value = 20500.0
 value = 500.0
 
-[node name="HBoxContainer1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
+[node name="HBoxContainer0" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter/FilterControls"]
 layout_mode = 2
 alignment = 1
 
-[node name="ResonanceLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer1"]
+[node name="CutoffLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter/FilterControls/HBoxContainer0"]
 layout_mode = 2
-tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
-mouse_filter = 0
-text = "Resonance:"
+text = "Cutoff_Hz:"
 horizontal_alignment = 1
 
-[node name="ResonanceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer1"]
+[node name="CutoffHzEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter/FilterControls/HBoxContainer0"]
 layout_mode = 2
-tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
 
-[node name="ResonanceSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
+[node name="LFO_Checkbox" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter/FilterControls"]
 layout_mode = 2
-max_value = 1.0
-step = 0.001
-value = 0.5
+text = "LFO"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
+[node name="LFODepthsliderPopupMenu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter/FilterControls"]
 layout_mode = 2
-alignment = 1
+text = "Resonance"
+flat = false
+item_count = 1
+popup/item_0/id = 0
 
-[node name="dBLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer2"]
+[node name="ResonancesliderPopupMenu2" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter/FilterControls"]
 layout_mode = 2
-tooltip_text = "Steepness of the cutoff curve in dB per octave, also known as the order of the filter. Higher orders have a more aggressive cutoff."
-mouse_filter = 0
-text = "Cutoff Curve Steepness"
-horizontal_alignment = 1
+text = "Resonance"
+flat = false
+item_count = 1
+popup/item_0/id = 0
 
-[node name="db_menu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer2"]
+[node name="db_menu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter/FilterControls"]
 layout_mode = 2
 tooltip_text = "CLIP: Digital distortion effect which cuts off peaks at the top and bottom of the waveform.
 
@@ -578,112 +492,7 @@ WaveShape:  Waveshaper distortions are used mainly by electronic musicians to ac
 
 
 "
-text = "Mode"
-flat = false
-item_count = 4
-popup/item_0/text = "6 dB"
-popup/item_0/id = 0
-popup/item_1/text = "12 dB"
-popup/item_1/id = 1
-popup/item_2/text = "18 dB"
-popup/item_2/id = 2
-popup/item_3/text = "24 dB"
-popup/item_3/id = 3
-
-[node name="HighPassFilter" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls"]
-layout_mode = 2
-size_flags_horizontal = 4
-alignment = 1
-
-[node name="CheckBox_HighPassFilterEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilter"]
-layout_mode = 2
-text = "LOW PASS FILTER"
-
-[node name="CheckBox_HPFilterShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilter" node_paths=PackedStringArray("control_node")]
-layout_mode = 2
-text = "CONTROLS"
-script = ExtResource("3_v5rwn")
-control_node = NodePath("../../LowPassFilterControls")
-
-[node name="HighPassFilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("gynth", "effect_enable_button", "cutoff_hz_input", "cutoff_hz_slider", "resonance_input", "resonance_slider", "db_menu")]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-script = ExtResource("4_43mi8")
-effect_name = &"HighPassFilter"
-gynth = NodePath("../../../../AudioOsc2D")
-effect_enable_button = NodePath("../HighPassFilter/CheckBox_HighPassFilterEnable")
-cutoff_hz_input = NodePath("HBoxContainer0/CutoffHzEdit")
-cutoff_hz_slider = NodePath("CutoffHzSlider")
-resonance_input = NodePath("HBoxContainer1/ResonanceEdit")
-resonance_slider = NodePath("ResonanceSlider")
-db_menu = NodePath("HBoxContainer2/db_menu")
-
-[node name="HBoxContainer0" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
-layout_mode = 2
-alignment = 1
-
-[node name="CutoffLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer0"]
-layout_mode = 2
-text = "Cutoff_Hz:"
-horizontal_alignment = 1
-
-[node name="CutoffHzEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer0"]
-layout_mode = 2
-
-[node name="CutoffHzSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
-layout_mode = 2
-min_value = 1.0
-max_value = 20500.0
-value = 500.0
-
-[node name="HBoxContainer1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
-layout_mode = 2
-alignment = 1
-
-[node name="ResonanceLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer1"]
-layout_mode = 2
-tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
-mouse_filter = 0
-text = "Resonance:"
-horizontal_alignment = 1
-
-[node name="ResonanceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer1"]
-layout_mode = 2
-tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
-
-[node name="ResonanceSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
-layout_mode = 2
-max_value = 1.0
-step = 0.001
-value = 0.5
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
-layout_mode = 2
-alignment = 1
-
-[node name="dBLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer2"]
-layout_mode = 2
-tooltip_text = "Steepness of the cutoff curve in dB per octave, also known as the order of the filter. Higher orders have a more aggressive cutoff."
-mouse_filter = 0
-text = "Cutoff Curve Steepness"
-horizontal_alignment = 1
-
-[node name="db_menu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer2"]
-layout_mode = 2
-tooltip_text = "CLIP: Digital distortion effect which cuts off peaks at the top and bottom of the waveform.
-
-ATAN: Yet undescribed.
-
-LoFi: Low-resolution digital distortion effect (bit depth reduction). You can use it to emulate the sound of early digital audio devices.
-
-OverDrive: Emulates the warm distortion produced by a field effect transistor, which is commonly used in solid-state musical instrument amplifiers. The drive property has no effect in this mode.
-
-WaveShape:  Waveshaper distortions are used mainly by electronic musicians to achieve an extra-abrasive sound.
-
-
-"
-text = "Mode"
+text = "dB"
 flat = false
 item_count = 4
 popup/item_0/text = "6 dB"
@@ -1101,11 +910,6 @@ text = "Close"
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/SustainSlider" to="." method="_on_sustain_slider_value_changed"]
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer4/Release_LineEdit" to="." method="_on_release_text_submitted"]
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/ReleaseSlider" to="." method="_on_release_slider_value_changed"]
-[connection signal="value_changed" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/SpeedSlider" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_speed_slider_value_changed"]
-[connection signal="toggled" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/CheckBox_FM" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_check_box_fm_toggled"]
-[connection signal="about_to_popup" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/FMVsliderPopupMenu" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_fm_vslider_popup_menu_about_to_popup"]
-[connection signal="toggled" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/CheckBox_AM" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_check_box_am_toggled"]
-[connection signal="about_to_popup" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/AMVsliderPopupMenu" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_am_vslider_popup_menu_about_to_popup"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/HBoxContainer/Keyboard_Controlle" to="." method="_on_keyboard_controlle_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/HBoxContainer/AudioEffects" to="." method="_on_audio_effects_visibility_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/FX/HBoxContainer3/ReverbCheckBox" to="ReverbSettings" method="_on_reverb_check_box_toggled"]

@@ -30,6 +30,9 @@ func init_spectrum()->void:
 
 	var bus_idx :int = AudioServer.get_bus_index(gynth.bus)
 	analyzer_idx = AudioServer.get_bus_effect_count(bus_idx)-1
+
+	AudioServer.add_bus_effect(bus_idx, AudioEffectSpectrumAnalyzer.new())
+	analyzer_idx = AudioServer.get_bus_effect_count(bus_idx)-1
 	spectrum = AudioServer.get_bus_effect_instance(bus_idx, analyzer_idx, 0)
 	vu_count = size.x/vu_scalor
 	frequency_peaks.resize(vu_count)

@@ -5,3 +5,4 @@ res://Scripts/LFO.gd
 res://Scripts/wav_vis_2D.gd
 res://Scripts/LowPassController.gd
 res://Scripts/gynth_console_2D.gd
+res://Scripts/FilterController.gd

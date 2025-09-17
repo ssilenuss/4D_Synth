@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=9 format=3 uid="uid://cio742mfykx27"]
+[gd_resource type="AudioBusLayout" load_steps=13 format=3 uid="uid://cio742mfykx27"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_8bfbl"]
 resource_name = "Record"
@@ -24,9 +24,20 @@ resource_name = "LowPassFilter"
 [sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_j3pel"]
 resource_name = "HighPassFilter"
 
-[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_0wexf"]
-resource_name = "SpectrumAnalyzer"
-fft_size = 4
+[sub_resource type="AudioEffectBandPassFilter" id="AudioEffectBandPassFilter_j3pel"]
+resource_name = "BandPassFilter"
+
+[sub_resource type="AudioEffectHighShelfFilter" id="AudioEffectHighShelfFilter_j3pel"]
+resource_name = "HighShelfFilter"
+
+[sub_resource type="AudioEffectBandLimitFilter" id="AudioEffectBandLimitFilter_j3pel"]
+resource_name = "BandLimitFilter"
+
+[sub_resource type="AudioEffectLowShelfFilter" id="AudioEffectLowShelfFilter_j3pel"]
+resource_name = "LowShelfFilter"
+
+[sub_resource type="AudioEffectNotchFilter" id="AudioEffectNotchFilter_j3pel"]
+resource_name = "NotchFilter"
 
 [resource]
 bus/0/volume_db = -1.12151
@@ -56,8 +67,16 @@ bus/2/effect/3/effect = SubResource("AudioEffectLowPassFilter_s0afi")
 bus/2/effect/3/enabled = false
 bus/2/effect/4/effect = SubResource("AudioEffectHighPassFilter_j3pel")
 bus/2/effect/4/enabled = false
-bus/2/effect/5/effect = SubResource("AudioEffectSpectrumAnalyzer_0wexf")
-bus/2/effect/5/enabled = true
+bus/2/effect/5/effect = SubResource("AudioEffectBandPassFilter_j3pel")
+bus/2/effect/5/enabled = false
+bus/2/effect/6/effect = SubResource("AudioEffectHighShelfFilter_j3pel")
+bus/2/effect/6/enabled = false
+bus/2/effect/7/effect = SubResource("AudioEffectBandLimitFilter_j3pel")
+bus/2/effect/7/enabled = false
+bus/2/effect/8/effect = SubResource("AudioEffectLowShelfFilter_j3pel")
+bus/2/effect/8/enabled = false
+bus/2/effect/9/effect = SubResource("AudioEffectNotchFilter_j3pel")
+bus/2/effect/9/enabled = false
 bus/3/name = &"Gynth1"
 bus/3/solo = false
 bus/3/mute = false
@@ -88,3 +107,9 @@ bus/5/mute = false
 bus/5/bypass_fx = false
 bus/5/volume_db = 0.0
 bus/5/send = &"Buffer"
+bus/6/name = &"Analyzer"
+bus/6/solo = false
+bus/6/mute = false
+bus/6/bypass_fx = false
+bus/6/volume_db = 0.0
+bus/6/send = &"Master"
