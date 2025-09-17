@@ -58,7 +58,7 @@ func _ready() -> void:
 	
 	_on_wav_menu_popup_selected(0)
 	_on_frequency_text_submitted("440.0")
-	_on_limiter_text_submitted("0.0")
+	_on_limiter_text_submitted("5.0")
 	_on_check_box_envelope_enable_toggled(false)	
 	_on_check_box_loop_envelope_toggled(false)
 	_on_check_box_generating_toggled(false)
@@ -78,7 +78,7 @@ func _on_check_box_generating_toggled(toggled_on: bool) -> void:
 	gynth.set_generating(toggled_on)
 	wav_controls.visible = toggled_on
 	gen_box.button_pressed = toggled_on
-	env_title.visible = toggled_on
+	#env_title.visible = toggled_on
 	fx_menu.visible = toggled_on
 	filter_title.visible = toggled_on
 	#wav_vis.visible = toggled_on
@@ -105,13 +105,6 @@ func init_menu()->void:
 	release_slider.value = gynth.release
 	speed_slider.value = gynth.speed
 	
-
-func _on_check_box_envelope_enable_toggled(toggled_on: bool) -> void:
-	gynth.set_env_enabled(toggled_on)
-	env_controls.visible = toggled_on
-	enable_envelope_box.button_pressed = toggled_on
-	_on_check_box_generating_toggled(false)
-	_on_check_box_generating_toggled(true)
 
 
 func _on_check_box_loop_envelope_toggled(toggled_on: bool) -> void:
@@ -270,3 +263,16 @@ func _on_sustain_text_submitted(new_text: String) -> void:
 
 func _on_audio_effects_visibility_toggled(toggled_on: bool) -> void:
 	fx_menu.visible = toggled_on
+
+
+func _on_check_box_envelope_show_controls_toggled(toggled_on: bool) -> void:
+	env_controls.visible = toggled_on
+	enable_envelope_box.button_pressed = toggled_on
+	
+func _on_check_box_envelope_enable_toggled(toggled_on: bool) -> void:
+	gynth.set_env_enabled(toggled_on)
+	
+	#enable_envelope_box.button_pressed = toggled_on
+	#if gynth.generating:
+		#_on_check_box_generating_toggled(false)
+		#_on_check_box_generating_toggled(true)

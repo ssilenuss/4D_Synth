@@ -1,4 +1,7 @@
 res://default_bus_layout.tres
 res://Scenes/Gynth_Console_2D.tscn
-res://Scripts/hide_button.gd
+res://Scenes/Gynth0.tscn
+res://Scripts/LFO.gd
+res://Scripts/wav_vis_2D.gd
 res://Scripts/LowPassController.gd
+res://Scripts/gynth_console_2D.gd

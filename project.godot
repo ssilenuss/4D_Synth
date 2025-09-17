@@ -20,6 +20,10 @@ config/icon="res://icon.png"
 
 driver/mix_rate=48000
 
+[autoload]
+
+Singleton="*res://Singleton.gd"
+
 [display]
 
 window/size/viewport_width=1280

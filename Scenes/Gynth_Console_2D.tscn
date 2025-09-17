@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://1vr8g2dxrg65"]
+[gd_scene load_steps=14 format=3 uid="uid://1vr8g2dxrg65"]
 
 [ext_resource type="Script" uid="uid://dyfcgqeh0phwi" path="res://Scripts/gynth_console_2D.gd" id="1_p0bg2"]
 [ext_resource type="Script" uid="uid://p3ils4w62ntp" path="res://Scripts/wav_vis_2D.gd" id="1_pqsbc"]
+[ext_resource type="Script" uid="uid://cbgevt48y0gv4" path="res://Scripts/LFO.gd" id="3_eoux1"]
 [ext_resource type="Script" uid="uid://dghpohjqvm5sm" path="res://Scripts/audio_osc_2D.gd" id="3_o8jjk"]
 [ext_resource type="Script" uid="uid://qktol1mxc4g5" path="res://Scripts/hide_button.gd" id="3_v5rwn"]
 [ext_resource type="Script" uid="uid://o3pvsa0qobfw" path="res://Scripts/SettingsLabel.gd" id="4_3g0wi"]
@@ -10,10 +11,12 @@
 [ext_resource type="Script" uid="uid://jk82mpum7as" path="res://Scripts/reset_button.gd" id="4_vjg4x"]
 [ext_resource type="Script" uid="uid://bufblpkqwusdm" path="res://Scripts/reverb_settings.gd" id="4_wncvk"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_eoux1"]
+
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_p1236"]
 mix_rate = 48000.0
 
-[sub_resource type="Curve" id="Curve_11dff"]
+[sub_resource type="Curve" id="Curve_r5igw"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -29,7 +32,7 @@ size_flags_vertical = 3
 script = ExtResource("1_p0bg2")
 bang_box = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_Bang")
 gen_box = NodePath("ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_Generating")
-enable_envelope_box = NodePath("ScrollContainer/VBoxContainer/ENV_TITLE/SUBTITLE/CheckBox_EnvelopeEnable")
+enable_envelope_box = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/CheckBox_EnvelopeEnable")
 loop_envelope_box = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_LoopEnvelope")
 wav_menu = NodePath("ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/WaveType_Menu")
 fx_menu = NodePath("ScrollContainer/VBoxContainer/FX")
@@ -45,7 +48,7 @@ release_slider = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/Relea
 speed_slider = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/SpeedSlider")
 keyboard_box = NodePath("ScrollContainer/VBoxContainer/HBoxContainer/Keyboard_Controlle")
 wav_controls = NodePath("ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS")
-env_title = NodePath("ScrollContainer/VBoxContainer/ENV_TITLE")
+env_title = NodePath("")
 env_controls = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS")
 filter_title = NodePath("ScrollContainer/VBoxContainer/FILTER_TITLE")
 filter_controls = NodePath("ScrollContainer/VBoxContainer/FilterControls")
@@ -119,6 +122,20 @@ popup/item_3/id = 3
 popup/item_4/text = "NOISE"
 popup/item_4/id = 4
 
+[node name="CheckBox_LFOEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE"]
+layout_mode = 2
+text = "LFO"
+
+[node name="CheckBox_EnvelopeShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE"]
+layout_mode = 2
+text = "ENVELOPE"
+
+[node name="CheckBox_FilterShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE" node_paths=PackedStringArray("control_node")]
+layout_mode = 2
+text = "FILTERS"
+script = ExtResource("3_v5rwn")
+control_node = NodePath("../../../../../FilterControls")
+
 [node name="WAVE_CONTROLS" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer"]
 layout_mode = 2
 alignment = 1
@@ -172,30 +189,99 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="ENV_TITLE" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="LFO" type="VBoxContainer" parent="ScrollContainer/VBoxContainer" node_paths=PackedStringArray("enable_checkbox", "wav_vis", "speed_slider", "speed_label", "wav_menu", "gynth", "gynth_freq_slider", "gynth_amp_slider", "fm_menu_popup", "am_menu_popup", "lfo_controls")]
 layout_mode = 2
-size_flags_horizontal = 4
+alignment = 1
+script = ExtResource("3_eoux1")
+enable_checkbox = NodePath("../Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_LFOEnable")
+wav_vis = NodePath("../wav_vis")
+speed_slider = NodePath("SUBTITLE/LFO Controls/SpeedSlider")
+speed_label = NodePath("SUBTITLE/LFO Controls/SpeedLabel")
+wav_menu = NodePath("SUBTITLE/LFO Controls/WaveType_Menu")
+gynth = NodePath("../../../AudioOsc2D")
+gynth_freq_slider = NodePath("../Controls/VBoxContainer/WAVE_CONTROLS/FrequencySlider")
+gynth_amp_slider = NodePath("../Controls/VBoxContainer/WAVE_CONTROLS/LimiterSlider")
+fm_menu_popup = NodePath("SUBTITLE/LFO Controls/FMVsliderPopupMenu")
+am_menu_popup = NodePath("SUBTITLE/LFO Controls/AMVsliderPopupMenu")
+noise = SubResource("FastNoiseLite_eoux1")
+lfo_controls = NodePath("SUBTITLE/LFO Controls")
+
+[node name="SUBTITLE" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/LFO"]
+layout_mode = 2
+size_flags_vertical = 3
 alignment = 1
 
-[node name="SUBTITLE" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/ENV_TITLE"]
+[node name="LFO Controls" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE"]
 layout_mode = 2
-size_flags_horizontal = 4
-alignment = 1
+size_flags_horizontal = 3
 
-[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/ENV_TITLE/SUBTITLE"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls"]
 layout_mode = 2
-text = "ENVELOPE"
+text = "LFO Controls:  "
 
-[node name="CheckBox_EnvelopeShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/ENV_TITLE/SUBTITLE" node_paths=PackedStringArray("control_node")]
+[node name="WaveType_Menu" type="MenuButton" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls"]
 layout_mode = 2
-text = "CONTROLS"
-script = ExtResource("3_v5rwn")
-control_node = NodePath("../../../ENVELOPE_CONTROLS")
+text = "WaveType
+"
+flat = false
+item_count = 5
+popup/item_0/text = "SIN"
+popup/item_0/id = 0
+popup/item_1/text = "SAW"
+popup/item_1/id = 1
+popup/item_2/text = "PULSE"
+popup/item_2/id = 2
+popup/item_3/text = "SQUARE"
+popup/item_3/id = 3
+popup/item_4/text = "NOISE"
+popup/item_4/id = 4
+
+[node name="SpeedLabel" type="Label" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls"]
+layout_mode = 2
+text = "    Speed:"
+
+[node name="SpeedSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.001
+max_value = 10.0
+step = 0.001
+value = 1.001
+
+[node name="CheckBox_FM" type="CheckBox" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls"]
+layout_mode = 2
+text = "FM"
+
+[node name="FMVsliderPopupMenu" type="MenuButton" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls"]
+visible = false
+layout_mode = 2
+text = "FMDepth"
+flat = false
+item_count = 1
+popup/item_0/id = 0
+
+[node name="CheckBox_AM" type="CheckBox" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls"]
+layout_mode = 2
+text = "AM"
+
+[node name="AMVsliderPopupMenu" type="MenuButton" parent="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls"]
+visible = false
+layout_mode = 2
+text = "AM Depth:"
+flat = false
+item_count = 1
+popup/item_0/id = 0
 
 [node name="ENVELOPE_CONTROLS" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 alignment = 1
+
+[node name="CheckBox_EnvelopeEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "ENABLE ENVELOPE"
 
 [node name="EnvelopeOptions" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS"]
 layout_mode = 2
@@ -307,6 +393,7 @@ step = 0.001
 value = 0.01
 
 [node name="FILTER_TITLE" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
@@ -321,15 +408,82 @@ visible = false
 layout_mode = 2
 text = "FILTERS"
 
-[node name="CheckBox_FilterShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/FILTER_TITLE/SUBTITLE" node_paths=PackedStringArray("control_node")]
-layout_mode = 2
-text = "FILTERS"
-script = ExtResource("3_v5rwn")
-control_node = NodePath("../../../FilterControls")
-
 [node name="FilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 alignment = 1
+
+[node name="LowPassFilter2" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls"]
+layout_mode = 2
+alignment = 1
+script = ExtResource("4_43mi8")
+
+[node name="SUBTITLE" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="LFO Controls" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
+layout_mode = 2
+text = "LFO Controls:  "
+
+[node name="WaveType_Menu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
+layout_mode = 2
+text = "WaveType
+"
+flat = false
+item_count = 5
+popup/item_0/text = "SIN"
+popup/item_0/id = 0
+popup/item_1/text = "SAW"
+popup/item_1/id = 1
+popup/item_2/text = "PULSE"
+popup/item_2/id = 2
+popup/item_3/text = "SQUARE"
+popup/item_3/id = 3
+popup/item_4/text = "NOISE"
+popup/item_4/id = 4
+
+[node name="SpeedLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
+layout_mode = 2
+text = "    Speed:"
+
+[node name="SpeedSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.001
+max_value = 10.0
+step = 0.001
+value = 1.001
+
+[node name="CheckBox_FM" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
+layout_mode = 2
+text = "FM"
+
+[node name="FMVsliderPopupMenu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
+visible = false
+layout_mode = 2
+text = "FMDepth"
+flat = false
+item_count = 1
+popup/item_0/id = 0
+
+[node name="CheckBox_AM" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
+layout_mode = 2
+text = "AM"
+
+[node name="AMVsliderPopupMenu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls"]
+visible = false
+layout_mode = 2
+text = "AM Depth:"
+flat = false
+item_count = 1
+popup/item_0/id = 0
 
 [node name="LowPassFilter" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls"]
 layout_mode = 2
@@ -346,7 +500,7 @@ text = "CONTROLS"
 script = ExtResource("3_v5rwn")
 control_node = NodePath("../../LowPassFilterControls")
 
-[node name="LowPassFilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("gynth", "effect_enable_button", "cutoff_hz_input", "cutoff_hz_slider", "resonance_input", "resonance_slider")]
+[node name="LowPassFilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("gynth", "effect_enable_button", "cutoff_hz_input", "cutoff_hz_slider", "resonance_input", "resonance_slider", "db_menu")]
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
@@ -358,6 +512,7 @@ cutoff_hz_input = NodePath("HBoxContainer0/CutoffHzEdit")
 cutoff_hz_slider = NodePath("CutoffHzSlider")
 resonance_input = NodePath("HBoxContainer1/ResonanceEdit")
 resonance_slider = NodePath("ResonanceSlider")
+db_menu = NodePath("HBoxContainer2/db_menu")
 
 [node name="HBoxContainer0" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
 layout_mode = 2
@@ -384,7 +539,8 @@ alignment = 1
 [node name="ResonanceLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer1"]
 layout_mode = 2
 tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
-text = "Cutoff_Hz:"
+mouse_filter = 0
+text = "Resonance:"
 horizontal_alignment = 1
 
 [node name="ResonanceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer1"]
@@ -396,6 +552,148 @@ layout_mode = 2
 max_value = 1.0
 step = 0.001
 value = 0.5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls"]
+layout_mode = 2
+alignment = 1
+
+[node name="dBLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Steepness of the cutoff curve in dB per octave, also known as the order of the filter. Higher orders have a more aggressive cutoff."
+mouse_filter = 0
+text = "Cutoff Curve Steepness"
+horizontal_alignment = 1
+
+[node name="db_menu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/LowPassFilterControls/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "CLIP: Digital distortion effect which cuts off peaks at the top and bottom of the waveform.
+
+ATAN: Yet undescribed.
+
+LoFi: Low-resolution digital distortion effect (bit depth reduction). You can use it to emulate the sound of early digital audio devices.
+
+OverDrive: Emulates the warm distortion produced by a field effect transistor, which is commonly used in solid-state musical instrument amplifiers. The drive property has no effect in this mode.
+
+WaveShape:  Waveshaper distortions are used mainly by electronic musicians to achieve an extra-abrasive sound.
+
+
+"
+text = "Mode"
+flat = false
+item_count = 4
+popup/item_0/text = "6 dB"
+popup/item_0/id = 0
+popup/item_1/text = "12 dB"
+popup/item_1/id = 1
+popup/item_2/text = "18 dB"
+popup/item_2/id = 2
+popup/item_3/text = "24 dB"
+popup/item_3/id = 3
+
+[node name="HighPassFilter" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="CheckBox_HighPassFilterEnable" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilter"]
+layout_mode = 2
+text = "LOW PASS FILTER"
+
+[node name="CheckBox_HPFilterShowControls" type="CheckBox" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilter" node_paths=PackedStringArray("control_node")]
+layout_mode = 2
+text = "CONTROLS"
+script = ExtResource("3_v5rwn")
+control_node = NodePath("../../LowPassFilterControls")
+
+[node name="HighPassFilterControls" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("gynth", "effect_enable_button", "cutoff_hz_input", "cutoff_hz_slider", "resonance_input", "resonance_slider", "db_menu")]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource("4_43mi8")
+effect_name = &"HighPassFilter"
+gynth = NodePath("../../../../AudioOsc2D")
+effect_enable_button = NodePath("../HighPassFilter/CheckBox_HighPassFilterEnable")
+cutoff_hz_input = NodePath("HBoxContainer0/CutoffHzEdit")
+cutoff_hz_slider = NodePath("CutoffHzSlider")
+resonance_input = NodePath("HBoxContainer1/ResonanceEdit")
+resonance_slider = NodePath("ResonanceSlider")
+db_menu = NodePath("HBoxContainer2/db_menu")
+
+[node name="HBoxContainer0" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
+layout_mode = 2
+alignment = 1
+
+[node name="CutoffLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer0"]
+layout_mode = 2
+text = "Cutoff_Hz:"
+horizontal_alignment = 1
+
+[node name="CutoffHzEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer0"]
+layout_mode = 2
+
+[node name="CutoffHzSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
+layout_mode = 2
+min_value = 1.0
+max_value = 20500.0
+value = 500.0
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
+layout_mode = 2
+alignment = 1
+
+[node name="ResonanceLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer1"]
+layout_mode = 2
+tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
+mouse_filter = 0
+text = "Resonance:"
+horizontal_alignment = 1
+
+[node name="ResonanceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer1"]
+layout_mode = 2
+tooltip_text = "Amount of boost in the frequency range near the cutoff frequency."
+
+[node name="ResonanceSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 0.5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls"]
+layout_mode = 2
+alignment = 1
+
+[node name="dBLabel" type="Label" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Steepness of the cutoff curve in dB per octave, also known as the order of the filter. Higher orders have a more aggressive cutoff."
+mouse_filter = 0
+text = "Cutoff Curve Steepness"
+horizontal_alignment = 1
+
+[node name="db_menu" type="MenuButton" parent="ScrollContainer/VBoxContainer/FilterControls/HighPassFilterControls/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "CLIP: Digital distortion effect which cuts off peaks at the top and bottom of the waveform.
+
+ATAN: Yet undescribed.
+
+LoFi: Low-resolution digital distortion effect (bit depth reduction). You can use it to emulate the sound of early digital audio devices.
+
+OverDrive: Emulates the warm distortion produced by a field effect transistor, which is commonly used in solid-state musical instrument amplifiers. The drive property has no effect in this mode.
+
+WaveShape:  Waveshaper distortions are used mainly by electronic musicians to achieve an extra-abrasive sound.
+
+
+"
+text = "Mode"
+flat = false
+item_count = 4
+popup/item_0/text = "6 dB"
+popup/item_0/id = 0
+popup/item_1/text = "12 dB"
+popup/item_1/id = 1
+popup/item_2/text = "18 dB"
+popup/item_2/id = 2
+popup/item_3/text = "24 dB"
+popup/item_3/id = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -442,7 +740,7 @@ text = "Distortion"
 
 [node name="AudioOsc2D" type="AudioStreamPlayer2D" parent="."]
 visible = false
-position = Vector2(1, 1)
+position = Vector2(551, 431)
 stream = SubResource("AudioStreamGenerator_p1236")
 pitch_scale = 1.01
 bus = &"Gynth0"
@@ -450,7 +748,7 @@ script = ExtResource("3_o8jjk")
 pitch = 1.0
 env_enabled = false
 loop = false
-envelope = SubResource("Curve_11dff")
+envelope = SubResource("Curve_r5igw")
 attack = 0.075
 
 [node name="ReverbSettings" type="Control" parent="." node_paths=PackedStringArray("gynth")]
@@ -777,12 +1075,20 @@ layout_mode = 2
 text = "Close"
 
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_Generating" to="." method="_on_check_box_generating_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_LFOEnable" to="ScrollContainer/VBoxContainer/wav_vis" method="_on_check_box_lfo_enable_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_LFOEnable" to="ScrollContainer/VBoxContainer/LFO" method="_on_check_box_lfo_enable_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_EnvelopeShowControls" to="." method="_on_check_box_envelope_show_controls_toggled"]
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/FreqLineEdit" to="." method="_on_frequency_text_submitted"]
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/FrequencySlider" to="." method="_on_pitch_slider_value_changed"]
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer2/LimiterLineEdit" to="." method="_on_limiter_text_submitted"]
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/LimiterSlider" to="." method="_on_limiter_slider_value_changed"]
 [connection signal="resized" from="ScrollContainer/VBoxContainer/wav_vis" to="ScrollContainer/VBoxContainer/wav_vis" method="_on_resized"]
-[connection signal="toggled" from="ScrollContainer/VBoxContainer/ENV_TITLE/SUBTITLE/CheckBox_EnvelopeEnable" to="." method="_on_check_box_envelope_enable_toggled"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls/SpeedSlider" to="ScrollContainer/VBoxContainer/LFO" method="_on_speed_slider_value_changed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls/CheckBox_FM" to="ScrollContainer/VBoxContainer/LFO" method="_on_check_box_fm_toggled"]
+[connection signal="about_to_popup" from="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls/FMVsliderPopupMenu" to="ScrollContainer/VBoxContainer/LFO" method="_on_fm_vslider_popup_menu_about_to_popup"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls/CheckBox_AM" to="ScrollContainer/VBoxContainer/LFO" method="_on_check_box_am_toggled"]
+[connection signal="about_to_popup" from="ScrollContainer/VBoxContainer/LFO/SUBTITLE/LFO Controls/AMVsliderPopupMenu" to="ScrollContainer/VBoxContainer/LFO" method="_on_am_vslider_popup_menu_about_to_popup"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/CheckBox_EnvelopeEnable" to="." method="_on_check_box_envelope_enable_toggled"]
 [connection signal="button_down" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_Bang" to="." method="_on_check_box_bang_button_down"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/EnvelopeOptions/CheckBox_LoopEnvelope" to="." method="_on_check_box_loop_envelope_toggled"]
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer0/SpeedLineEdit" to="." method="_on_speed_text_submitted"]
@@ -795,6 +1101,11 @@ text = "Close"
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/SustainSlider" to="." method="_on_sustain_slider_value_changed"]
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/HBoxContainer4/Release_LineEdit" to="." method="_on_release_text_submitted"]
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/ReleaseSlider" to="." method="_on_release_slider_value_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/SpeedSlider" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_speed_slider_value_changed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/CheckBox_FM" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_check_box_fm_toggled"]
+[connection signal="about_to_popup" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/FMVsliderPopupMenu" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_fm_vslider_popup_menu_about_to_popup"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/CheckBox_AM" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_check_box_am_toggled"]
+[connection signal="about_to_popup" from="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2/SUBTITLE/LFO Controls/AMVsliderPopupMenu" to="ScrollContainer/VBoxContainer/FilterControls/LowPassFilter2" method="_on_am_vslider_popup_menu_about_to_popup"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/HBoxContainer/Keyboard_Controlle" to="." method="_on_keyboard_controlle_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/HBoxContainer/AudioEffects" to="." method="_on_audio_effects_visibility_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/FX/HBoxContainer3/ReverbCheckBox" to="ReverbSettings" method="_on_reverb_check_box_toggled"]
