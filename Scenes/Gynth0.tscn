@@ -40,6 +40,9 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/separation = 20
 
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Gynths"]
+layout_mode = 2
+
 [node name="Gynth_Console" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 layout_mode = 2
 focus_mode = 1

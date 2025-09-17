@@ -23,7 +23,7 @@ var lfo_depth : float = 0.25
 
 func _ready() -> void:
 	effect_name = self.get_name()
-	effect_enable_button.text = effect_name
+	#effect_enable_button.text = effect_name
 	bus_idx = AudioServer.get_bus_index(gynth.bus)
 	find_audio_effect()
 	

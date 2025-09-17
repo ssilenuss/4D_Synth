@@ -71,7 +71,9 @@ func _ready() -> void:
 	_on_check_box_loop_envelope_toggled(true)
 
 
-
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().quit()
 	
 		
 func _on_check_box_generating_toggled(toggled_on: bool) -> void:
