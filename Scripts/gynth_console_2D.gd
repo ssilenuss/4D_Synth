@@ -3,6 +3,8 @@ class_name Gynth_Controller
 var gynth : AudioOsc2D
 
 #@export var controls_visible_box : CheckBox 
+@export var key: String 
+@export var AudioBus: StringName
 @export var bang_box : CheckBox 
 @export var gen_box : CheckBox 
 @export var enable_envelope_box : CheckBox 
@@ -52,6 +54,9 @@ func _ready() -> void:
 	wav_vis.gynth = gynth
 	base_frequency = gynth.frequency
 	
+	if AudioBus:
+		gynth.bus = AudioBus
+	
 	
 	wav_menu_popup = wav_menu.get_popup()
 	wav_menu_popup.id_pressed.connect(_on_wav_menu_popup_selected)
@@ -74,6 +79,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
+	elif Input.is_action_just_pressed(key):
+		visible = !visible
 	
 		
 func _on_check_box_generating_toggled(toggled_on: bool) -> void:
@@ -278,3 +285,32 @@ func _on_check_box_envelope_enable_toggled(toggled_on: bool) -> void:
 	#if gynth.generating:
 		#_on_check_box_generating_toggled(false)
 		#_on_check_box_generating_toggled(true)
+
+
+
+
+
+func _on_octave_up_pressed() -> void:
+	var new_frequency : float = gynth.get_effective_frequency()*2.0
+	gynth.set_effective_frequency(new_frequency)
+	frequency_label.text = str(gynth.get_effective_frequency())
+
+
+func _on_octave_down_pressed() -> void:
+	var new_frequency : float = gynth.get_effective_frequency()/2.0
+	gynth.set_effective_frequency(new_frequency)
+	frequency_label.text = str(gynth.get_effective_frequency())
+
+
+func _on_detune_up_pressed() -> void:
+	var new_frequency : float = gynth.get_effective_frequency()
+	new_frequency += new_frequency/12.0 * 0.1
+	gynth.set_effective_frequency(new_frequency)
+	frequency_label.text = str(gynth.get_effective_frequency())
+
+
+func _on_detune_down_pressed() -> void:
+	var new_frequency : float = gynth.get_effective_frequency()
+	new_frequency -= new_frequency/12.0 * 0.1
+	gynth.set_effective_frequency(new_frequency)
+	frequency_label.text = str(gynth.get_effective_frequency())

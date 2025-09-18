@@ -20,7 +20,7 @@ mix_rate = 48000.0
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[node name="Gynth_Console" type="Control" node_paths=PackedStringArray("bang_box", "gen_box", "enable_envelope_box", "loop_envelope_box", "wav_menu", "fx_menu", "wav_vis", "frequency_label", "frequency_slider", "limiter_label", "limiter_slider", "attack_slider", "decay_slider", "sustain_slider", "release_slider", "speed_slider", "keyboard_box", "wav_controls", "env_controls", "filter_title", "filter_controls", "speed_label", "attack_label", "decay_label", "release_label", "sustain_label")]
+[node name="Gynth_Console" type="Control" node_paths=PackedStringArray("bang_box", "gen_box", "enable_envelope_box", "loop_envelope_box", "wav_menu", "fx_menu", "wav_vis", "frequency_label", "frequency_slider", "limiter_label", "limiter_slider", "attack_slider", "decay_slider", "sustain_slider", "release_slider", "speed_slider", "wav_controls", "env_controls", "filter_title", "filter_controls", "speed_label", "attack_label", "decay_label", "release_label", "sustain_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,7 +46,6 @@ decay_slider = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/DecaySl
 sustain_slider = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/SustainSlider")
 release_slider = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/ReleaseSlider")
 speed_slider = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/SpeedSlider")
-keyboard_box = NodePath("")
 wav_controls = NodePath("ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS")
 env_controls = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS")
 filter_title = NodePath("ScrollContainer/VBoxContainer/FILTER_TITLE")
@@ -148,13 +147,24 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="FreqLabel" type="Label" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer"]
+[node name="OctaveDown" type="Button" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer"]
 layout_mode = 2
-text = "FREQUENCY"
-horizontal_alignment = 1
+text = "- Octave"
+
+[node name="DetuneDown" type="Button" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer"]
+layout_mode = 2
+text = "- Detune"
 
 [node name="FreqLineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer"]
 layout_mode = 2
+
+[node name="DetuneUp" type="Button" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer"]
+layout_mode = 2
+text = "+ Detune"
+
+[node name="OctaveUp" type="Button" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer"]
+layout_mode = 2
+text = "+ Octave"
 
 [node name="FrequencySlider" type="HSlider" parent="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS"]
 layout_mode = 2
@@ -684,6 +694,7 @@ popup/item_3/text = "24 dB"
 popup/item_3/id = 3
 
 [node name="LowShelfFilter" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("filter_controls", "gynth", "effect_enable_button", "lfo_checkbox", "cutoff_hz_input", "cutoff_hz_slider", "resonance_menu", "lfo_depth_menu", "db_menu", "lfo")]
+visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("5_eoux1")
@@ -771,6 +782,7 @@ popup/item_3/text = "24 dB"
 popup/item_3/id = 3
 
 [node name="HighShelfFilter" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/FilterControls" node_paths=PackedStringArray("filter_controls", "gynth", "effect_enable_button", "lfo_checkbox", "cutoff_hz_input", "cutoff_hz_slider", "resonance_menu", "lfo_depth_menu", "db_menu", "lfo")]
+visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("5_eoux1")
@@ -1404,7 +1416,11 @@ text = "Close"
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_LFOEnable" to="ScrollContainer/VBoxContainer/LFO" method="_on_check_box_lfo_enable_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_EnvelopeShowControls" to="." method="_on_check_box_envelope_show_controls_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/AudioEffects" to="." method="_on_audio_effects_visibility_toggled"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/OctaveDown" to="." method="_on_octave_down_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/DetuneDown" to="." method="_on_detune_down_pressed"]
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/FreqLineEdit" to="." method="_on_frequency_text_submitted"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/DetuneUp" to="." method="_on_detune_up_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer/OctaveUp" to="." method="_on_octave_up_pressed"]
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/FrequencySlider" to="." method="_on_pitch_slider_value_changed"]
 [connection signal="text_submitted" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/HBoxContainer2/LimiterLineEdit" to="." method="_on_limiter_text_submitted"]
 [connection signal="value_changed" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/WAVE_CONTROLS/LimiterSlider" to="." method="_on_limiter_slider_value_changed"]

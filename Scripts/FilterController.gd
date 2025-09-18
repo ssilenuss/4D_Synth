@@ -40,7 +40,7 @@ func _ready() -> void:
 	
 	_on_cutoff_slider_value_changed(2000.0)
 	_on_resonance_slider_value_changed(0.5)
-	_on_db_popup_selected(0)
+	_on_db_popup_selected(3)
 	
 func _process(delta: float) -> void:
 	if lfo_enabled:
@@ -87,7 +87,7 @@ func find_audio_effect()->void:
 		
 func _on_effect_enable_checkbox_toggled(toggled_on: bool) -> void:
 	AudioServer.set_bus_effect_enabled(bus_idx, effect_idx, toggled_on)
-	filter_controls.visible = toggled_on
+	#filter_controls.visible = toggled_on
 	
 
 
