@@ -53,9 +53,10 @@ func _ready() -> void:
 	gynth = $AudioOsc2D
 	wav_vis.gynth = gynth
 	base_frequency = gynth.frequency
-	
-	if AudioBus:
-		gynth.bus = AudioBus
+	#
+	#if AudioBus:
+		#gynth.set_bus(AudioBus)
+		#print(get_name(), " set to ", gynth.get_bus())
 	
 	
 	wav_menu_popup = wav_menu.get_popup()

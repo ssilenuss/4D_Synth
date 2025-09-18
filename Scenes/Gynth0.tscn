@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bur5odtjg4mqk"]
+[gd_scene load_steps=13 format=3 uid="uid://bur5odtjg4mqk"]
 
 [ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
 [ext_resource type="Script" uid="uid://dnspbqtgycg0w" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
@@ -10,6 +10,14 @@
 [ext_resource type="Script" uid="uid://c2tu4feth42ws" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
 
 [sub_resource type="Curve" id="Curve_xmlbu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_ghm16"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_qgms5"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -47,14 +55,21 @@ layout_mode = 2
 [node name="Gynth_Console" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 layout_mode = 2
 focus_mode = 1
-key = "1"
-AudioBus = &"Gynth0"
+
+[node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console" index="2"]
+position = Vector2(1751, 1170)
+envelope = SubResource("Curve_xmlbu")
 
 [node name="Gynth_Console2" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 visible = false
 layout_mode = 2
 key = "2"
 AudioBus = &"Gynth1"
+
+[node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console2" index="2"]
+position = Vector2(1751, 1170)
+bus = &"Gynth1"
+envelope = SubResource("Curve_ghm16")
 
 [node name="Gynth_Console3" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 visible = false
@@ -63,7 +78,9 @@ key = "3"
 AudioBus = &"Gynth2"
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
-envelope = SubResource("Curve_xmlbu")
+position = Vector2(1751, 1170)
+bus = &"Gynth2"
+envelope = SubResource("Curve_qgms5")
 
 [node name="Lowerhalf" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -686,4 +703,6 @@ vertical_icon_alignment = 0
 [connection signal="value_changed" from="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/osc_hscale_slider" to="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer/BusVis" method="_on_osc_hscale_slider_value_changed"]
 [connection signal="toggled" from="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/Trigger" to="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer/BusVis" method="_on_trigger_toggled"]
 
+[editable path="VBoxContainer/Gynths/Gynth_Console"]
+[editable path="VBoxContainer/Gynths/Gynth_Console2"]
 [editable path="VBoxContainer/Gynths/Gynth_Console3"]
