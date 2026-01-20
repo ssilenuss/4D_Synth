@@ -15,8 +15,6 @@ resource_name = "Distortion"
 
 [sub_resource type="AudioEffectDelay" id="AudioEffectDelay_g77q4"]
 resource_name = "Delay"
-tap1_delay_ms = 500.0
-tap2_delay_ms = 1.0
 
 [sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_s0afi"]
 resource_name = "LowPassFilter"

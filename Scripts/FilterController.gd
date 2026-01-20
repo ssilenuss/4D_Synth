@@ -42,7 +42,7 @@ func _ready() -> void:
 	_on_resonance_slider_value_changed(0.5)
 	_on_db_popup_selected(3)
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if lfo_enabled:
 		var cutoff_fq: float = cutoff_hz_slider.value
 		var new_value : float = cutoff_fq + (lfo.value*lfo_depth*cutoff_fq)
@@ -126,7 +126,7 @@ func init_resonance_slider() -> void:
 	v_slider.step = 0.001
 	v_slider.value_changed.connect(_on_resonance_slider_value_changed)
 	var min_size : float = 100
-	popup.min_size.y = min_size
+	popup.min_size.y = int(min_size)
 	v_slider.custom_minimum_size.y = min_size
 	popup.add_child(v_slider)
 
@@ -141,7 +141,7 @@ func init_lfo_depth_slider() -> void:
 	v_slider.step = 0.001
 	v_slider.value_changed.connect(_on_lfo_depth_slider_value_changed)
 	var min_size : float = 100
-	popup.min_size.y = min_size
+	popup.min_size.y = int(min_size)
 	v_slider.custom_minimum_size.y = min_size
 	popup.add_child(v_slider)
 	

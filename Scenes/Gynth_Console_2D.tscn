@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://1vr8g2dxrg65"]
+[gd_scene load_steps=15 format=3 uid="uid://1vr8g2dxrg65"]
 
 [ext_resource type="Script" uid="uid://dyfcgqeh0phwi" path="res://Scripts/gynth_console_2D.gd" id="1_p0bg2"]
 [ext_resource type="Script" uid="uid://p3ils4w62ntp" path="res://Scripts/wav_vis_2D.gd" id="1_pqsbc"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://jk82mpum7as" path="res://Scripts/reset_button.gd" id="4_vjg4x"]
 [ext_resource type="Script" uid="uid://bufblpkqwusdm" path="res://Scripts/reverb_settings.gd" id="4_wncvk"]
 [ext_resource type="Script" uid="uid://bpupqp5tewq0" path="res://Scripts/FilterController.gd" id="5_eoux1"]
+[ext_resource type="Script" uid="uid://buslbko77a3a2" path="res://Scripts/delay_settings.gd" id="11_21n1q"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_eoux1"]
 
@@ -17,7 +18,7 @@
 mix_rate = 48000.0
 
 [sub_resource type="Curve" id="Curve_eoux1"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [node name="Gynth_Console" type="Control" node_paths=PackedStringArray("bang_box", "gen_box", "enable_envelope_box", "loop_envelope_box", "wav_menu", "fx_menu", "wav_vis", "frequency_label", "frequency_slider", "limiter_label", "limiter_slider", "attack_slider", "decay_slider", "sustain_slider", "release_slider", "speed_slider", "wav_controls", "env_controls", "filter_title", "filter_controls", "speed_label", "attack_label", "decay_label", "release_label", "sustain_label")]
@@ -60,7 +61,7 @@ sustain_label = NodePath("ScrollContainer/VBoxContainer/ENVELOPE_CONTROLS/HBoxCo
 env_color = Color(1, 0, 1, 1)
 
 [node name="Background" type="ColorRect" parent="."]
-layout_mode = 2
+layout_mode = 0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.306923, 0.306923, 0.306923, 1)
@@ -1070,6 +1071,14 @@ layout_mode = 2
 tooltip_text = "By distorting the waveform the frequency content changes, which will often make the sound \"crunchy\" or \"abrasive\". For games, it can simulate sound coming from some saturated device or speaker very efficiently."
 text = "Distortion"
 
+[node name="DelayCheckbox" type="CheckBox" parent="ScrollContainer/VBoxContainer/FX/HBoxContainer3"]
+layout_mode = 2
+
+[node name="DelaySettings" type="Button" parent="ScrollContainer/VBoxContainer/FX/HBoxContainer3"]
+layout_mode = 2
+tooltip_text = "By distorting the waveform the frequency content changes, which will often make the sound \"crunchy\" or \"abrasive\". For games, it can simulate sound coming from some saturated device or speaker very efficiently."
+text = "Delay"
+
 [node name="Keyboard_Controlle" type="CheckBox" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -1413,6 +1422,297 @@ step = 0.1
 layout_mode = 2
 text = "Close"
 
+[node name="DelaySettings" type="Control" parent="." node_paths=PackedStringArray("gynth")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_21n1q")
+background_color = Color(0.28235295, 0.28235295, 0.28235295, 1)
+gynth = NodePath("../AudioOsc2D")
+delay_bus_idx = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DelaySettings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DelaySettings/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DelayTitleLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Different types are available: clip, tan, lo-fi (bit crushing), overdrive, or waveshape.
+
+By distorting the waveform the frequency content changes, which will often make the sound \"crunchy\" or \"abrasive\". For games, it can simulate sound coming from some saturated device or speaker very efficiently."
+mouse_filter = 0
+text = "
+DELAY SETTINGS"
+horizontal_alignment = 1
+
+[node name="ResetButton" type="Button" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("settings")]
+layout_mode = 2
+text = "RESET TO DEFAULTS"
+script = ExtResource("4_vjg4x")
+settings = [NodePath("../DrySlider"), NodePath("../Tap1/DelayVbox/Tap1_DelaySlider"), NodePath("../Tap1/LevelVbox/Tap1_LevelSlider"), NodePath("../Tap1/PanVbox/Tap1_PanSlider"), NodePath("../Tap2/DelayVbox/Tap2_DelaySlider"), NodePath("../Tap2/LevelVbox/Tap2_LevelSlider"), NodePath("../Tap2/PanVbox/Tap2_PanSlider"), NodePath("../Feedback/DelayVbox/Feedback_DelaySlider"), NodePath("../Feedback/LevelVbox/Feedback_LevelSlider"), NodePath("../Feedback/LowPassVbox/Feedback_LowPass_slider")]
+
+[node name="SpacerLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "
+"
+
+[node name="DryLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+tooltip_text = "Percentage of Original Sound.  From 0.0 - 1.0"
+mouse_filter = 0
+text = "Dry"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../DrySlider")
+
+[node name="DrySlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.001
+value = 1.0
+
+[node name="Tap1" type="HBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Tap1CheckBox" type="CheckBox" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+button_pressed = true
+text = "TAP 1"
+
+[node name="DelayVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DelayLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/DelayVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "Delay(ms)"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Tap1_DelaySlider")
+
+[node name="Tap1_DelaySlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/DelayVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+max_value = 1500.0
+value = 250.0
+
+[node name="LevelVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Level" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/LevelVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "Level dB"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Tap1_LevelSlider")
+
+[node name="Tap1_LevelSlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/LevelVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+min_value = -60.0
+max_value = 0.0
+value = -6.0
+
+[node name="PanVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/PanVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "Pan"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Tap1_PanSlider")
+
+[node name="Tap1_PanSlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/PanVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+min_value = -1.0
+max_value = 1.0
+
+[node name="Tap2" type="HBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Tap2CheckBox" type="CheckBox" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+button_pressed = true
+text = "TAP 2"
+
+[node name="DelayVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DelayLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/DelayVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "Delay(ms)"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Tap2_DelaySlider")
+
+[node name="Tap2_DelaySlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/DelayVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+max_value = 1500.0
+value = 500.0
+
+[node name="LevelVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Level" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/LevelVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "Level dB"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Tap2_LevelSlider")
+
+[node name="Tap2_LevelSlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/LevelVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+min_value = -60.0
+max_value = 0.0
+value = -12.0
+
+[node name="PanVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/PanVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "Pan"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Tap2_PanSlider")
+
+[node name="Tap2_PanSlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/PanVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+min_value = -1.0
+max_value = 1.0
+
+[node name="Feedback" type="HBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FeedbackCheckBox" type="CheckBox" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Feedback"
+
+[node name="DelayVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DelayLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/DelayVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "Delay(ms)"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Feedback_DelaySlider")
+
+[node name="Feedback_DelaySlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/DelayVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+max_value = 1500.0
+value = 340.0
+
+[node name="LevelVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Level" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/LevelVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "Level dB"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Feedback_LevelSlider")
+
+[node name="Feedback_LevelSlider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/LevelVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+min_value = -60.0
+max_value = 0.0
+value = -6.0
+
+[node name="LowPassVbox" type="VBoxContainer" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LowPassLabel" type="Label" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/LowPassVbox" node_paths=PackedStringArray("slider")]
+layout_mode = 2
+size_flags_vertical = 6
+tooltip_text = "High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000."
+mouse_filter = 0
+text = "LowPass"
+horizontal_alignment = 1
+script = ExtResource("4_3g0wi")
+slider = NodePath("../Feedback_LowPass_slider")
+
+[node name="Feedback_LowPass_slider" type="HSlider" parent="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/LowPassVbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+min_value = 1.0
+max_value = 16000.0
+value = 16000.0
+
+[node name="SettingsCloseButton" type="Button" parent="DelaySettings/VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/gen_box" to="." method="_on_check_box_generating_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_LFOEnable" to="ScrollContainer/VBoxContainer/wav_vis" method="_on_check_box_lfo_enable_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Controls/VBoxContainer/TITLE/SUBTITLE/CheckBox_LFOEnable" to="ScrollContainer/VBoxContainer/LFO" method="_on_check_box_lfo_enable_toggled"]
@@ -1449,6 +1749,8 @@ text = "Close"
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/FX/HBoxContainer3/ReverbSettings" to="ReverbSettings" method="_on_reverb_settings_pressed"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/FX/HBoxContainer3/DistortionCheckbox" to="DistortionSettings" method="_on_distortion_checkbox_toggled"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/FX/HBoxContainer3/DistortionSettings" to="DistortionSettings" method="_on_distortion_settings_pressed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/FX/HBoxContainer3/DelayCheckbox" to="DelaySettings" method="_on_delay_checkbox_toggled"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/FX/HBoxContainer3/DelaySettings" to="DelaySettings" method="_on_delay_settings_pressed"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Keyboard_Controlle" to="." method="_on_keyboard_controlle_toggled"]
 [connection signal="resized" from="ReverbSettings" to="ReverbSettings" method="_on_resized"]
 [connection signal="pressed" from="ReverbSettings/VBoxContainer/ScrollContainer/VBoxContainer/ResetButton" to="ReverbSettings/VBoxContainer/ScrollContainer/VBoxContainer/ResetButton" method="_on_pressed"]
@@ -1469,3 +1771,19 @@ text = "Close"
 [connection signal="value_changed" from="DistortionSettings/VBoxContainer/ScrollContainer/VBoxContainer/PreGainSlider" to="DistortionSettings" method="_on_pre_gain_slider_value_changed"]
 [connection signal="value_changed" from="DistortionSettings/VBoxContainer/ScrollContainer/VBoxContainer/PostGainSlider" to="DistortionSettings" method="_on_post_gain_slider_value_changed"]
 [connection signal="pressed" from="DistortionSettings/VBoxContainer/SettingsCloseButton" to="DistortionSettings" method="_on_settings_close_button_pressed"]
+[connection signal="resized" from="DelaySettings" to="DelaySettings" method="_on_resized"]
+[connection signal="pressed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/ResetButton" to="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/ResetButton" method="_on_pressed"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/DrySlider" to="DelaySettings" method="_on_dry_slider_value_changed"]
+[connection signal="toggled" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/Tap1CheckBox" to="DelaySettings" method="_on_tap_1_check_box_toggled"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/DelayVbox/Tap1_DelaySlider" to="DelaySettings" method="_on_tap_1_delay_slider_value_changed"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/LevelVbox/Tap1_LevelSlider" to="DelaySettings" method="_on_tap_1_level_slider_value_changed"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap1/PanVbox/Tap1_PanSlider" to="DelaySettings" method="_on_tap_1_pan_slider_value_changed"]
+[connection signal="toggled" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/Tap2CheckBox" to="DelaySettings" method="_on_tap_2_check_box_toggled"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/DelayVbox/Tap2_DelaySlider" to="DelaySettings" method="_on_tap_2_delay_slider_value_changed"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/LevelVbox/Tap2_LevelSlider" to="DelaySettings" method="_on_tap_2_level_slider_value_changed"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Tap2/PanVbox/Tap2_PanSlider" to="DelaySettings" method="_on_tap_2_pan_slider_value_changed"]
+[connection signal="toggled" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/FeedbackCheckBox" to="DelaySettings" method="_on_feedback_check_box_toggled"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/DelayVbox/Feedback_DelaySlider" to="DelaySettings" method="_on_feedback_delay_slider_value_changed"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/LevelVbox/Feedback_LevelSlider" to="DelaySettings" method="_on_feedback_level_slider_value_changed"]
+[connection signal="value_changed" from="DelaySettings/VBoxContainer/ScrollContainer/VBoxContainer/Feedback/LowPassVbox/Feedback_LowPass_slider" to="DelaySettings" method="_on_feedback_low_pass_slider_value_changed"]
+[connection signal="pressed" from="DelaySettings/VBoxContainer/SettingsCloseButton" to="DelaySettings" method="_on_settings_close_button_pressed"]

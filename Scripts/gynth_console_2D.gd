@@ -77,7 +77,7 @@ func _ready() -> void:
 	_on_check_box_loop_envelope_toggled(true)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
 	elif Input.is_action_just_pressed(key):

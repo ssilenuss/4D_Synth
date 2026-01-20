@@ -81,8 +81,8 @@ func _process(delta: float) -> void:
 			
 
 
-func _on_speed_slider_value_changed(value: float) -> void:
-	speed = value
+func _on_speed_slider_value_changed(speed_val: float) -> void:
+	speed = speed_val
 
 
 func _on_check_box_lfo_enable_toggled(toggled_on: bool) -> void:
@@ -111,7 +111,7 @@ func _on_fm_vslider_popup_menu_about_to_popup() -> void:
 	v_slider.step = 0.001
 	v_slider.value_changed.connect(_on_fm_depth_value_changed)
 	var min_size : float = 100
-	popup.min_size.y = min_size
+	popup.min_size.y = int(min_size)
 	v_slider.custom_minimum_size.y = min_size
 	popup.add_child(v_slider)
 
@@ -140,6 +140,6 @@ func _on_am_vslider_popup_menu_about_to_popup() -> void:
 	v_slider.step = 0.001
 	v_slider.value_changed.connect(_on_am_depth_value_changed)
 	var min_size : float = 100
-	popup.min_size.y = min_size
+	popup.min_size.y = int(min_size)
 	v_slider.custom_minimum_size.y = min_size
 	popup.add_child(v_slider)

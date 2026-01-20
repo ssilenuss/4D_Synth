@@ -10,15 +10,15 @@
 [ext_resource type="Script" uid="uid://c2tu4feth42ws" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
 
 [sub_resource type="Curve" id="Curve_xmlbu"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Curve" id="Curve_ghm16"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Curve" id="Curve_qgms5"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.733333, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_c7qjh"]
@@ -56,8 +56,12 @@ layout_mode = 2
 layout_mode = 2
 focus_mode = 1
 
+[node name="Background" parent="VBoxContainer/Gynths/Gynth_Console" index="0"]
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console" index="2"]
-position = Vector2(1751, 1170)
+position = Vector2(551.5, 219.5)
 envelope = SubResource("Curve_xmlbu")
 
 [node name="Gynth_Console2" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
@@ -66,8 +70,12 @@ layout_mode = 2
 key = "2"
 AudioBus = &"Gynth1"
 
+[node name="Background" parent="VBoxContainer/Gynths/Gynth_Console2" index="0"]
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console2" index="2"]
-position = Vector2(1751, 1170)
+position = Vector2(551.5, 219.5)
 bus = &"Gynth1"
 envelope = SubResource("Curve_ghm16")
 
@@ -77,8 +85,15 @@ layout_mode = 2
 key = "3"
 AudioBus = &"Gynth2"
 
+[node name="Background" parent="VBoxContainer/Gynths/Gynth_Console3" index="0"]
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="BandLimitFilter" parent="VBoxContainer/Gynths/Gynth_Console3/ScrollContainer/VBoxContainer/FilterControls" index="6"]
+visible = false
+
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
-position = Vector2(1751, 1170)
+position = Vector2(551.5, 219.5)
 bus = &"Gynth2"
 envelope = SubResource("Curve_qgms5")
 
@@ -607,22 +622,26 @@ initial_position = 1
 size = Vector2i(800, 400)
 access = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="Synth FX Label" type="Label" parent="VBoxContainer/Lowerhalf/Recorder"]
+visible = false
 layout_mode = 2
 text = "                        SYNTH FX:"
 
 [node name="ReverbCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+visible = false
 layout_mode = 2
 text = "REVERB"
 script = ExtResource("4_ns3sq")
 
 [node name="DistortionCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+visible = false
 layout_mode = 2
 text = "DISTORTION"
 script = ExtResource("4_ns3sq")
 effect_idx = 1
 
 [node name="DelayCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+visible = false
 layout_mode = 2
 text = "DELAY"
 script = ExtResource("4_ns3sq")

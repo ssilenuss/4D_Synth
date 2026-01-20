@@ -34,7 +34,7 @@ func init_spectrum()->void:
 	AudioServer.add_bus_effect(bus_idx, AudioEffectSpectrumAnalyzer.new())
 	analyzer_idx = AudioServer.get_bus_effect_count(bus_idx)-1
 	spectrum = AudioServer.get_bus_effect_instance(bus_idx, analyzer_idx, 0)
-	vu_count = size.x/vu_scalor
+	vu_count = int(size.x/vu_scalor)
 	frequency_peaks.resize(vu_count)
 	frequency_peaks.fill(0.0)
 	#min_values.resize(vu_count)
@@ -153,7 +153,3 @@ func _draw() -> void:
 			var lim_y : float = lerpf(size.y,0.0, gynth.limiter)
 			draw_line(Vector2(0.0,lim_y), Vector2(size.x, lim_y),limiter_color)
 			
-
-
-func _on_check_box_lfo_enable_toggled(toggled_on: bool) -> void:
-	pass # Replace with function body.

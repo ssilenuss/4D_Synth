@@ -1,6 +1,9 @@
 extends Control
 
-var file : AudioStreamWAV
+var file : AudioStreamWAV :
+	set(value):
+		file = value
+		wav_float_array = convert_16WAV_toFloat()
 
 @export var texture_rect : TextureRect
 @export var background_color : Color
@@ -11,8 +14,9 @@ var file : AudioStreamWAV
 
 var playback_position : float = 0
 var end_position: float = 1.0
+var wav_float_array : PackedFloat32Array = []
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if player.playing:
 		playback_position = player.get_playback_position()
 		queue_redraw()
@@ -26,14 +30,14 @@ func update_preview() -> void:
 func convert_16WAV_toFloat()->PackedFloat32Array:
 	var float_array : PackedFloat32Array = []
 	var data : PackedByteArray = file.data
-	var size: int = data.size()
+	var data_size: int = data.size()
 	
-	if size % 2 != 0:
+	if data_size % 2 != 0:
 		print("PackedByteArray is not even, invalid 16-bit PCM data")
 		return float_array
 	
 	#step 2 because 16 bits uses 2 bytes, skip another 2 because stereo
-	for i in range(0, size, 4):
+	for i in range(0, data_size, 4):
 		
 		#wavs are signed, apparently
 		var f : float = data.decode_s16(i)
@@ -53,19 +57,34 @@ func _draw()->void:
 		
 	end_position= file.get_length()
 	
-	#draw waveform
-	var float_array : PackedFloat32Array = convert_16WAV_toFloat()
-	var float_array_size : int = float_array.size()
+	#draw waveform per pixel
+	
+	var float_array_size : int = wav_float_array.size()
 	if float_array_size >  0:
-		var x_index:int = 0
 		var draw_buffer : PackedVector2Array = []
-		for i in float_array_size:
-			var x : float = lerpf(0.0, size.x, x_index/float(float_array_size))
+		for i in size.x:
+			var x_pos: float  = i/size.x
+			var value_index :int = int( x_pos*float_array_size ) -1
+			var x : float = lerpf(0.0, size.x, x_pos)
 			var y : float = 0
-			y = lerpf(1,size.y,  (-1.0*float_array[i]+1)/2.0)
+			y = lerpf(1,size.y,  (-1.0*wav_float_array[value_index]+1)/2.0)
 			draw_buffer.append(Vector2(x,y))
-			x_index+=1
+
 		draw_polyline(draw_buffer, foreground_color)
+	
+	#draw waveform every line
+	
+	#var float_array_size : int = float_array.size()
+	#if float_array_size >  0:
+		#var x_index:int = 0
+		#var draw_buffer : PackedVector2Array = []
+		#for i in float_array_size:
+			#var x : float = lerpf(0.0, size.x, x_index/float(float_array_size))
+			#var y : float = 0
+			#y = lerpf(1,size.y,  (-1.0*float_array[i]+1)/2.0)
+			#draw_buffer.append(Vector2(x,y))
+			#x_index+=1
+		#draw_polyline(draw_buffer, foreground_color)
 		
 	#draw playhead
 	var playhead_x :float = lerpf(0.0, size.x, playback_position/end_position)

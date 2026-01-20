@@ -44,6 +44,7 @@ func _on_distortion_checkbox_toggled(toggled_on: bool) -> void:
 	AudioServer.set_bus_effect_enabled(gynth.bus_idx, effect_bus_idx, toggled_on)
 
 
+
 func _on_reset_button_pressed() -> void:
 	var id : int = 0
 	mode_menu.text = mode_popup.get_item_text(id)

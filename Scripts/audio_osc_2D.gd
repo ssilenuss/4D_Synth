@@ -45,7 +45,7 @@ enum {SIN,SAW, PULSE, SQUARE, NOISE}
 @export_range(0, 10, 0.001) var pitch: float = 0.99 :
 	set(value):
 		pitch = value
-		set_pitch_scale(pitch+0.01)
+		set_pitch_scale( clamp(pitch+0.01, 0.0, 10.0))
 		buffer_limit = int(mix_rate)
 		#buffer_limit = frequency*pitch_scale*2
 		#if buffer_limit < 440:

@@ -12,12 +12,13 @@ config_version=5
 
 config/name="Gynth"
 run/main_scene="res://Scenes/Gynth0.tscn"
-config/features=PackedStringArray("4.4", "Mobile")
+config/features=PackedStringArray("4.5", "Mobile")
 boot_splash/image="res://icon.png"
 config/icon="res://icon.png"
 
 [audio]
 
+general/default_playback_type.web=0
 driver/mix_rate=48000
 
 [autoload]

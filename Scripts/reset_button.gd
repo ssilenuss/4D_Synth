@@ -18,7 +18,3 @@ func _process(_delta: float) -> void:
 func _on_pressed() -> void:
 	for v in settings.size():
 		settings[v].value = values[v]
-
-
-func _on_toggled(toggled_on: bool) -> void:
-	pass # Replace with function body.

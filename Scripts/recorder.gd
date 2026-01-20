@@ -76,7 +76,7 @@ func _on_record_button_pressed() -> void:
 		play_button.disabled = false
 		save_button.disabled = false
 		record_effect.set_recording_active(false)
-		file.set_mix_rate(mix_rate)
+		file.set_mix_rate(int(mix_rate))
 		file.set_format(format)
 		file.set_stereo(stereo)
 		record_button.modulate = Color(1.0,1.0,1.0,1.0)
