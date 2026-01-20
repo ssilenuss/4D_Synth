@@ -40,7 +40,15 @@ func _ready() -> void:
 
 func _on_save_button_pressed() -> void:
 	if file:
-		file_dialog.popup_centered_ratio(0.6)
+		if OS.get_name()=="Web":
+			var file_path :String= "user://synth_recording.wav"
+			file.save_to_wav(file_path)
+			var download_file : FileAccess = FileAccess.open(file_path, FileAccess.READ)
+			if download_file != null:
+				var buffer : PackedByteArray = download_file.get_buffer(download_file.get_length())
+				JavaScriptBridge.download_buffer(buffer, "synth_record.wav")
+		else:
+			file_dialog.popup_centered_ratio(0.6)
 		
 	else:
 		status.text = "No file to save.  Record first."
