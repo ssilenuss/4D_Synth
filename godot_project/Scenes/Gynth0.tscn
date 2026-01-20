@@ -1,0 +1,724 @@
+[gd_scene load_steps=13 format=3 uid="uid://bur5odtjg4mqk"]
+
+[ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
+[ext_resource type="Script" uid="uid://dnspbqtgycg0w" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
+[ext_resource type="Script" uid="uid://b0l0oj3nl71bd" path="res://Scenes/lowerhalf.gd" id="2_xmlbu"]
+[ext_resource type="Script" uid="uid://bof7670j82m8g" path="res://Scripts/recorder.gd" id="3_yxfa4"]
+[ext_resource type="Script" uid="uid://dw3c4tyhfbqfc" path="res://Scripts/FX_Box.gd" id="4_ns3sq"]
+[ext_resource type="Script" uid="uid://ds6mdf5cfhaku" path="res://Scenes/Bus_Oscilloscope.gd" id="5_pfloi"]
+[ext_resource type="Script" uid="uid://bffepwlwfo5e3" path="res://Scripts/playback_visualizer.gd" id="5_pg0e7"]
+[ext_resource type="Script" uid="uid://c2tu4feth42ws" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
+
+[sub_resource type="Curve" id="Curve_xmlbu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_ghm16"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_qgms5"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_c7qjh"]
+format = 1
+mix_rate = 48000
+
+[node name="MarginContainer" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+clip_contents = true
+layout_mode = 2
+
+[node name="Gynths" type="HBoxContainer" parent="VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Gynths"]
+layout_mode = 2
+
+[node name="Gynth_Console" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
+layout_mode = 2
+focus_mode = 1
+
+[node name="Background" parent="VBoxContainer/Gynths/Gynth_Console" index="0"]
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console" index="2"]
+envelope = SubResource("Curve_xmlbu")
+
+[node name="Gynth_Console2" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
+visible = false
+layout_mode = 2
+key = "2"
+AudioBus = &"Gynth1"
+
+[node name="Background" parent="VBoxContainer/Gynths/Gynth_Console2" index="0"]
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console2" index="2"]
+bus = &"Gynth1"
+envelope = SubResource("Curve_ghm16")
+
+[node name="Gynth_Console3" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
+visible = false
+layout_mode = 2
+key = "3"
+AudioBus = &"Gynth2"
+
+[node name="Background" parent="VBoxContainer/Gynths/Gynth_Console3" index="0"]
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="BandLimitFilter" parent="VBoxContainer/Gynths/Gynth_Console3/ScrollContainer/VBoxContainer/FilterControls" index="6"]
+visible = false
+
+[node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
+bus = &"Gynth2"
+envelope = SubResource("Curve_qgms5")
+
+[node name="Lowerhalf" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_xmlbu")
+
+[node name="Keyboard" type="Control" parent="VBoxContainer/Lowerhalf"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.27
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sockets" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="keys" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="A" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys"]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="B" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+flat = NodePath("B_FLAT")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="B_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B"]
+custom_minimum_size = Vector2(20, 50)
+layout_mode = 0
+offset_left = -19.5
+offset_right = 19.5
+offset_bottom = 50.0
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_oxfv1")
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B/B_FLAT"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="C" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys"]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/C"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="D" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+flat = NodePath("D_FLAT")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="D_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D"]
+custom_minimum_size = Vector2(20, 50)
+layout_mode = 0
+offset_left = -19.3333
+offset_right = 19.3333
+offset_bottom = 50.0
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_oxfv1")
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D/D_FLAT"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="E" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+flat = NodePath("E_FLAT")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="E_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E"]
+custom_minimum_size = Vector2(20, 50)
+layout_mode = 0
+offset_left = -19.5
+offset_right = 19.5
+offset_bottom = 50.0
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_oxfv1")
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E/E_FLAT"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="F" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys"]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/F"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="G" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+flat = NodePath("G_FLAT")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="G_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G"]
+custom_minimum_size = Vector2(20, 50)
+layout_mode = 0
+offset_left = -19.3333
+offset_right = 19.3333
+offset_bottom = 50.0
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_oxfv1")
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G/G_FLAT"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="A1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+flat = NodePath("A1_FLAT")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="A1_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1"]
+custom_minimum_size = Vector2(20, 50)
+layout_mode = 0
+offset_left = -19.5
+offset_right = 19.5
+offset_bottom = 50.0
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_oxfv1")
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1/A1_FLAT"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="B1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+flat = NodePath("B1_FLAT")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="B1_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1"]
+custom_minimum_size = Vector2(20, 50)
+layout_mode = 0
+offset_left = -19.3333
+offset_right = 19.3333
+offset_bottom = 50.0
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_oxfv1")
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1/B1_FLAT"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="C1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys"]
+custom_minimum_size = Vector2(40, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_oxfv1")
+key_color = Color(1, 1, 1, 1)
+pressed_color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/C1"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Recorder" type="HBoxContainer" parent="VBoxContainer/Lowerhalf" node_paths=PackedStringArray("playback_visualizer")]
+layout_mode = 2
+alignment = 1
+script = ExtResource("3_yxfa4")
+playback_visualizer = NodePath("../PlaybackVisualizer")
+
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer/Lowerhalf/Recorder"]
+layout_mode = 2
+button_pressed = true
+text = "oscilloscope"
+
+[node name="RecordButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder"]
+layout_mode = 2
+text = "RECORD"
+
+[node name="PlayButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder"]
+layout_mode = 2
+text = "PLAY"
+
+[node name="LoopButton" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+layout_mode = 2
+text = "LOOP"
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder"]
+layout_mode = 2
+text = "SAVE"
+
+[node name="Status" type="Label" parent="VBoxContainer/Lowerhalf/Recorder"]
+layout_mode = 2
+text = "NO RECORDING"
+
+[node name="Playback" type="AudioStreamPlayer" parent="VBoxContainer/Lowerhalf/Recorder"]
+stream = SubResource("AudioStreamWAV_c7qjh")
+bus = &"Playback"
+
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/Lowerhalf/Recorder"]
+title = "Save WAV"
+initial_position = 1
+size = Vector2i(800, 400)
+access = 2
+
+[node name="Synth FX Label" type="Label" parent="VBoxContainer/Lowerhalf/Recorder"]
+visible = false
+layout_mode = 2
+text = "                        SYNTH FX:"
+
+[node name="ReverbCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+visible = false
+layout_mode = 2
+text = "REVERB"
+script = ExtResource("4_ns3sq")
+
+[node name="DistortionCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+visible = false
+layout_mode = 2
+text = "DISTORTION"
+script = ExtResource("4_ns3sq")
+effect_idx = 1
+
+[node name="DelayCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+visible = false
+layout_mode = 2
+text = "DELAY"
+script = ExtResource("4_ns3sq")
+effect_idx = 2
+
+[node name="PlaybackVisualizer" type="Control" parent="VBoxContainer/Lowerhalf" node_paths=PackedStringArray("player")]
+visible = false
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+script = ExtResource("5_pg0e7")
+background_color = Color(0, 0, 1, 1)
+playhead_color = Color(0, 1, 0, 1)
+player = NodePath("../Recorder/Playback")
+
+[node name="Playback_Speed_Label" type="Label" parent="VBoxContainer/Lowerhalf"]
+layout_mode = 2
+text = "Playback Speed"
+
+[node name="Playback_Speed_Slider" type="HSlider" parent="VBoxContainer/Lowerhalf"]
+layout_mode = 2
+min_value = 0.1
+max_value = 4.0
+step = 0.01
+value = 1.0
+
+[node name="Bus_Oscilloscope" type="Control" parent="VBoxContainer/Lowerhalf"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+script = ExtResource("5_pfloi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="osc_trigger_slider" type="VSlider" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="BusVis" type="ColorRect" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.0142752, 0.0142752, 0.0142752, 1)
+script = ExtResource("5_s6rx5")
+osc_color = Color(1, 1, 1, 1)
+
+[node name="osc_hscale_slider" type="HSlider" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 2000.0
+value = 1000.0
+
+[node name="Trigger" type="CheckBox" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "TriggerY"
+vertical_icon_alignment = 0
+
+[connection signal="toggled" from="VBoxContainer/Lowerhalf/Recorder/CheckButton" to="VBoxContainer/Lowerhalf/Bus_Oscilloscope" method="_on_bus_oscilloscope_toggled"]
+[connection signal="pressed" from="VBoxContainer/Lowerhalf/Recorder/RecordButton" to="VBoxContainer/Lowerhalf/Recorder" method="_on_record_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Lowerhalf/Recorder/PlayButton" to="VBoxContainer/Lowerhalf/Recorder" method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Lowerhalf/Recorder/SaveButton" to="VBoxContainer/Lowerhalf/Recorder" method="_on_save_button_pressed"]
+[connection signal="finished" from="VBoxContainer/Lowerhalf/Recorder/Playback" to="VBoxContainer/Lowerhalf/Recorder" method="_on_playback_finished"]
+[connection signal="value_changed" from="VBoxContainer/Lowerhalf/Playback_Speed_Slider" to="VBoxContainer/Lowerhalf/PlaybackVisualizer" method="_on_playback_speed_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer/osc_trigger_slider" to="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer/BusVis" method="_on_osc_trigger_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/osc_hscale_slider" to="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer/BusVis" method="_on_osc_hscale_slider_value_changed"]
+[connection signal="toggled" from="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/Trigger" to="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer/BusVis" method="_on_trigger_toggled"]
+
+[editable path="VBoxContainer/Gynths/Gynth_Console"]
+[editable path="VBoxContainer/Gynths/Gynth_Console2"]
+[editable path="VBoxContainer/Gynths/Gynth_Console3"]
