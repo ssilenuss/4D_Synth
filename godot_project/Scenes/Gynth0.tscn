@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bur5odtjg4mqk"]
+[gd_scene format=3 uid="uid://bur5odtjg4mqk"]
 
 [ext_resource type="PackedScene" uid="uid://1vr8g2dxrg65" path="res://Scenes/Gynth_Console_2D.tscn" id="1_k7tr7"]
 [ext_resource type="Script" uid="uid://dnspbqtgycg0w" path="res://Scripts/PianoKey.gd" id="2_oxfv1"]
@@ -8,16 +8,17 @@
 [ext_resource type="Script" uid="uid://ds6mdf5cfhaku" path="res://Scenes/Bus_Oscilloscope.gd" id="5_pfloi"]
 [ext_resource type="Script" uid="uid://bffepwlwfo5e3" path="res://Scripts/playback_visualizer.gd" id="5_pg0e7"]
 [ext_resource type="Script" uid="uid://c2tu4feth42ws" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
-
-[sub_resource type="Curve" id="Curve_xmlbu"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="Curve" id="Curve_ghm16"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
+[ext_resource type="Script" uid="uid://byuiwqvp08qg" path="res://Scripts/DrawPlayhead.gd" id="7_ghm16"]
 
 [sub_resource type="Curve" id="Curve_qgms5"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_33acb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_bqpe3"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -25,7 +26,7 @@ point_count = 4
 format = 1
 mix_rate = 48000
 
-[node name="MarginContainer" type="MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" unique_id=2142632504]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -38,21 +39,21 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1977091955]
 clip_contents = true
 layout_mode = 2
 
-[node name="Gynths" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Gynths" type="HBoxContainer" parent="VBoxContainer" unique_id=53504873]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/separation = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Gynths"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Gynths" unique_id=2031871677]
 layout_mode = 2
 
-[node name="Gynth_Console" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
+[node name="Gynth_Console" parent="VBoxContainer/Gynths" unique_id=2071416038 groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 layout_mode = 2
 focus_mode = 1
 
@@ -61,9 +62,9 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console" index="2"]
-envelope = SubResource("Curve_xmlbu")
+envelope = SubResource("Curve_qgms5")
 
-[node name="Gynth_Console2" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
+[node name="Gynth_Console2" parent="VBoxContainer/Gynths" unique_id=1317696902 groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 visible = false
 layout_mode = 2
 key = "2"
@@ -75,9 +76,9 @@ grow_vertical = 1
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console2" index="2"]
 bus = &"Gynth1"
-envelope = SubResource("Curve_ghm16")
+envelope = SubResource("Curve_33acb")
 
-[node name="Gynth_Console3" parent="VBoxContainer/Gynths" groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
+[node name="Gynth_Console3" parent="VBoxContainer/Gynths" unique_id=2107010428 groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 visible = false
 layout_mode = 2
 key = "3"
@@ -92,19 +93,19 @@ visible = false
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
 bus = &"Gynth2"
-envelope = SubResource("Curve_qgms5")
+envelope = SubResource("Curve_bqpe3")
 
-[node name="Lowerhalf" type="VBoxContainer" parent="VBoxContainer"]
+[node name="Lowerhalf" type="VBoxContainer" parent="VBoxContainer" unique_id=1777271070]
 layout_mode = 2
 script = ExtResource("2_xmlbu")
 
-[node name="Keyboard" type="Control" parent="VBoxContainer/Lowerhalf"]
+[node name="Keyboard" type="Control" parent="VBoxContainer/Lowerhalf" unique_id=1653490192]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.27
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard" unique_id=1012999707]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,17 +113,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sockets" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer"]
+[node name="Sockets" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer" unique_id=746177645]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="keys" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer"]
+[node name="keys" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer" unique_id=229608435]
 layout_mode = 2
 alignment = 1
 
-[node name="A" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys"]
+[node name="A" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=786596866]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -130,7 +131,7 @@ script = ExtResource("2_oxfv1")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A" unique_id=284062924]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -149,7 +150,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="B" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+[node name="B" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=1040815344 node_paths=PackedStringArray("flat")]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -158,7 +159,7 @@ flat = NodePath("B_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="B_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B"]
+[node name="B_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B" unique_id=545609892]
 custom_minimum_size = Vector2(20, 50)
 layout_mode = 0
 offset_left = -19.5
@@ -169,7 +170,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B/B_FLAT"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B/B_FLAT" unique_id=1662260672]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -188,7 +189,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B" unique_id=472114707]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -207,7 +208,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="C" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys"]
+[node name="C" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=1882844249]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -215,7 +216,7 @@ script = ExtResource("2_oxfv1")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/C"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/C" unique_id=625939433]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -234,7 +235,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="D" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+[node name="D" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=1414769586 node_paths=PackedStringArray("flat")]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -243,7 +244,7 @@ flat = NodePath("D_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="D_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D"]
+[node name="D_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D" unique_id=1783859812]
 custom_minimum_size = Vector2(20, 50)
 layout_mode = 0
 offset_left = -19.3333
@@ -254,7 +255,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D/D_FLAT"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D/D_FLAT" unique_id=772292156]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -273,7 +274,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/D" unique_id=786686150]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -292,7 +293,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="E" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+[node name="E" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=993448126 node_paths=PackedStringArray("flat")]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -301,7 +302,7 @@ flat = NodePath("E_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="E_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E"]
+[node name="E_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E" unique_id=565380404]
 custom_minimum_size = Vector2(20, 50)
 layout_mode = 0
 offset_left = -19.5
@@ -312,7 +313,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E/E_FLAT"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E/E_FLAT" unique_id=550225475]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -331,7 +332,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/E" unique_id=17683288]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -350,7 +351,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="F" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys"]
+[node name="F" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=17938348]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -358,7 +359,7 @@ script = ExtResource("2_oxfv1")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/F"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/F" unique_id=647446684]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -377,7 +378,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="G" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+[node name="G" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=923994439 node_paths=PackedStringArray("flat")]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -386,7 +387,7 @@ flat = NodePath("G_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="G_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G"]
+[node name="G_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G" unique_id=341275839]
 custom_minimum_size = Vector2(20, 50)
 layout_mode = 0
 offset_left = -19.3333
@@ -397,7 +398,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G/G_FLAT"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G/G_FLAT" unique_id=1969128015]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -416,7 +417,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/G" unique_id=1983268269]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -435,7 +436,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="A1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+[node name="A1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=1345142893 node_paths=PackedStringArray("flat")]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -444,7 +445,7 @@ flat = NodePath("A1_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="A1_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1"]
+[node name="A1_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1" unique_id=948572321]
 custom_minimum_size = Vector2(20, 50)
 layout_mode = 0
 offset_left = -19.5
@@ -455,7 +456,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1/A1_FLAT"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1/A1_FLAT" unique_id=1672261414]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -474,7 +475,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/A1" unique_id=1167530354]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -493,7 +494,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="B1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" node_paths=PackedStringArray("flat")]
+[node name="B1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=749364586 node_paths=PackedStringArray("flat")]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -502,7 +503,7 @@ flat = NodePath("B1_FLAT")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="B1_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1"]
+[node name="B1_FLAT" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1" unique_id=1520638691]
 custom_minimum_size = Vector2(20, 50)
 layout_mode = 0
 offset_left = -19.3333
@@ -513,7 +514,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("2_oxfv1")
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1/B1_FLAT"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1/B1_FLAT" unique_id=287830276]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -532,7 +533,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/B1" unique_id=1290654770]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -551,7 +552,7 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="C1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys"]
+[node name="C1" type="ColorRect" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys" unique_id=1480301508]
 custom_minimum_size = Vector2(40, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -559,7 +560,7 @@ script = ExtResource("2_oxfv1")
 key_color = Color(1, 1, 1, 1)
 pressed_color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/C1"]
+[node name="Label" type="Label" parent="VBoxContainer/Lowerhalf/Keyboard/VBoxContainer/keys/C1" unique_id=141996123]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -578,73 +579,73 @@ text = "!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Recorder" type="HBoxContainer" parent="VBoxContainer/Lowerhalf" node_paths=PackedStringArray("playback_visualizer")]
+[node name="Recorder" type="HBoxContainer" parent="VBoxContainer/Lowerhalf" unique_id=1907528136 node_paths=PackedStringArray("playback_visualizer")]
 layout_mode = 2
 alignment = 1
 script = ExtResource("3_yxfa4")
 playback_visualizer = NodePath("../PlaybackVisualizer")
 
-[node name="CheckButton" type="CheckButton" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=1849828470]
 layout_mode = 2
 button_pressed = true
 text = "oscilloscope"
 
-[node name="RecordButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="RecordButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=1083388552]
 layout_mode = 2
 text = "RECORD"
 
-[node name="PlayButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="PlayButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=620716287]
 layout_mode = 2
 text = "PLAY"
 
-[node name="LoopButton" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="LoopButton" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=995397999]
 layout_mode = 2
 text = "LOOP"
 
-[node name="SaveButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="SaveButton" type="Button" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=170930118]
 layout_mode = 2
 text = "SAVE"
 
-[node name="Status" type="Label" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="Status" type="Label" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=1309725488]
 layout_mode = 2
 text = "NO RECORDING"
 
-[node name="Playback" type="AudioStreamPlayer" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="Playback" type="AudioStreamPlayer" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=928475153]
 stream = SubResource("AudioStreamWAV_c7qjh")
 bus = &"Playback"
 
-[node name="FileDialog" type="FileDialog" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=1399772997]
 title = "Save WAV"
 initial_position = 1
 size = Vector2i(800, 400)
 access = 2
 
-[node name="Synth FX Label" type="Label" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="Synth FX Label" type="Label" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=873029785]
 visible = false
 layout_mode = 2
 text = "                        SYNTH FX:"
 
-[node name="ReverbCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="ReverbCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=1572211389]
 visible = false
 layout_mode = 2
 text = "REVERB"
 script = ExtResource("4_ns3sq")
 
-[node name="DistortionCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="DistortionCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=736450554]
 visible = false
 layout_mode = 2
 text = "DISTORTION"
 script = ExtResource("4_ns3sq")
 effect_idx = 1
 
-[node name="DelayCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder"]
+[node name="DelayCheckBox" type="CheckBox" parent="VBoxContainer/Lowerhalf/Recorder" unique_id=902057517]
 visible = false
 layout_mode = 2
 text = "DELAY"
 script = ExtResource("4_ns3sq")
 effect_idx = 2
 
-[node name="PlaybackVisualizer" type="Control" parent="VBoxContainer/Lowerhalf" node_paths=PackedStringArray("player")]
+[node name="PlaybackVisualizer" type="Control" parent="VBoxContainer/Lowerhalf" unique_id=2056880282 node_paths=PackedStringArray("player")]
 visible = false
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
@@ -653,23 +654,32 @@ background_color = Color(0, 0, 1, 1)
 playhead_color = Color(0, 1, 0, 1)
 player = NodePath("../Recorder/Playback")
 
-[node name="Playback_Speed_Label" type="Label" parent="VBoxContainer/Lowerhalf"]
+[node name="Playhead" type="Control" parent="VBoxContainer/Lowerhalf/PlaybackVisualizer" unique_id=2114772158]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_ghm16")
+
+[node name="Playback_Speed_Label" type="Label" parent="VBoxContainer/Lowerhalf" unique_id=2019545068]
 layout_mode = 2
 text = "Playback Speed"
 
-[node name="Playback_Speed_Slider" type="HSlider" parent="VBoxContainer/Lowerhalf"]
+[node name="Playback_Speed_Slider" type="HSlider" parent="VBoxContainer/Lowerhalf" unique_id=206446179]
 layout_mode = 2
 min_value = 0.1
 max_value = 4.0
 step = 0.01
 value = 1.0
 
-[node name="Bus_Oscilloscope" type="Control" parent="VBoxContainer/Lowerhalf"]
+[node name="Bus_Oscilloscope" type="Control" parent="VBoxContainer/Lowerhalf" unique_id=212095533]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 script = ExtResource("5_pfloi")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope" unique_id=34908422]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -677,18 +687,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer" unique_id=336735763]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="osc_trigger_slider" type="VSlider" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer"]
+[node name="osc_trigger_slider" type="VSlider" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer" unique_id=1279507617]
 visible = false
 layout_mode = 2
 min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="BusVis" type="ColorRect" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer"]
+[node name="BusVis" type="ColorRect" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer/HBoxContainer" unique_id=388227271]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -696,16 +706,17 @@ color = Color(0.0142752, 0.0142752, 0.0142752, 1)
 script = ExtResource("5_s6rx5")
 osc_color = Color(1, 1, 1, 1)
 
-[node name="osc_hscale_slider" type="HSlider" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer"]
+[node name="osc_hscale_slider" type="HSlider" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer" unique_id=968045206]
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 1.0
 max_value = 2000.0
 value = 1000.0
 
-[node name="Trigger" type="CheckBox" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer"]
+[node name="Trigger" type="CheckBox" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer" unique_id=1453435124]
 layout_mode = 2
 size_flags_vertical = 0
+button_pressed = true
 text = "TriggerY"
 vertical_icon_alignment = 0
 

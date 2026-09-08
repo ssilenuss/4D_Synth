@@ -294,24 +294,28 @@ func _on_check_box_envelope_enable_toggled(toggled_on: bool) -> void:
 func _on_octave_up_pressed() -> void:
 	var new_frequency : float = gynth.get_effective_frequency()*2.0
 	gynth.set_effective_frequency(new_frequency)
-	frequency_label.text = str(gynth.get_effective_frequency())
+	base_frequency = gynth.get_effective_frequency()
+	frequency_label.text = str(base_frequency)
 
 
 func _on_octave_down_pressed() -> void:
 	var new_frequency : float = gynth.get_effective_frequency()/2.0
 	gynth.set_effective_frequency(new_frequency)
-	frequency_label.text = str(gynth.get_effective_frequency())
+	base_frequency = gynth.get_effective_frequency()
+	frequency_label.text = str(base_frequency)
 
 
 func _on_detune_up_pressed() -> void:
 	var new_frequency : float = gynth.get_effective_frequency()
 	new_frequency += new_frequency/12.0 * 0.1
 	gynth.set_effective_frequency(new_frequency)
-	frequency_label.text = str(gynth.get_effective_frequency())
+	base_frequency = gynth.get_effective_frequency()
+	frequency_label.text = str(base_frequency)
 
 
 func _on_detune_down_pressed() -> void:
 	var new_frequency : float = gynth.get_effective_frequency()
 	new_frequency -= new_frequency/12.0 * 0.1
 	gynth.set_effective_frequency(new_frequency)
-	frequency_label.text = str(gynth.get_effective_frequency())
+	base_frequency = gynth.get_effective_frequency()
+	frequency_label.text = str(base_frequency)

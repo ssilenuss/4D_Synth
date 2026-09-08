@@ -1,4 +1,5 @@
 extends Control
+class_name PlaybackVisualizer
 
 var file : AudioStreamWAV :
 	set(value):
@@ -16,10 +17,13 @@ var playback_position : float = 0
 var end_position: float = 1.0
 var wav_float_array : PackedFloat32Array = []
 
+signal redraw_playhead
+
 func _process(_delta: float) -> void:
 	if player.playing:
 		playback_position = player.get_playback_position()
-		queue_redraw()
+		#queue_redraw()
+		redraw_playhead.emit()
 	else:
 		playback_position = 0.0
 		
@@ -87,9 +91,9 @@ func _draw()->void:
 		#draw_polyline(draw_buffer, foreground_color)
 		
 	#draw playhead
-	var playhead_x :float = lerpf(0.0, size.x, playback_position/end_position)
-	var playhead_points : PackedVector2Array = [Vector2(playhead_x, 0.0), Vector2(playhead_x, size.y)]
-	draw_polyline(playhead_points, playhead_color, 3.0)
+	#var playhead_x :float = lerpf(0.0, size.x, playback_position/end_position)
+	#var playhead_points : PackedVector2Array = [Vector2(playhead_x, 0.0), Vector2(playhead_x, size.y)]
+	#draw_polyline(playhead_points, playhead_color, 3.0)
 		
 	
 	
