@@ -10,15 +10,15 @@
 [ext_resource type="Script" uid="uid://c2tu4feth42ws" path="res://Scripts/bus_vis.gd" id="5_s6rx5"]
 [ext_resource type="Script" uid="uid://byuiwqvp08qg" path="res://Scripts/DrawPlayhead.gd" id="7_ghm16"]
 
+[sub_resource type="Curve" id="Curve_ghm16"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [sub_resource type="Curve" id="Curve_qgms5"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Curve" id="Curve_33acb"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="Curve" id="Curve_bqpe3"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.73333335, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -62,7 +62,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console" index="2"]
-envelope = SubResource("Curve_qgms5")
+envelope = SubResource("Curve_ghm16")
 
 [node name="Gynth_Console2" parent="VBoxContainer/Gynths" unique_id=1317696902 groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 visible = false
@@ -76,7 +76,7 @@ grow_vertical = 1
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console2" index="2"]
 bus = &"Gynth1"
-envelope = SubResource("Curve_33acb")
+envelope = SubResource("Curve_qgms5")
 
 [node name="Gynth_Console3" parent="VBoxContainer/Gynths" unique_id=2107010428 groups=["gynth_consoles"] instance=ExtResource("1_k7tr7")]
 visible = false
@@ -93,7 +93,7 @@ visible = false
 
 [node name="AudioOsc2D" parent="VBoxContainer/Gynths/Gynth_Console3" index="2"]
 bus = &"Gynth2"
-envelope = SubResource("Curve_bqpe3")
+envelope = SubResource("Curve_33acb")
 
 [node name="Lowerhalf" type="VBoxContainer" parent="VBoxContainer" unique_id=1777271070]
 layout_mode = 2
@@ -716,7 +716,6 @@ value = 1000.0
 [node name="Trigger" type="CheckBox" parent="VBoxContainer/Lowerhalf/Bus_Oscilloscope/VBoxContainer" unique_id=1453435124]
 layout_mode = 2
 size_flags_vertical = 0
-button_pressed = true
 text = "TriggerY"
 vertical_icon_alignment = 0
 
