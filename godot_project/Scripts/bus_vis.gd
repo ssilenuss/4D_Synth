@@ -9,9 +9,11 @@ var waveform_points = []
 var max_points: int = 1000 # Adjust as needed for desired history length
 var trigger_level: float = 0
 var trigger: bool = false
-var triggering: bool = false
+var triggering: bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	
 	# Get the SpectrumAnalyzer instance
 	var bus_idx = AudioServer.get_bus_index(audio_bus_name)
 

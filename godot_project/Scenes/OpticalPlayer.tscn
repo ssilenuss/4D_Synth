@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cxqn4a7tnr3vv"]
+
+[ext_resource type="Texture2D" uid="uid://dov4n6fmmjifn" path="res://icon.svg" id="1_fsbvv"]
+[ext_resource type="Shader" uid="uid://kmi5fvtf4qyt" path="res://Scenes/OpticalPlayer.gdshader" id="1_miri0"]
+[ext_resource type="Script" uid="uid://txyyy6kvb5e5" path="res://Scenes/optical_player.gd" id="2_miri0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fsbvv"]
+shader = ExtResource("1_miri0")
+shader_parameter/image_height = 512
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_bg2dd"]
+mix_rate = 48000.0
+buffer_length = 0.25
+
+[node name="OpticalPlayer" type="TextureRect" unique_id=1894912321]
+material = SubResource("ShaderMaterial_fsbvv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_fsbvv")
+script = ExtResource("2_miri0")
+scan_speed = 1.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=721751542]
+stream = SubResource("AudioStreamGenerator_bg2dd")
+
+[node name="Playhead" type="ColorRect" parent="." unique_id=1519817607]
+visible = false
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -754.065
+offset_right = -679.065
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 1, 1)
